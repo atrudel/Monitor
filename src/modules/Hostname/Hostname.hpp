@@ -10,28 +10,34 @@
 
 #define BUFFERLEN 128
 
-class Hostname : public IMonitorModule
+class Hostname: public IMonitorModule
 {
   public:
     Hostname(void);
     Hostname(Hostname const &src);
-    ~Hostname(void);
+    virtual ~Hostname(void);
 
     Hostname &operator=(Hostname const &rhs);
 
     void fetch(void);
     void update(void);
 
-    void setName(std::string name);
-    std::string getName(void) const;
-    std::map< std::string, std::deque<float> > getGraphs(void) const;
-    std::map<std::string, std::string> getData(void) const;
+    void    setName(std::string name);
+    virtual const std::string   &getName(void) const;
+    virtual const std::map< std::string, std::deque<float> >    &getGraphs(void) const;
+    virtual const std::map<std::string, float>      &getGraphsMin(void) const;
+    virtual const std::map<std::string, float>      &getGraphsMax(void) const;
+    virtual const std::map<std::string, std::string>    &getData(void) const;
 
   private:
     std::string _name;
+    std::map<std::string, float> _min;
+    std::map<std::string, float> _max;
+    std::map< std::string, std::deque<float> > _graphs;
+    std::map<std::string, std::string> _data;
 };
 
-Hostname::Hostname(void)
+Hostname::Hostname(void): _name(""), _min(std::map<std::string, float>()), _max(std::map<std::string, float>()), _graphs(std::map< std::string, std::deque<float> >()), _data(std::map<std::string, std::string>())
 {
 }
 
@@ -56,16 +62,27 @@ void Hostname::fetch()
     std::string name(buff);
     this->setName(name);
 }
-std::map< std::string, std::deque<float> > Hostname::getGraphs(void) const
+
+const std::map<std::string, float> &Hostname::getGraphsMin(void) const
 {
-    return std::map<std::string, std::deque<float> >();
+    return this->_min;
 }
 
-std::map<std::string, std::string> Hostname::getData(void) const
+const std::map<std::string, float> &Hostname::getGraphsMax(void) const
 {
-    return std::map<std::string, std::string>();
+    return this->_max;
 }
-std::string Hostname::getName(void) const
+
+const std::map< std::string, std::deque<float> > &Hostname::getGraphs(void) const
+{
+    return this->_graphs;
+}
+
+const std::map<std::string, std::string> &Hostname::getData(void) const
+{
+    return this->_data;
+}
+const std::string &Hostname::getName(void) const
 {
     return this->_name;
 }
