@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <map>
-#include <queue>
+#include <deque>
 #include <sys/sysctl.h>
 
 #include "IMonitorModule.hpp"
@@ -24,7 +24,7 @@ class Hostname : public IMonitorModule
 
     void setName(std::string name);
     std::string getName(void) const;
-    std::map< std::string, std::queue<float> > getGraphs(void) const;
+    std::map< std::string, std::deque<float> > getGraphs(void) const;
     std::map<std::string, std::string> getData(void) const;
 
   private:
@@ -56,9 +56,9 @@ void Hostname::fetch()
     std::string name(buff);
     this->setName(name);
 }
-std::map< std::string, std::queue<float> > Hostname::getGraphs(void) const
+std::map< std::string, std::deque<float> > Hostname::getGraphs(void) const
 {
-    return std::map<std::string, std::queue<float> >();
+    return std::map<std::string, std::deque<float> >();
 }
 
 std::map<std::string, std::string> Hostname::getData(void) const
