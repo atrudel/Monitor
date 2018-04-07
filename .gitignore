@@ -37,3 +37,7 @@ ehthumbs.db
 .idea/
 cmake-build-debug/
 dep/
+CMakeLists.txt
+
+# Executable
+ft_gkrellm
