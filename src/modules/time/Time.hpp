@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <sys/sysctl.h>
 #include <ctime>
+#include <sstream>
 
 #include "../IMonitorModule.hpp"
 
@@ -18,6 +19,7 @@ class TimeModule : public IMonitorModule
     
     std::string now();
     std::string uptime();
+    std::string timeToDate(time_t time);
     std::string timeToString(time_t time);
 
   public:
@@ -30,8 +32,8 @@ class TimeModule : public IMonitorModule
 
     virtual const std::string &getName(void) const;
     virtual const std::map<std::string, std::deque<float> > &getGraphs(void) const;
-    virtual const float &getGraphsMin(void) const;
-    virtual const float &getGraphsMax(void) const;
+    virtual const float &getGraphMin(void) const;
+    virtual const float &getGraphMax(void) const;
     virtual const std::map<std::string, std::string> &getData(void) const;
 };
 

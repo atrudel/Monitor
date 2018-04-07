@@ -9,6 +9,7 @@ int main()
 
     result = time->getData();
     std::cout << result["uptime"] << std::endl;
+    std::cout << result["now"] << std::endl;
     
     return 0;
 }
