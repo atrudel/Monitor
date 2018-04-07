@@ -1,6 +1,6 @@
 #include "DummyModule.hpp"
 
-#define QUEUE_SIZE 100
+#define QUEUE_SIZE 10
 
 DummyModule::DummyModule(void): _name("Dummy") {
     _graphs["dummy1"] = std::deque<float>(QUEUE_SIZE);

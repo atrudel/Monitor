@@ -1,21 +1,38 @@
+
 #include "BeautifulDisplay.hpp"
 
 BeautifulDisplay::BeautifulDisplay(void) {
-    return;
+
 }
 
 BeautifulDisplay::BeautifulDisplay(const BeautifulDisplay& src) {
-    *this = src;
-    return;
+
 }
 
 BeautifulDisplay::~BeautifulDisplay(void) {
-    return;
+
 }
 
 BeautifulDisplay& BeautifulDisplay::operator=(const BeautifulDisplay& rhs) {
-    if (this != &rhs) {
-        // TODO
-    }
-    return *this;
+    return <#initializer#>;
+}
+
+void BeautifulDisplay::init(void) {
+
+}
+
+void BeautifulDisplay::update(void) {
+
+}
+
+void BeautifulDisplay::render(void) const {
+
+}
+
+void BeautifulDisplay::close(void) {
+
+}
+
+bool BeautifulDisplay::_check_module_info(IMonitorModule*) {
+    return false;
 }
