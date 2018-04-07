@@ -35,3 +35,4 @@ ehthumbs.db
 # Other
 .makefile_saves/
 .idea/
+cmake-build-debug/
