@@ -8,7 +8,7 @@ int		main(void)
 	IMonitorModule* truc = new OSModule;
 	IMonitorModule* plop = new Hostname;
 
-		plop->fetch();
+		plop->update();
 	for (int i = 0; i< 1000; i++)
 	{
 		std::cout << plop->getName() << std::endl;

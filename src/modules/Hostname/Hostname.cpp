@@ -18,10 +18,10 @@ Hostname::Hostname(Hostname const &src)
 Hostname::~Hostname()
 {
 }
-void Hostname::update(void)
+void Hostname::fetch(void)
 {
 }
-void Hostname::fetch()
+void Hostname::update(void)
 {
     char buff[BUFFERLEN];
     size_t buffLen = BUFFERLEN;
