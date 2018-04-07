@@ -9,9 +9,8 @@ class IMonitorModule
 {
 
 protected:
-  virtual ~IMonitorModule(void);
 
-  virtual IMonitorModule &operator=(IMonitorModule const &rhs) = 0;
+  virtual ~IMonitorModule(void);
 
   virtual void fetch(void) = 0;
   virtual void update(void) = 0;
