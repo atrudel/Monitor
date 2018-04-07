@@ -38,7 +38,10 @@ SRC = src/
 
 FILES =\
 Core.cpp\
+displays/beautiful/BeautifulDisplay.cpp\
+displays/moduleOutputTester.cpp\
 main.cpp\
+modules/DummyModule.cpp\
 modules/test.cpp
 
 OBJ_DIR = bin/
