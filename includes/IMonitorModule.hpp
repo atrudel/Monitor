@@ -10,7 +10,7 @@ class IMonitorModule
 
 public:
 
-  virtual ~IMonitorModule(void);
+  virtual ~IMonitorModule(void) {};
 
   virtual void fetch(void) = 0;
   virtual void update(void) = 0;
