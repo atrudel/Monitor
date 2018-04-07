@@ -28,41 +28,42 @@ void DummyDisplay::update(void) {
 
 }
 
-void DummyDisplay::render(void) const {
-    std::for_each(_modules.begin(), _modules.end(), _displayModule)
+void DummyDisplay::render(const std::map<std::string, IMonitorModule*> &modules) const {
+    for (std::map<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, IMonitorModule*>::const_iterator i = modules.begin(); i != modules.end(); i++){
+        _displayModule(i->second);
+    }
 }
 
 void DummyDisplay::close(void) {
 
 }
 
-void DummyDisplay::_printData(std::map<std::string, std::string>& data){
-    for (std::map<std::string, std::string>::iterator i = data.begin(); i != data.end() ; i++) {
+void DummyDisplay::_printData(const std::map<std::string, std::string>& data) const {
+    for (std::map<std::string, std::string>::const_iterator i = data.begin(); i != data.end() ; i++) {
         std::cout << i->first << ": " << i->second << std::endl;
     }
 }
-void DummyDisplay::_printGraphs(std::map<std::string, std::deque<float> > graphs) {
-    for (std::map<std::string, std::deque<float> >::iterator i; i != graphs.end()){
+void DummyDisplay::_printGraphs(const std::map<std::string, std::deque<float> > graphs) const {
+    for (std::map<std::string, std::deque<float> >::const_iterator i; i != graphs.end(); i++){
         std::cout << i->first << ": " << std::endl;
         _printQueue(i->second);
         std::cout << std::endl;
     }
 }
-void DummyDisplay::_printQueue(std::deque<float> queue){
-    for(std::iterator i = queue.begin(); i != queue.end(); i++){
+void DummyDisplay::_printQueue(const std::deque<float> queue) const {
+    for(std::deque<float>::const_iterator i = queue.begin(); i != queue.end(); i++){
         std::cout << *i << " | ";
     }
     std::cout << std::endl;
 }
-void DummyDisplay::_displayModule(IMonitorModule* module) {
-    module =
+void DummyDisplay::_displayModule(const IMonitorModule* module) const{
     std::cout << "===========================  DISPLAYING module named " << module->getName() << " ======================" << std::endl;
     std::cout << std::endl;
     std::cout << "---------- Data --------" << std::endl << std::endl;
     _printData(module->getData());
     std::cout  << std::endl;
     std::cout << "---------- Graphs -------" << std::endl << std::endl;
-    std::cout << "min: " << module->getGraphsMin() << "      max: " << module->getGraphsMax() << std::endl;
+    std::cout << "min: " << module->getGraphMin() << "      max: " << module->getGraphMax() << std::endl;
     _printGraphs(module->getGraphs());
 }
 

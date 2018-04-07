@@ -14,12 +14,11 @@ public:
     BeautifulDisplay& operator=(const BeautifulDisplay& rhs);
     virtual void init(void);
     virtual void update(void);
-    virtual void render(void) const;
+    virtual void render(const std::map<std::string, IMonitorModule*> &disp) const;
     virtual void close(void);
 
 private:
-    std::map<std::string, IMonitorModule*>&	_modules;
-    bool                                    _check_module_info(IMonitorModule*);
+
 };
 
 

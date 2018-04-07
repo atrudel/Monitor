@@ -1,4 +1,6 @@
 #include "Core.hpp"
+#include "modules/DummyModule.hpp"
+#include "displays/dummy/DummyDisplay.hpp"
 
 Core::Core()
 	: _running(false),
@@ -30,7 +32,7 @@ Core &Core::operator=(const Core &o)
 
 void Core::init()
 {
-	// _modules["cpu"] = new CpuModul();
+    // _modules["cpu"] = new CpuModul();
 	// _modules["gpu"] = new GpuModul();
 	// _modules["ram"] = new RamModul();
 }
@@ -39,8 +41,8 @@ void Core::update()
 {
 	typedef std::map<std::string, IMonitorModule*>::iterator iterator;
 
-	for (iterator modul = _modules.begin(); modul != _modules.begin(); modul++)
-		modul->second->update();g
+	for (iterator modul = _modules.begin(); modul != _modules.end(); modul++)
+		modul->second->update();
 
 	if (!_displays.empty())
 		_displays[_activeDisplayIndex]->update();
@@ -83,4 +85,14 @@ void Core::loop()
 			beforeTime = clock();
 		}
 	}
+}
+void Core::test()
+{
+    _displays.push_back(new DummyDisplay());
+
+    // ADD YOUR MODULES HERE, AS A NEW ENTRY IN THE MAP
+    _modules["dummy"] = new DummyModule();
+
+    update();
+    render();
 }

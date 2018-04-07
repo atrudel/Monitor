@@ -14,15 +14,14 @@ public:
     DummyDisplay& operator=(const DummyDisplay& rhs);
     virtual void init(void);
     virtual void update(void);
-    virtual void render(void) const;
+    virtual void render(const std::map<std::string, IMonitorModule*> &disp) const;
     virtual void close(void);
 
 private:
-    std::map<std::string, IMonitorModule*>&	_modules;
-    void                                    _displayModule(IMonitorModule*);
-    void                                    _printData(std::map<std::string, std::string>& data);
-    void                                    _printGraphs(std::map<std::string, std::deque<float> >);
-    void                                    _printQueue(std::deque<float> queue){
+    void _displayModule(const IMonitorModule*) const;
+    void _printData(const std::map<std::string, std::string>& data) const ;
+    void _printGraphs(const std::map<std::string, std::deque<float> >) const ;
+    void _printQueue(const std::deque<float> queue) const ;
 };
 
 
