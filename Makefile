@@ -40,9 +40,9 @@ FILES =\
 Core.cpp\
 displays/beautiful/BeautifulDisplay.cpp\
 displays/beautiful/SdlDisplay.cpp\
-displays/moduleOutputTester.cpp\
+displays/dummy/DummyDisplay.cpp\
 main.cpp\
-modules/DummyModule.cpp\
+modules/dummy/DummyModule.cpp\
 modules/Hostname/Hostname.cpp\
 modules/os/OSModule.cpp\
 modules/time/Time.cpp

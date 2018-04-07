@@ -42,7 +42,14 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 	i++;
 
 	SDL_Event event;
-	while (SDL_PollEvent(&event) != 0);
+	while (SDL_PollEvent(&event) != 0)
+	{
+		if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN &&
+										event.key.keysym.sym == SDLK_ESCAPE))
+		{
+			exit(0);
+		}
+	}
 
 	for (int y = 0; y < _display.getHeight(); y++)
 		for (int x = 0; x < _display.getHeight(); x++)
