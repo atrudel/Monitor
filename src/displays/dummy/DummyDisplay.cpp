@@ -44,7 +44,7 @@ void DummyDisplay::_printData(const std::map<std::string, std::string>& data) co
     }
 }
 void DummyDisplay::_printGraphs(const std::map<std::string, std::deque<float> > graphs) const {
-    for (std::map<std::string, std::deque<float> >::const_iterator i; i != graphs.end(); i++){
+    for (std::map<std::string, std::deque<float> >::const_iterator i = graphs.begin(); i != graphs.end(); i++){
         std::cout << i->first << ": " << std::endl;
         _printQueue(i->second);
         std::cout << std::endl;
