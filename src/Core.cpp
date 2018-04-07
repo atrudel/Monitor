@@ -30,7 +30,8 @@ Core &Core::operator=(const Core &o)
 
 void Core::init()
 {
-	// _modules["cpu"] = new CpuModul();
+	_displays.push_back(new BeautifulDisplay());
+	_modules["time"] = new TimeModule();
 	// _modules["gpu"] = new GpuModul();
 	// _modules["ram"] = new RamModul();
 }
@@ -39,7 +40,7 @@ void Core::update()
 {
 	typedef std::map<std::string, IMonitorModule*>::iterator iterator;
 
-	for (iterator modul = _modules.begin(); modul != _modules.begin(); modul++)
+	for (iterator modul = _modules.begin(); modul != _modules.end(); modul++)
 		modul->second->update();
 
 	if (!_displays.empty())

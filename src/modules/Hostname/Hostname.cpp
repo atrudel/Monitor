@@ -1,9 +1,3 @@
-#include <iostream>
-#include <map>
-#include <deque>
-#include <sys/sysctl.h>
-
-#include "IMonitorModule.hpp"
 #include "Hostname.hpp"
 
 Hostname::Hostname(void): _name(""), _min(0), _max(0), _graphs(std::map< std::string, std::deque<float> >()), _data(std::map<std::string, std::string>())

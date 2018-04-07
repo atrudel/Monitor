@@ -2,6 +2,7 @@
 #define IMONITORMODULE_HPP
 
 #include <iostream>
+#include <exception>
 #include <map>
 #include <queue>
 

@@ -12,6 +12,10 @@ public:
 
     BeautifulDisplay& operator=(const BeautifulDisplay& rhs);
 
+	void init(void);
+    void update(void);
+	void render(const std::map<std::string, IMonitorModule*> &module) const;
+
 private:
 
 };

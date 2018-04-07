@@ -7,7 +7,10 @@
 # include <string>
 
 # include "displays/IMonitorDisplay.hpp"
+# include "displays/beautiful/BeautifulDisplay.hpp"
 # include "modules/IMonitorModule.hpp"
+
+# include "modules/time/Time.hpp"
 
 class IMonitorModule;
 class IMonitorDisplay;

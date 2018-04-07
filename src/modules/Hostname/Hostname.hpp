@@ -6,7 +6,7 @@
 #include <deque>
 #include <sys/sysctl.h>
 
-#include "IMonitorModule.hpp"
+#include "../IMonitorModule.hpp"
 
 #define BUFFERLEN 128
 

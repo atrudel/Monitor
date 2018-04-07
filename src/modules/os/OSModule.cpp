@@ -1,15 +1,11 @@
-
 #include "OSModule.hpp"
-#include <mach-o/dyld.h>
-#include <sys/sysctl.h>
-#include "IMonitorModule.hpp"
 
 OSModule::OSModule(void) : _name(""), _graphMin(0), _graphMax(0), _graphs(std::map<std::string, std::deque<float> >()), _datas(std::map<std::string, std::string>())
 {
     set_osrelease();
-    this->_name += " "; 
+    this->_name += " ";
     set_osname();
-    this->_name += " "; 
+    this->_name += " ";
     set_osversion();
 }
 
@@ -46,9 +42,9 @@ void OSModule::set_osversion()
     FILE*           ret = popen(strtmp, "r");
 
     if (!ret)
-        return ;
+        throw std::runtime_error("sw_vers -productVersion not found !");
 
-   
+
     while(!feof(ret)) {
        fgets(str, 256, ret);
     }
@@ -63,7 +59,8 @@ void OSModule::set_osrelease()
     char str[256];
     size_t size = sizeof(str);
     int ret = sysctlbyname("kern.osrelease", str, &size, NULL, 0);
-
+	if (!ret)
+		throw std::runtime_error("kern.osrelease not found !");
     this->_name += str;
 }
 
@@ -71,21 +68,21 @@ void OSModule::set_osrelease()
   void OSModule::update(void) {
   }
 
-const std::map<std::string, std::deque<float> > &OSModule::getGraphs(void) const 
+const std::map<std::string, std::deque<float> > &OSModule::getGraphs(void) const
     {
         return this->_graphs;
     }
 
-const float &OSModule::getGraphMin(void) const 
+const float &OSModule::getGraphMin(void) const
 {
         return this->_graphMin;
 }
- const float &OSModule::getGraphMax(void) const 
+ const float &OSModule::getGraphMax(void) const
  {
     return this->_graphMax;
  }
 
-const std::map<std::string, std::string> &OSModule::getData(void) const 
+const std::map<std::string, std::string> &OSModule::getData(void) const
   {
       return this->_datas;
     }
@@ -103,6 +100,7 @@ const std::string &OSModule::getName(void) const
 
 OSModule &OSModule::operator=(OSModule const &rhs) {
 
+	(void) rhs;
     // this->_foo = rhs.getValue();
     return *this;
 }

@@ -1,7 +1,10 @@
 #ifndef OSMODULE_HPP
 #define OSMODULE_HPP
 
-#include "IMonitorModule.hpp"
+#include <mach-o/dyld.h>
+#include <sys/sysctl.h>
+
+#include "../IMonitorModule.hpp"
 
 class OSModule : public IMonitorModule
 {
@@ -26,7 +29,7 @@ class OSModule : public IMonitorModule
   void set_osrelease(void);
   void set_osname(void);
   void set_osversion(void);
-  
+
     std::string _name;
     float _graphMin;
     float _graphMax;

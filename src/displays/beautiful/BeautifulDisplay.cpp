@@ -19,3 +19,21 @@ BeautifulDisplay& BeautifulDisplay::operator=(const BeautifulDisplay& rhs) {
     }
     return *this;
 }
+
+void BeautifulDisplay::init(void)
+{
+
+}
+
+void BeautifulDisplay::update(void)
+{
+
+}
+
+void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &module) const
+{
+	typedef std::map<std::string, IMonitorModule*>::const_iterator iterator;
+
+	for (iterator i = module.begin(); i != module.end(); i++)
+		std::cout << i->first << ": " << std::endl;
+}
