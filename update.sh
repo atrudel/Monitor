@@ -20,7 +20,7 @@ if [ -e "$CURRENT" ] && [ ! -z "$CURRENT" ]; then
 	echo "FILES =\\" >> $CURRENT
 	find src -name *.cpp -o -name *.c | sed 's/src\///g' | sed 's/$/\\/g' | sed 's/\Z//g' | sed '$ s/.$//' >> $CURRENT
 	echo "" >> $CURRENT
-	sed -n '/SRC/,$p' $CUR_FILE >> $CURRENT
+	sed -n '/OBJ_DIR/,$p' $CUR_FILE >> $CURRENT
 	printf "\033[7;49;34mSuccessfully updated the Makefile !\033[m\n"
 else
 	printf "\033[7;49;31mInvalid file !\033[m\n"

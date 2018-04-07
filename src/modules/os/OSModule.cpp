@@ -2,7 +2,7 @@
 #include "OSModule.hpp"
 #include <mach-o/dyld.h>
 #include <sys/sysctl.h>
-#include "../../../includes/IMonitorModule.hpp"
+#include "IMonitorModule.hpp"
 
 OSModule::OSModule(void) : _name(""), _graphMin(0), _graphMax(0), _graphs(std::map<std::string, std::deque<float> >()), _datas(std::map<std::string, std::string>())
 {

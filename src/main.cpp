@@ -1,9 +1,10 @@
 #include <iostream>
-
-#include "IMonitorDisplay.hpp"
-#include "IMonitorModule.hpp"
+#include "Core.hpp"
 
 int main()
 {
+	Core core;
+
 	std::cout << "Hello 42" << std::endl;
+	core.start();
 }

@@ -28,9 +28,19 @@ ehthumbs.db
 
 # IDE config file
 .vscode
+.idea
 
 # Debug file
 *.dSYM
+cmake-build-debug/
 
 # Other
 .makefile_saves/
+wxWidgets/
+.idea/
+cmake-build-debug/
+dep/
+CMakeLists.txt
+
+# Executable
+ft_gkrellm
