@@ -6,7 +6,7 @@
 /*   By: agrumbac <agrumbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 14:38:03 by agrumbac          #+#    #+#             */
-/*   Updated: 2018/04/07 15:10:52 by agrumbac         ###   ########.fr       */
+/*   Updated: 2018/04/07 17:19:59 by agrumbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ NcursesDisplay &		NcursesDisplay::operator=( NcursesDisplay const & rhs )
 	return *this;
 }
 
-virtual void 			NcursesDisplay::init(void)
+void 					NcursesDisplay::init(void)
 {
 	initscr();
 	cbreak();
@@ -41,22 +41,33 @@ virtual void 			NcursesDisplay::init(void)
 	nodelay(stdscr, TRUE);
 
 	start_color();
-
-	// init_pair(PLAYER_COLOR, COLOR_GREEN, COLOR_BLACK);
-	// init_pair(PLAYER2_COLOR, COLOR_CYAN, COLOR_BLACK);
-	// init_pair(MISSILES_COLOR, COLOR_RED, COLOR_BLACK);
-	// init_pair(ENEMIES_COLOR, COLOR_YELLOW, COLOR_BLACK);
-	// init_pair(EMISSILES_COLOR, COLOR_MAGENTA, COLOR_BLACK);
-	// init_pair(STARS_COLOR, COLOR_WHITE, COLOR_BLACK);
+	init_pair(DISP_WHITE, COLOR_WHITE, COLOR_BLACK);
+	init_pair(DISP_RED, COLOR_RED, COLOR_BLACK);
+	init_pair(DISP_GREEN, COLOR_GREEN, COLOR_BLACK);
+	init_pair(DISP_BLUE, COLOR_BLUE, COLOR_BLACK);
+	init_pair(DISP_CYAN, COLOR_CYAN, COLOR_BLACK);
+	init_pair(DISP_YELLOW, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(DISP_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
 }
 
-virtual void 			NcursesDisplay::update(void)
-{ }
-
-virtual void 			NcursesDisplay::render(void) const
-{ }
-
-void 					NcursesDisplay::quit( void )
+bool 					NcursesDisplay::quit( void )
 {
-	endwin();
+	int					ch = getch();
+
+	if (ch == KEY_ESC)
+	{
+		endwin();
+		return true;
+	}
+	return false;
+}
+
+void 					NcursesDisplay::update(void)
+{ }
+
+void 					NcursesDisplay::render(void) const
+{
+	box(stdscr, 0, 0);
+	attron(COLOR_PAIR(PLAYER_COLOR));
+	mvprintw(LINES, COLS);
 }
