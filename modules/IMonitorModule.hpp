@@ -8,7 +8,7 @@
 class IMonitorModule
 {
 
-protected:
+public:
 
   virtual ~IMonitorModule(void);
 
