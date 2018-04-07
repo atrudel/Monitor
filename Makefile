@@ -1,4 +1,4 @@
-.PHONY : clean, fclean, re, all, $(NAME), lanch, debug, install
+.PHONY : clean, fclean, re, all, $(NAME), lanch, debug, install, uninstall
 .SUFFIXES :
 # Colors :
 WHITE = \033[7;49;39m
@@ -54,28 +54,21 @@ INC_DIR = ./includes
 INC = $(SRC)
 INC_FILES = #$(SRC:.cpp=.hpp)# ls -1 > src.txt &&
 
-# DEP_DIR = ./dep
-# WX_TARNAME = wxWidgets-3.1.1.tar.bz2
-# WX_DIRNAME = wxWidgets
-# WX_DIR = $(DEP_DIR)/$(WX_DIRNAME)
-# WX_COMPILE_FLAGS = `$(WX_DIR)/wx-config --cxxflags`
-# WX_LIB_FLAGS = `$(WX_DIR)/wx-config --cxxflags --libs`
-
 DEPS_DIR = dep
 SDL_DIR = $(DEPS_DIR)/SDL2-2.0.8
 SDL_LIB_DIR = $(SDL_DIR)/build/.libs
 SDL_LIB = $(SDL_LIB_DIR)/libSDL2.a
 SDL_INCLUDES = $(SDL_DIR)/include
-SDL_FLAGS = -lSDL2 -framework Cocoa -framework CoreAudio\
-  			-framework AudioToolbox -framework ForceFeedback\
- 			-framework CoreVideo -framework Carbon -framework IOKit -liconv
+SDL_MAC_FLAGS = -lSDL2 -framework Cocoa -framework CoreAudio\
+  				-framework AudioToolbox -framework ForceFeedback\
+ 				-framework CoreVideo -framework Carbon -framework IOKit -liconv
 
 AUTOR = auteur
 
 all : $(NAME)
 
 $(NAME) : install $(OBJ_DIR) $(addprefix $(OBJ_DIR), $(OBJ)) $(addprefix $(INC), $(INC_FILES)) $(AUTOR)
-	@($(CC) $(FLAGS) $(SPE_FLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -I$(INC) $(INCLUDE_LIBS) -L $(SDL_LIB_DIR) $(SDL_FLAGS) -I $(SDL_INCLUDES) -o $(NAME))
+	@($(CC) $(FLAGS) $(SPE_FLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -I$(INC) $(INCLUDE_LIBS) -L $(SDL_LIB_DIR) $(SDL_MAC_FLAGS) -I $(SDL_INCLUDES) -o $(NAME))
 	@(echo creation de $(NAME))
 
 $(OBJ_DIR)%.o : $(addprefix $(SRC), %.cpp) $(addprefix $(INC), $(INC_FILES))
@@ -90,6 +83,7 @@ $(AUTOR) :
 
 clean :
 	@(rm -f $(addprefix $(OBJ_DIR), $(OBJ)))
+	@(rm -rf $(OBJ_DIR))
 	@(echo suppression des $(OBJ_DIR).o)
 
 fclean : clean
@@ -106,14 +100,6 @@ lanch : re
 	./$(NAME)
 
 install : $(SDL_LIB)
-
-# $(WX_DIR)/wx-config :
-# 	@(cd $(DEP_DIR) && \
-# 	tar xf ./$(WX_TARNAME) && \
-# 	mv ./wxWidgets-3.1.1 $(WX_DIRNAME) && \
-# 	cd ./$(WX_DIRNAME) && \
-# 	./configure --with-osx_cocoa --with-macosx-version-min=10.12 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk --prefix="$(pwd)" && \
-# 	make -j4)
 
 
 $(SDL_LIB):
