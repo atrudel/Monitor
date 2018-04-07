@@ -19,6 +19,7 @@ public:
     virtual const float &getGraphMin(void) const = 0;
     virtual const float &getGraphMax(void) const = 0;
     virtual const std::map<std::string, std::string> &getData(void) const = 0;
+
 };
 
 #endif //  IMONITORMODULE_HPP
