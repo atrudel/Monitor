@@ -1,4 +1,36 @@
-.makefile_saves/
+# Compiled source files
+*.a
+*.o
+*.so
+a.out
+*.class
+*.com
+*.pyc
+*.cmi
+*.cmx
+*.cmo
 bin/
 
-*.o
+# Editor backups
+\#*#
+*~
+.*.swp
+
+# OS-generated crap
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.nfs*
+Thumbs.db
+ehthumbs.db
+
+# IDE config file
+.vscode
+
+# Debug file
+*.dSYM
+
+# Other
+.makefile_saves/
