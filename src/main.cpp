@@ -6,6 +6,6 @@ int main()
 	Core core;
 
 	std::cout << "Hello 42" << std::endl;
-	core.start();
-	// core.test();
+//	core.start();
+	 core.test();
 }
