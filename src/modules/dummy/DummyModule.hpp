@@ -1,7 +1,7 @@
 #ifndef DUMMYMODULE_HPP
 # define DUMMYMODULE_HPP
 
-#include "IMonitorModule.hpp"
+#include "../IMonitorModule.hpp"
 
 class DummyModule : public IMonitorModule{
 
@@ -15,14 +15,14 @@ public:
     virtual void update(void);
     virtual const std::string &getName(void) const;
     virtual const std::map<std::string, std::deque<float> > &getGraphs(void) const;
-    virtual const std::map<std::string, float> &getGraphsMin(void) const;
-    virtual const std::map<std::string, float> &getGraphsMax(void) const;
+    virtual const float &getGraphMin(void) const;
+    virtual const float &getGraphMax(void) const;
     virtual const std::map<std::string, std::string> &getData(void) const;
 private:
     std::string const                           _name;
     std::map<std::string, std::deque<float> >   _graphs;
-    std::map<std::string, float>                _graphs_min;
-    std::map<std::string, float>                _graphs_max;
+    float                                       _graph_min;
+    float                                       _graph_max;
     std::map<std::string, std::string>          _data;
 };
 

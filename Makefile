@@ -39,11 +39,11 @@ SRC = src/
 FILES =\
 Core.cpp\
 displays/beautiful/BeautifulDisplay.cpp\
-displays/moduleOutputTester.cpp\
+displays/dummy/DummyDisplay.cpp\
 main.cpp\
-modules/DummyModule.cpp\
+modules/dummy/DummyModule.cpp\
+modules/Hostname/Hostname.cpp\
 modules/os/OSModule.cpp\
-modules/test.cpp\
 modules/time/Time.cpp
 
 OBJ_DIR = bin/

@@ -1,4 +1,6 @@
 #include "Core.hpp"
+#include "displays/dummy/DummyDisplay.hpp"
+#include "modules/dummy/DummyModule.hpp"
 
 Core::Core()
 	: _running(false),
@@ -84,4 +86,15 @@ void Core::loop()
 			beforeTime = clock();
 		}
 	}
+}
+
+void Core::test()
+{
+    _displays.push_back(new DummyDisplay());
+
+    // ADD YOUR MODULES HERE, AS A NEW ENTRY IN THE MAP
+    _modules["dummy"] = new DummyModule();
+
+    update();
+    render();
 }
