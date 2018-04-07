@@ -1,7 +1,7 @@
 #ifndef IMONITORDISPLAY_HPP
 #define IMONITORDISPLAY_HPP
 
-#include "../modules/IMonitorModule.hpp"
+# include "../modules/IMonitorModule.hpp"
 
 class IMonitorDisplay
 {
