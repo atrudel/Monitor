@@ -45,7 +45,7 @@ main.cpp\
 modules/dummy/DummyModule.cpp\
 modules/Hostname/Hostname.cpp\
 modules/os/OSModule.cpp\
-modules/time/Time.cpp
+modules/time/TimeModule.cpp
 
 OBJ_DIR = bin/
 OBJ_PATHS = $(addprefix $(OBJ_DIR), $(dir $(OBJ)))
