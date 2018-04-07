@@ -16,7 +16,7 @@ OSModule::OSModule(void) : _name(""), _graphMin(std::map<std::string, float>()),
 
 OSModule::~OSModule()
 {
-    std::cout << this->_name << std::endl;
+    //
 }
 
 void OSModule::set_osname()

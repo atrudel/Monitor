@@ -29,6 +29,7 @@ void Hostname::fetch()
     sysctlbyname("kern.hostname", &buff, &buffLen, NULL, 0);
 
     std::string name(buff);
+    std::cout << name << std::endl;
     this->setName(name);
 }
 

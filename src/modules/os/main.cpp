@@ -7,6 +7,5 @@ int		main(void)
 {
 	IMonitorModule* truc = new OSModule;
 
-	delete truc;
 	return 1;
 }
