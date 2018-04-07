@@ -9,7 +9,6 @@ class IMonitorModule
 {
 
 public:
-
 	virtual ~IMonitorModule(void) {};
 
     virtual void fetch(void) = 0;
