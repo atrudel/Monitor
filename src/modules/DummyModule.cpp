@@ -32,6 +32,7 @@ const std::string & DummyModule::getName(void) const {
 const std::map<std::string, std::deque<float> > & DummyModule::getGraphs(void) const{
     return _graphs;
 }
+
 const std::map<std::string, std::string> & DummyModule::getData(void) const {
     return _data;
 }
@@ -55,4 +56,3 @@ void    DummyModule::update() {
     _data["dummy1"] = std::to_string(dummy1) + "%";
     _data["dummy2"] = std::to_string(dummy2) + "%";
 }
-

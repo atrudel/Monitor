@@ -36,6 +36,7 @@ ehthumbs.db
 .makefile_saves/
 .idea/
 cmake-build-debug/
+dep/
 CMakeLists.txt
 
 # Executable
