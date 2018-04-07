@@ -1,0 +1,4 @@
+.makefile_saves/
+bin/
+
+*.o
