@@ -36,9 +36,7 @@ cmake-build-debug/
 
 # Other
 .makefile_saves/
-<<<<<<< HEAD
 wxWidgets/
-=======
 .idea/
 cmake-build-debug/
 dep/
@@ -46,4 +44,3 @@ CMakeLists.txt
 
 # Executable
 ft_gkrellm
->>>>>>> wxWidget
