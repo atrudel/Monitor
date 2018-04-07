@@ -39,6 +39,8 @@ public:
 	void start();
 	void stop();
 	void loop();
+
+	void test();
 };
 
 #endif
