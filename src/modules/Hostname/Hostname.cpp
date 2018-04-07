@@ -6,7 +6,7 @@
 #include "IMonitorModule.hpp"
 #include "Hostname.hpp"
 
-Hostname::Hostname(void): _name(""), _min(std::map<std::string, float>()), _max(std::map<std::string, float>()), _graphs(std::map< std::string, std::deque<float> >()), _data(std::map<std::string, std::string>())
+Hostname::Hostname(void): _name(""), _min(0), _max(0), _graphs(std::map< std::string, std::deque<float> >()), _data(std::map<std::string, std::string>())
 {
 }
 
@@ -18,9 +18,7 @@ Hostname::Hostname(Hostname const &src)
 Hostname::~Hostname()
 {
 }
-void Hostname::fetch(void)
-{
-}
+
 void Hostname::update(void)
 {
     char buff[BUFFERLEN];
@@ -33,12 +31,12 @@ void Hostname::update(void)
     this->setName(name);
 }
 
-const std::map<std::string, float> &Hostname::getGraphsMin(void) const
+const float &Hostname::getGraphMin(void) const
 {
     return this->_min;
 }
 
-const std::map<std::string, float> &Hostname::getGraphsMax(void) const
+const float &Hostname::getGraphMax(void) const
 {
     return this->_max;
 }

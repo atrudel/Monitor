@@ -1,7 +1,7 @@
 #ifndef OSMODULE_HPP
 #define OSMODULE_HPP
 
-#include "../../../includes/IMonitorModule.hpp"
+#include "IMonitorModule.hpp"
 
 class OSModule : public IMonitorModule
 {
@@ -12,14 +12,13 @@ class OSModule : public IMonitorModule
 
     OSModule &operator=(OSModule const &rhs);
 
-  virtual void fetch(void);
   virtual void update(void);
 
   virtual const std::string &getName(void) const;
   virtual const std::map<std::string, std::deque<float> > &getGraphs(void) const;
   virtual const std::map<std::string, std::string> &getData(void) const;
-  virtual const std::map<std::string, float> &getGraphsMin(void) const;
-  virtual const std::map<std::string, float> &getGraphsMax(void) const;
+  virtual const float &getGraphMin(void) const;
+  virtual const float &getGraphMax(void) const;
 
 
   private:
@@ -29,8 +28,8 @@ class OSModule : public IMonitorModule
   void set_osversion(void);
   
     std::string _name;
-    std::map<std::string, float> _graphMin;
-    std::map<std::string, float> _graphMax;
+    float _graphMin;
+    float _graphMax;
     std::map<std::string, std::deque<float> > _graphs;
     std::map<std::string, std::string> _datas;
 };

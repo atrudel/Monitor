@@ -4,8 +4,7 @@
 #include <sys/sysctl.h>
 #include "../../../includes/IMonitorModule.hpp"
 
-OSModule::OSModule(void) : _name(""), _graphMin(std::map<std::string, float>()), _graphMax(std::map<std::string
-        , float>()), _graphs(std::map<std::string, std::deque<float> >()), _datas(std::map<std::string, std::string>())
+OSModule::OSModule(void) : _name(""), _graphMin(0), _graphMax(0), _graphs(std::map<std::string, std::deque<float> >()), _datas(std::map<std::string, std::string>())
 {
     set_osrelease();
     this->_name += " "; 
@@ -69,13 +68,7 @@ void OSModule::set_osrelease()
 }
 
 
-  void OSModule::fetch(void) {
-
-  }
-  
   void OSModule::update(void) {
-
-
   }
 
 const std::map<std::string, std::deque<float> > &OSModule::getGraphs(void) const 
@@ -83,11 +76,11 @@ const std::map<std::string, std::deque<float> > &OSModule::getGraphs(void) const
         return this->_graphs;
     }
 
-const std::map<std::string, float > &OSModule::getGraphsMin(void) const 
+const float &OSModule::getGraphMin(void) const 
 {
         return this->_graphMin;
 }
- const std::map<std::string, float > &OSModule::getGraphsMax(void) const 
+ const float &OSModule::getGraphMax(void) const 
  {
     return this->_graphMax;
  }
