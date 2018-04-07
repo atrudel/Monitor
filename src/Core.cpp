@@ -55,6 +55,7 @@ void Core::stop()
 
 void Core::loop()
 {
+	int time = 0;
 	double tickTime = 1000000.0 / 60.0;
 	clock_t beforeTime = clock();
 	while (_running)
@@ -62,6 +63,9 @@ void Core::loop()
 		clock_t currentTime = clock();
 		if (currentTime - beforeTime > tickTime)
 		{
+			time++;
+			if (time % 60 == 0)
+				std::cout << (time / 60) << " seconds..." << std::endl;
 			update();
 			render();
 			beforeTime = clock();
