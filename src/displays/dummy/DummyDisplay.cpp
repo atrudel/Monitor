@@ -28,7 +28,7 @@ void DummyDisplay::update(void) {
 
 }
 
-void DummyDisplay::render(const std::map<std::string, IMonitorModule*> &modules) const {
+void DummyDisplay::render(const std::map<std::string, IMonitorModule*> &modules) {
     for (std::map<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, IMonitorModule*>::const_iterator i = modules.begin(); i != modules.end(); i++){
         _displayModule(i->second);
     }

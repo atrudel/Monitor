@@ -39,6 +39,7 @@ SRC = src/
 FILES =\
 Core.cpp\
 displays/beautiful/BeautifulDisplay.cpp\
+displays/beautiful/SdlDisplay.cpp\
 displays/dummy/DummyDisplay.cpp\
 main.cpp\
 modules/dummy/DummyModule.cpp\
@@ -61,7 +62,7 @@ SDL_LIB = $(SDL_LIB_DIR)/libSDL2.a
 SDL_INCLUDES = $(SDL_DIR)/include
 SDL_MAC_FLAGS = -lSDL2 -framework Cocoa -framework CoreAudio\
   				-framework AudioToolbox -framework ForceFeedback\
- 				-framework CoreVideo -framework Carbon -framework IOKit -liconv
+ 				-framework CoreVideo -framework Carbon -framework Metal -framework IOKit -liconv
 
 AUTOR = auteur
 
