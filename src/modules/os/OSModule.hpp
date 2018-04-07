@@ -1,7 +1,11 @@
 #ifndef OSMODULE_HPP
 #define OSMODULE_HPP
 
+#ifdef __LINUX_OS__
+#else
 #include <mach-o/dyld.h>
+#endif
+
 #include <sys/sysctl.h>
 
 #include "../IMonitorModule.hpp"

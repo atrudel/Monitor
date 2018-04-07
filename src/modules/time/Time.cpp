@@ -36,7 +36,9 @@ const float &TimeModule::getGraphMax(void) const
 }
 
 /* PRIVATE SECTION */
+#ifdef __LINUX_OS__
 
+#else
 std::string TimeModule::uptime()
 {
     struct timeval boottime;
@@ -47,6 +49,7 @@ std::string TimeModule::uptime()
 
     return this->timeToDate(boottime.tv_sec);
 }
+#endif
 
 std::string TimeModule::now()
 {

@@ -19,6 +19,12 @@ DEBUG_FLAG = -pedantic -Weverything -std=c++98
 
 CC = clang++
 FLAG = -Wall -Wextra -Werror
+
+OS = $(shell uname -s)
+ifeq ($(OS), Linux)
+	FLAG += -std=c++11 -D __LINUX_OS__
+endif
+
 ifeq ($(DEBUG), yes)
         SPE_FLAGS = $(DEBUG_FLAG)
 else ifeq ($(OPTI), yes)
@@ -26,6 +32,7 @@ else ifeq ($(OPTI), yes)
 else
 		SPE_FLAGS =
 endif
+
 ifeq (SYSTEM, Darwin)
 	DEPSFLAGS =
 else
@@ -41,7 +48,6 @@ Core.cpp\
 displays/beautiful/BeautifulDisplay.cpp\
 displays/moduleOutputTester.cpp\
 main.cpp\
-modules/DummyModule.cpp\
 modules/os/OSModule.cpp\
 modules/test.cpp\
 modules/time/Time.cpp
@@ -66,7 +72,7 @@ AUTOR = auteur
 all : $(NAME)
 
 $(NAME) : install $(OBJ_DIR) $(addprefix $(OBJ_DIR), $(OBJ)) $(addprefix $(INC), $(INC_FILES)) $(AUTOR)
-	@($(CC) $(FLAGS) $(SPE_FLAGS) $(WX_LIB_FLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -I$(INC) $(INCLUDE_LIBS) -o $(NAME))
+	@($(CC) $(FLAG) $(SPE_FLAGS) $(WX_LIB_FLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -I$(INC) $(INCLUDE_LIBS) -o $(NAME))
 	@(echo creation de $(NAME))
 
 $(OBJ_DIR)%.o : $(addprefix $(SRC), %.cpp) $(addprefix $(INC), $(INC_FILES))

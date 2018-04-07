@@ -14,6 +14,11 @@ OSModule::~OSModule()
     //
 }
 
+#ifdef __LINUX_OS__
+
+
+#else
+
 void OSModule::set_osname()
 {
 
@@ -64,6 +69,7 @@ void OSModule::set_osrelease()
     this->_name += str;
 }
 
+#endif
 
   void OSModule::update(void) {
   }
