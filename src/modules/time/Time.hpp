@@ -1,0 +1,38 @@
+#ifndef __TIME_MONITOR__
+#define __TIME_MONITOR__
+
+#include <time.h>
+#include <errno.h>
+#include <sys/sysctl.h>
+#include <ctime>
+
+#include "../IMonitorModule.hpp"
+
+class TimeModule : public IMonitorModule
+{
+    std::string _name;
+    std::map<std::string, std::string> _data;
+    std::map<std::string, std::deque<float> > _graphs;
+    float _min;
+    float _max;
+    
+    std::string now();
+    std::string uptime();
+    std::string timeToString(time_t time);
+
+  public:
+    TimeModule();
+    virtual ~TimeModule(void);
+
+    //From interface :
+    virtual void fetch(void);
+    virtual void update(void);
+
+    virtual const std::string &getName(void) const;
+    virtual const std::map<std::string, std::deque<float> > &getGraphs(void) const;
+    virtual const float &getGraphsMin(void) const;
+    virtual const float &getGraphsMax(void) const;
+    virtual const std::map<std::string, std::string> &getData(void) const;
+};
+
+#endif
