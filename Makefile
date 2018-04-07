@@ -1,4 +1,4 @@
-.PHONY : clean, fclean, re, all, $(NAME), lanch, debug
+.PHONY : clean, fclean, re, all, $(NAME), lanch, debug, install
 .SUFFIXES :
 # Colors :
 WHITE = \033[7;49;39m
@@ -49,16 +49,23 @@ INC_DIR = ./includes
 INC = $(SRC)
 INC_FILES = #$(SRC:.cpp=.hpp)# ls -1 > src.txt &&
 
+DEP_DIR = ./dep
+WX_TARNAME = wxWidgets-3.1.1.tar.bz2
+WX_DIRNAME = wxWidgets
+WX_DIR = $(DEP_DIR)/$(WX_DIRNAME)
+WX_COMPILE_FLAGS = `$(WX_DIR)/wx-config --cxxflags`
+WX_LIB_FLAGS = `$(WX_DIR)/wx-config --cxxflags --libs`
+
 AUTOR = auteur
 
 all : $(NAME)
 
-$(NAME) : $(OBJ_DIR) $(addprefix $(OBJ_DIR), $(OBJ)) $(addprefix $(INC), $(INC_FILES)) $(AUTOR)
-	@($(CC) $(FLAGS) $(SPE_FLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -I$(INC) $(INCLUDE_LIBS) -o $(NAME))
+$(NAME) : install $(OBJ_DIR) $(addprefix $(OBJ_DIR), $(OBJ)) $(addprefix $(INC), $(INC_FILES)) $(AUTOR)
+	@($(CC) $(FLAGS) $(SPE_FLAGS) $(WX_LIB_FLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -I$(INC) $(INCLUDE_LIBS) -o $(NAME))
 	@(echo creation de $(NAME))
 
 $(OBJ_DIR)%.o : $(addprefix $(SRC), %.cpp) $(addprefix $(INC), $(INC_FILES))
-	@($(CC) $(FLAG) $(SPE_FLAGS) -I $(INC) -c $< -o $@)
+	@($(CC) $(FLAG) $(SPE_FLAGS) $(WX_COMPILE_FLAGS) -I $(INC) -c $< -o $@)
 	@(echo $< " created")
 
 $(OBJ_DIR) :
@@ -69,7 +76,7 @@ $(AUTOR) :
 
 clean :
 	@(rm -f $(addprefix $(OBJ_DIR), $(OBJ)))
-	@(echo suppression des $(OBJ_DIR)/.o)
+	@(echo suppression des $(OBJ_DIR).o)
 
 fclean : clean
 	@(rm -f $(NAME))
@@ -83,6 +90,19 @@ debug :
 
 lanch : re
 	./$(NAME)
+
+install : $(WX_DIR)/wx-config
+
+$(WX_DIR)/wx-config :
+	@(cd $(DEP_DIR) && \
+	tar xf ./$(WX_TARNAME) && \
+	mv ./wxWidgets-3.1.1 $(WX_DIRNAME) && \
+	cd ./$(WX_DIRNAME) && \
+	./configure --with-osx_cocoa --with-macosx-version-min=10.12 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk --prefix="$(pwd)" && \
+	make -j4)
+
+uninstall : fclean
+	@(rm -rf $(WX_DIR))
 
 horse:
 	@(echo "	                                               \`T\",.\`-, ");
