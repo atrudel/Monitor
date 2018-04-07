@@ -33,7 +33,7 @@ public:
 	bool 					quit( void );
 
 private:
-
+	std::map<std::string, WINDOW *>                   fenetres;
 
 };
 
