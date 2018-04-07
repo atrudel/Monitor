@@ -2,35 +2,99 @@
 #include "OSModule.hpp"
 #include <mach-o/dyld.h>
 #include <sys/sysctl.h>
-#include "IMonitorModule.hpp"
+#include "../../../includes/IMonitorModule.hpp"
 
-OSModule::OSModule(void)
+OSModule::OSModule(void) : _name(""), _graphMin(std::map<std::string, float>()), _graphMax(std::map<std::string
+        , float>()), _graphs(std::map<std::string, std::deque<float> >()), _datas(std::map<std::string, std::string>())
+{
+    set_osrelease();
+    this->_name += " "; 
+    set_osname();
+    this->_name += " "; 
+    set_osversion();
+}
+
+OSModule::~OSModule()
+{
+    std::cout << this->_name << std::endl;
+}
+
+void OSModule::set_osname()
 {
 
+    const char*     strtmp ="sw_vers -productName";
+    char str[256];
 
+    FILE*           ret = popen(strtmp, "r");
+
+    if (!ret)
+        return ;
+
+    while(!feof(ret)) {
+       fgets(str, 256, ret);
+    }
+
+    this->_name += strtok(str, "\n");
+
+    pclose(ret);
+}
+
+void OSModule::set_osversion()
+{
+    const char*     strtmp ="sw_vers -productVersion";
+    char str[256];
+
+    FILE*           ret = popen(strtmp, "r");
+
+    if (!ret)
+        return ;
+
+   
+    while(!feof(ret)) {
+       fgets(str, 256, ret);
+    }
+
+    this->_name += strtok(str, "\n");
+
+    pclose(ret);
+}
+
+void OSModule::set_osrelease()
+{
     char str[256];
     size_t size = sizeof(str);
     int ret = sysctlbyname("kern.osrelease", str, &size, NULL, 0);
 
-    // this->_name = NULL;
-    
-
-    // this->_graphs;
-    // this->_datas = NULL;
+    this->_name += str;
 }
 
-  void OSModule::fetch(void) {} ;
-  
-  void OSModule::update(void) {} ;
 
-    std::map<std::string, std::queue<float> > OSModule::getGraphs(void) const 
+  void OSModule::fetch(void) {
+
+  }
+  
+  void OSModule::update(void) {
+
+
+  }
+
+const std::map<std::string, std::deque<float> > &OSModule::getGraphs(void) const 
     {
-        return std::map<std::string, std::queue<float> >();
+        return this->_graphs;
     }
 
-  std::map<std::string, std::string> OSModule::getData(void) const 
+const std::map<std::string, float > &OSModule::getGraphsMin(void) const 
+{
+        return this->_graphMin;
+}
+ const std::map<std::string, float > &OSModule::getGraphsMax(void) const 
+ {
+    return this->_graphMax;
+ }
+
+const std::map<std::string, std::string> &OSModule::getData(void) const 
   {
-      return std::map<std::string, std::string>();
+      return this->_datas;
     }
 
 OSModule::OSModule(OSModule const &src)
@@ -38,12 +102,8 @@ OSModule::OSModule(OSModule const &src)
     *this = src;
 }
 
-OSModule::~OSModule()
-{
-    //
-}
 
-std::string OSModule::getName(void) const
+const std::string &OSModule::getName(void) const
 {
     return (this->_name);
 }
