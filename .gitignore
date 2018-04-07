@@ -36,10 +36,9 @@ cmake-build-debug/
 
 # Other
 .makefile_saves/
-wxWidgets/
+dep/wxWidgets/
 .idea/
 cmake-build-debug/
-dep/
 CMakeLists.txt
 
 # Executable
