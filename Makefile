@@ -54,23 +54,32 @@ INC_DIR = ./includes
 INC = $(SRC)
 INC_FILES = #$(SRC:.cpp=.hpp)# ls -1 > src.txt &&
 
-DEP_DIR = ./dep
-WX_TARNAME = wxWidgets-3.1.1.tar.bz2
-WX_DIRNAME = wxWidgets
-WX_DIR = $(DEP_DIR)/$(WX_DIRNAME)
-WX_COMPILE_FLAGS = `$(WX_DIR)/wx-config --cxxflags`
-WX_LIB_FLAGS = `$(WX_DIR)/wx-config --cxxflags --libs`
+# DEP_DIR = ./dep
+# WX_TARNAME = wxWidgets-3.1.1.tar.bz2
+# WX_DIRNAME = wxWidgets
+# WX_DIR = $(DEP_DIR)/$(WX_DIRNAME)
+# WX_COMPILE_FLAGS = `$(WX_DIR)/wx-config --cxxflags`
+# WX_LIB_FLAGS = `$(WX_DIR)/wx-config --cxxflags --libs`
+
+DEPS_DIR = dep
+SDL_DIR = $(DEPS_DIR)/SDL2-2.0.8
+SDL_LIB_DIR = $(SDL_DIR)/build/.libs
+SDL_LIB = $(SDL_LIB_DIR)/libSDL2.a
+SDL_INCLUDES = $(SDL_DIR)/include
+SDL_FLAGS = -lSDL2 -framework Cocoa -framework CoreAudio\
+  			-framework AudioToolbox -framework ForceFeedback\
+ 			-framework CoreVideo -framework Carbon -framework IOKit -liconv
 
 AUTOR = auteur
 
 all : $(NAME)
 
 $(NAME) : install $(OBJ_DIR) $(addprefix $(OBJ_DIR), $(OBJ)) $(addprefix $(INC), $(INC_FILES)) $(AUTOR)
-	@($(CC) $(FLAGS) $(SPE_FLAGS) $(WX_LIB_FLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -I$(INC) $(INCLUDE_LIBS) -o $(NAME))
+	@($(CC) $(FLAGS) $(SPE_FLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -I$(INC) $(INCLUDE_LIBS) -L $(SDL_LIB_DIR) $(SDL_FLAGS) -I $(SDL_INCLUDES) -o $(NAME))
 	@(echo creation de $(NAME))
 
 $(OBJ_DIR)%.o : $(addprefix $(SRC), %.cpp) $(addprefix $(INC), $(INC_FILES))
-	@($(CC) $(FLAG) $(SPE_FLAGS) $(WX_COMPILE_FLAGS) -I $(INC) -c $< -o $@)
+	@($(CC) $(FLAG) $(SPE_FLAGS) -I $(SDL_INCLUDES) -I $(INC) -c $< -o $@)
 	@(echo $< " created")
 
 $(OBJ_DIR) :
@@ -96,18 +105,30 @@ debug :
 lanch : re
 	./$(NAME)
 
-install : $(WX_DIR)/wx-config
+install : $(SDL_LIB)
 
-$(WX_DIR)/wx-config :
-	@(cd $(DEP_DIR) && \
-	tar xf ./$(WX_TARNAME) && \
-	mv ./wxWidgets-3.1.1 $(WX_DIRNAME) && \
-	cd ./$(WX_DIRNAME) && \
-	./configure --with-osx_cocoa --with-macosx-version-min=10.12 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk --prefix="$(pwd)" && \
-	make -j4)
+# $(WX_DIR)/wx-config :
+# 	@(cd $(DEP_DIR) && \
+# 	tar xf ./$(WX_TARNAME) && \
+# 	mv ./wxWidgets-3.1.1 $(WX_DIRNAME) && \
+# 	cd ./$(WX_DIRNAME) && \
+# 	./configure --with-osx_cocoa --with-macosx-version-min=10.12 --with-macosx-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk --prefix="$(pwd)" && \
+# 	make -j4)
+
+
+$(SDL_LIB):
+	@printf "\r$(YELLOW)  Building SDL2...$(NO_COLOR)                   \r";
+	@$(shell tar -xzf $(SDL_DIR).tar.gz -C $(DEPS_DIR))
+	@printf "\r$(YELLOW)  Building SDL2: Configuring...$(NO_COLOR)      \r";
+	@cd $(SDL_DIR) && ./configure > /dev/null
+	@printf "\r$(YELLOW)  Building SDL2: Making...$(NO_COLOR)           \r";
+	@make -C $(SDL_DIR) -j4 > /dev/null 2> /dev/null
+	@printf "\r$(YELLOW)  Building SDL2: Removing dylib...$(NO_COLOR)   \r";
+	@rm -rf $(SDL_LIB_DIR)/libSDL2-2.0.0.dylib
+	@printf "\r$(GREEN)Building SDL2: DONE !$(NO_COLOR)                 \n";
 
 uninstall : fclean
-	@(rm -rf $(WX_DIR))
+	@(rm -rf $(SDL_LIB))
 
 horse:
 	@(echo "	                                               \`T\",.\`-, ");
