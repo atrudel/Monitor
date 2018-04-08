@@ -2,10 +2,18 @@
 
 OSModule::OSModule(void) : _name("OS"), _graphMin(0), _graphMax(0), _graphs(std::map< std::string, std::deque<float> >()), _datas(std::map<std::string, std::string>())
 {
-    this->_name += " ";
-    set_osname();
-    this->_name += " ";
-    set_osversion();
+    try
+	{
+		this->_name += " ";
+		set_osname();
+		this->_name += " ";
+		set_osversion();
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+		exit(0);
+	}
 }
 
 OSModule::~OSModule()

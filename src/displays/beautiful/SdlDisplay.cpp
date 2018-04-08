@@ -8,20 +8,25 @@ SdlDisplay::SdlDisplay()
 SdlDisplay::SdlDisplay(const int &w, const int &h)
 	: _width(w), _height(h), _font("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.;,:=+-*/\\()!?@ "), _clicked(false)
 {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-		throw  std::runtime_error("sdl error: unable to initialize sdl !");
-	_window = SDL_CreateWindow("ft_gkrellm", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, 0);
-	if (!_window)
-		throw  std::runtime_error("sdl error: unable to create window !");
-	_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_PRESENTVSYNC);
-	_texture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, w, h);
-	_pixels = new int[w * h];
-	_fontImg = SDL_CreateTextureFromSurface(_renderer, SDL_LoadBMP("font.bmp"));
-	SDL_SetWindowResizable(_window, SDL_TRUE);
-	SDL_SetWindowBordered(_window, SDL_FALSE);
-
-
-
+	try
+	{
+		if (SDL_Init(SDL_INIT_VIDEO) < 0)
+			throw std::runtime_error("sdl error: unable to initialize sdl !");
+		_window = SDL_CreateWindow("ft_gkrellm", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, 0);
+		if (!_window)
+			throw std::runtime_error("sdl error: unable to create window !");
+		_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_PRESENTVSYNC);
+		_texture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, w, h);
+		_pixels = new int[w * h];
+		_fontImg = SDL_CreateTextureFromSurface(_renderer, SDL_LoadBMP("font.bmp"));
+		SDL_SetWindowResizable(_window, SDL_TRUE);
+		SDL_SetWindowBordered(_window, SDL_FALSE);
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+		exit(0);
+	}
 }
 
 SdlDisplay::SdlDisplay(const SdlDisplay &o)
