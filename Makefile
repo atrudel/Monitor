@@ -40,7 +40,6 @@ FILES =\
 Core.cpp\
 displays/beautiful/BeautifulDisplay.cpp\
 displays/beautiful/SdlDisplay.cpp\
-displays/dummy/DummyDisplay.cpp\
 displays/ncurses/NcursesDisplay.cpp\
 main.cpp\
 modules/Hostname/Hostname.cpp\

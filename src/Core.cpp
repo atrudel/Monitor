@@ -122,7 +122,7 @@ void Core::loop()
 		{
 //			seconds++;
 //			if (seconds % 60 == 0)
-//				std::cout << (seconds / 60) << " seconds..." << std::endl;
+//				// std::cout << (seconds / 60) << " seconds..." << std::endl;
 			update();
 			render();
 			beforeTime = clock();

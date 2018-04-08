@@ -4,9 +4,9 @@
 
 int main(int ac, char **av)
 {
-	std::ofstream out("logs.txt");
-	std::streambuf *coutbuf = std::cout.rdbuf();
-	std::cout.rdbuf(out.rdbuf());
+	// std::ofstream out("logs.txt");
+	// std::streambuf *coutbuf = // std::cout.rdbuf();
+	// std::cout.rdbuf(out.rdbuf());
 
 	int j, i = 1, c = 0;
 	char display_options[SIZE_OPT];
@@ -51,8 +51,6 @@ int main(int ac, char **av)
 		}
 		i++;
 	}
-	core.start(display_options);
-//	 core.test();
-
-	std::cout.rdbuf(coutbuf);
+	 core.start(display_options);
+	// std::cout.rdbuf(coutbuf);
 }
