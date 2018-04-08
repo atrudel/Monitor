@@ -2,6 +2,10 @@
 #include "Core.hpp"
 #include <fstream>
 
+void printUsage(void) {
+		std::cout << "usage: ./ft_gkrellm [-lhtcrnao] \n-l: display ncurses mode \n-h: Hostname \n-t: Time info \n-c: CPU info \n-r: RAM info \n-n: Network info \n-a: display cat \n-o: OS info\n--help: print usage" << std::endl;
+}
+
 int main(int ac, char **av)
 {
 	// std::ofstream out("logs.txt");
@@ -12,8 +16,8 @@ int main(int ac, char **av)
 	char display_options[SIZE_OPT];
 	Core core;
 
-	if (ac == 2 && !strcmp(av[1], "-help")) {
-		std::cout << "usage: ./ft_gkrellm [-lhtcrnao] \n-l: display ncurses mode \n-h: Hostname \n-t: Time info \n-c: CPU info \n-r: RAM info \n-n: Network info \n-a: display cat \n-o: OS info" << std::endl;
+	if (ac == 2 && !strcmp(av[1], "--help")) {
+		printUsage();
 		return 0;
 	}
 	bzero(display_options, SIZE_OPT);
@@ -35,24 +39,29 @@ int main(int ac, char **av)
 				continue ;
 			if (av[i][j] == 'l')
 				display_options[c++] = 'l';
-			if (av[i][j] == 'h')
+			else if (av[i][j] == 'h')
 				display_options[c++] = 'h';
-			if (av[i][j] == 't')
+			else if (av[i][j] == 't')
 				display_options[c++] = 't';
-			if (av[i][j] == 'c')
+			else if (av[i][j] == 'c')
 				display_options[c++] = 'c';
-			if (av[i][j] == 'r')
+			else if (av[i][j] == 'r')
 				display_options[c++] = 'r';
-			if (av[i][j] == 'n')
+			else if (av[i][j] == 'n')
 				display_options[c++] = 'n';
-			if (av[i][j] == 'a')
+			else if (av[i][j] == 'a')
 				display_options[c++] = 'a';
-			if (av[i][j] == 'o')
+			else if (av[i][j] == 'o')
 				display_options[c++] = 'o';
+			else
+			{
+				printUsage();
+				return (1);
+			}
 			j++;
 		}
 		i++;
 	}
-	 core.start(display_options);
+	core.start(display_options);
 	// std::cout.rdbuf(coutbuf);
 }

@@ -113,9 +113,9 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 
 	}
 
-	_display.button("CPU", 5 + 45, 5, 40, 12, 0x00aa00);
-	_display.button("RAM", 5 + 45 * 2, 5, 40, 12, 0x00aa00);
-	_display.button("NET", 5 + 45 * 3, 5, 40, 12, 0x00aa00);
+	_display.button("CPU", 5 + 45, 5, 40, TOP_BTN_HEIGHT, 0x00aa00);
+	_display.button("RAM", 5 + 45 * 2, 5, 40, TOP_BTN_HEIGHT, 0x00aa00);
+	_display.button("NET", 5 + 45 * 3, 5, 40, TOP_BTN_HEIGHT, 0x00aa00);
 
 	int curr_x = LEFT_OFFSET;
 	int curr_y = TOP_OFFSET;
@@ -131,7 +131,7 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 int	 BeautifulDisplay::_calculateTotalHeight(const std::map<std::string, IMonitorModule*> &modules) const {
     int height= 0;
 
-    height += TOP_OFFSET;
+    height += TOP_OFFSET + TOP_BTN_HEIGHT;
 
     typedef std::map<std::string, IMonitorModule*>::const_iterator iterator;
     for (iterator it = modules.begin(); it != modules.end(); it++)
@@ -148,7 +148,7 @@ int	 BeautifulDisplay::_calculateModuleHeight(const IMonitorModule* module) cons
     height += TITLE_HEIGHT;
     height += DATA_HEIGHT * module->getData().size();
     height += GRAPH_HEIGHT * module->getGraphs().size(); // to change
-    height += MODULE_GAP * (module->getGraphs().size() -1); // to change
+    height += MODULE_GAP * ((module->getGraphs().size() > 0) ? module->getGraphs().size() -1 : 0 ); // to change
     return height;
 }
 float   BeautifulDisplay::_scale(size_t x, std::deque<float> data, const IMonitorModule& module) const {
