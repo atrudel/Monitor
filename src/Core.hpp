@@ -10,7 +10,8 @@
 # include "displays/beautiful/BeautifulDisplay.hpp"
 # include "modules/IMonitorModule.hpp"
 
-# include "modules/time/Time.hpp"
+# include "modules/time/TimeModule.hpp"
+# include "modules/mainCpu/MainCpu.hpp"
 
 class IMonitorModule;
 class IMonitorDisplay;

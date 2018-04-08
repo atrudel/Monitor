@@ -18,6 +18,7 @@ void MainCpu::fetch(void)
 {
 }
 
+
 void MainCpu::setCPUsLoad()
 {
     natural_t                       cpuCount;

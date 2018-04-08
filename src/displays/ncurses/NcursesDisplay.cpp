@@ -21,7 +21,9 @@ NcursesDisplay::NcursesDisplay( NcursesDisplay const & src )
 }
 
 NcursesDisplay::~NcursesDisplay()
-{ }
+{ 
+
+}
 
 
 NcursesDisplay &		NcursesDisplay::operator=( NcursesDisplay const & rhs )
@@ -52,14 +54,8 @@ void 					NcursesDisplay::init(void)
 
 bool 					NcursesDisplay::quit( void )
 {
-	int					ch = getch();
-
-	if (ch == KEY_ESC)
-	{
-		endwin();
-		return true;
-	}
-	return false;
+	endwin();
+	return true;
 }
 
 void 					NcursesDisplay::update(void)
@@ -68,6 +64,6 @@ void 					NcursesDisplay::update(void)
 void 					NcursesDisplay::render(void) const
 {
 	box(stdscr, 0, 0);
-	attron(COLOR_PAIR(PLAYER_COLOR));
-	mvprintw(LINES, COLS);
+//	attron(COLOR_PAIR(PLAYER_COLOR));
+//	mvprintw(LINES, COLS);
 }

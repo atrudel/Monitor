@@ -28,7 +28,7 @@ void DummyDisplay::update(void) {
 
 }
 
-void DummyDisplay::render(const std::map<std::string, IMonitorModule*> &modules) const {
+void DummyDisplay::render(const std::map<std::string, IMonitorModule*> &modules) {
     for (std::map<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, IMonitorModule*>::const_iterator i = modules.begin(); i != modules.end(); i++){
         _displayModule(i->second);
     }
@@ -58,12 +58,17 @@ void DummyDisplay::_printQueue(const std::deque<float> queue) const {
 }
 void DummyDisplay::_displayModule(const IMonitorModule* module) const{
     std::cout << "===========================  DISPLAYING module named " << module->getName() << " ======================" << std::endl;
-    std::cout << std::endl;
-    std::cout << "---------- Data --------" << std::endl << std::endl;
-    _printData(module->getData());
-    std::cout  << std::endl;
-    std::cout << "---------- Graphs -------" << std::endl << std::endl;
-    std::cout << "min: " << module->getGraphMin() << "      max: " << module->getGraphMax() << std::endl;
-    _printGraphs(module->getGraphs());
+    if (!module->getData().empty()) {
+        std::cout << "---------- Data --------" << std::endl << std::endl;
+        _printData(module->getData());
+        std::cout << std::endl;
+    }
+    if (!module->getGraphs().empty()) {
+        std::cout << "---------- Graphs -------" << std::endl;
+        std::cout << "min: " << module->getGraphMin() << "      max: " << module->getGraphMax() << std::endl;
+        _printGraphs(module->getGraphs());
+    }
+    else
+        std::cout << std::endl;
 }
 

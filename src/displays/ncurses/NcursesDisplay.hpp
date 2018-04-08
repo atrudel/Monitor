@@ -20,7 +20,6 @@
 class NcursesDisplay : public IMonitorDisplay {
 
 public:
-
 	NcursesDisplay( void );
 	NcursesDisplay( NcursesDisplay const & src );
 	virtual ~NcursesDisplay();
@@ -33,7 +32,7 @@ public:
 	bool 					quit( void );
 
 private:
-
+	std::map<std::string, WINDOW *>                   fenetres;
 
 };
 
