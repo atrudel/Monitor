@@ -20,7 +20,7 @@ void Cat::update(void)
 
     // sysctlbyname("kern.hostname", &buff, &buffLen, NULL, 0);
 
-    std::string name("Cat");
+    std::string name("cat");
     // std::cout << name << std::endl;//WHO THE FUCK DID THIS!!???
     this->setName(name);
 }

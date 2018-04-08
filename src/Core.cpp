@@ -43,7 +43,7 @@ void Core::init(char display_options[8])
 		if (display_options[i] == 'n')
 			_modules["net"] = new NetworkModule();
 		if (display_options[i] == 'a')
-			_modules["net"] = new Cat();
+			_modules["cat"] = new Cat();
 		// if (display_options[i] == 'r')
 			// _modules["ram"] = new RamModul();
 		i++;

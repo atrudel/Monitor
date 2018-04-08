@@ -231,8 +231,8 @@ void                     NcursesDisplay::render( const module_map &disp )
     box(stdscr, 0, 0);
 
     _dispTitle();
-    // if cats
-    _dispAnime();
+    if (disp.count("cat"))
+    	_dispAnime();
     _dispWindows(disp);
     _dispRefresh();
 }
