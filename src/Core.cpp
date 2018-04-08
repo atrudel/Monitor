@@ -28,12 +28,13 @@ Core &Core::operator=(const Core &o)
 	return *this;
 }
 
-void Core::init(char display_options[8])
+void Core::init(char display_options[SIZE_OPT])
 {
 	int i = 0, l = 0;
 
 	while (display_options[i]) {
-		_modules["Hostname"] = new Hostname();
+		if (display_options[i] == 'h')
+			_modules["Hostname"] = new Hostname();
 		if (display_options[i] == 't')
 			_modules["time"] = new TimeModule();
 		if (display_options[i] == 'o')
@@ -79,7 +80,7 @@ void Core::render()
 		_displays[_activeDisplayIndex]->render(_modules);
 }
 
-void Core::start(char display_options[8])
+void Core::start(char display_options[SIZE_OPT])
 {
 	_running = true;
 

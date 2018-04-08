@@ -4,19 +4,21 @@
 int main(int ac, char **av)
 {
 	int j, i = 1, c = 0;
-	char display_options[8];
+	char display_options[SIZE_OPT];
 	Core core;
 
 	if (ac == 2 && !strcmp(av[1], "-help")) {
 		std::cout << "usage: ./ft_gkrellm [-locrtn] \n-l: display ncurses mode\n-o: OS info\n-c: CPU info\n-r: RAM info\n-t: Time info\n-n: Network info" << std::endl;
 		return 0;
 	}
-	bzero(display_options, 8);
+	bzero(display_options, SIZE_OPT);
 	while (i < ac) {
 		j = 0;
 		while (av[i][j]) {
 			if ((j == 0) && av[i][j] && av[i][j++] != '-')
 				continue ;
+			if (av[i][j] == 'h')
+				display_options[c++] = 'h';
 			if (av[i][j] == 'l')
 				display_options[c++] = 'l';
 			if (av[i][j] == 'o')

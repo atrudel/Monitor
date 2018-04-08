@@ -20,6 +20,8 @@
 # include "modules/dummy/DummyModule.hpp"
 # include "modules/Hostname/Hostname.hpp"
 
+#define SIZE_OPT	10
+
 class IMonitorModule;
 class IMonitorDisplay;
 
@@ -41,11 +43,11 @@ public:
 
 	Core &operator=(const Core &o);
 
-	void init(char display_options[8]);
+	void init(char display_options[SIZE_OPT]);
 	void update();
 	void render();
 
-	void start(char display_options[8]);
+	void start(char display_options[SIZE_OPT]);
 	void stop();
 	void loop();
 
