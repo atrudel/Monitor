@@ -229,7 +229,7 @@ inline void              NcursesDisplay::_dispWindows( const module_map &modules
             {
                 cpu += *eqiter;
             }
-            mvwprintw(it->second,print_position++, INFO_PADDING, "[ %02i %% ] %s  ",static_cast<int>(cpu / i * 100), secondit->first.c_str());
+            mvwprintw(it->second,print_position++, INFO_PADDING, "[ %02i %% ] %s  ",static_cast<int>(cpu / i), secondit->first.c_str());
         }
 
         for (std::map<std::string, std::string>::const_iterator datait = \
@@ -237,7 +237,7 @@ inline void              NcursesDisplay::_dispWindows( const module_map &modules
             datait != mainit->second->getData().end();
             datait++)
         {
-            mvwprintw(it->second,print_position++, INFO_PADDING, "[ %.2f %% ] %s  ", cpu / i, datait->first.c_str());
+            mvwprintw(it->second,print_position++, INFO_PADDING, "[ %s ] %s  ", datait->second.c_str(), datait->first.c_str());
         }
         wattroff(it->second, COLOR_PAIR(INFO_COLOR));
     }
