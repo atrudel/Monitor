@@ -55,7 +55,7 @@ float MainMemory::getSystemMemoryUsagePercentage()
 
     if (totalPages > 0.0){
         float tmp = static_cast<float>(pagesUsed / totalPages);
-        std::cout << "memory " << tmp << std::endl;  
+        // std::cout << "memory " << tmp << std::endl;  
         return tmp * 100;
     }
     return 0.0f;

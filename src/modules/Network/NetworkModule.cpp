@@ -105,7 +105,7 @@ void NetworkModule::reset_net()
 
 void NetworkModule::dequeUpdate(std::string name, float ret)
 {
-   std::cout << ret << std::endl;
+   // std::cout << ret << std::endl;
    if (!this->_graphs[name].empty())
    {
        if (this->_graphs[name].size() >= DEQUE_SIZE)

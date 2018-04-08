@@ -21,7 +21,7 @@ void Hostname::update(void)
     sysctlbyname("kern.hostname", &buff, &buffLen, NULL, 0);
 
     std::string name(buff);
-    // std::cout << name << std::endl;//WHO THE FUCK DID THIS!!???
+    // // std::cout << name << std::endl;//WHO THE FUCK DID THIS!!???
     this->setName(name);
 }
 
