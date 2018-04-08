@@ -15,6 +15,7 @@ private:
 	int				*_pixels;
 	SDL_Texture		*_fontImg;
 	std::string		_font;
+	bool			_clicked;
 
 	SdlDisplay();
 public:
@@ -35,6 +36,10 @@ public:
 	void draw();
 
 	void drawString(const std::string &str, const int &x, const int &y);
+
+	bool button(const std::string &str, const int &x, const int &y, const int &w, const int &h);
+	bool button(const std::string &str, const int &x, const int &y, const int &w, const int &h, const int &color);
+	bool button(const std::string &str, const int &x, const int &y, const int &w, const int &h, const int &color, const int &clickColor);
 
 	void setSize(const int &w, const int &h);
 
