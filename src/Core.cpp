@@ -28,21 +28,39 @@ Core &Core::operator=(const Core &o)
 	return *this;
 }
 
-void Core::init()
+void Core::init(char display_options[SIZE_OPT])
 {
-	_displays.push_back(new BeautifulDisplay());
+	int i = 0, l = 0;
 
-//	 _modules["time"] = new TimeModule();
-//	_modules["main_cpu"] = new MainCpu();
-	 _modules["net"] = new NetworkModule();
-//	 _modules["Hostname"] = new Hostname();
-//	 _modules["ram"] = new RamModul();
-  if (_activeDisplayIndex == 1)
-	{
-		NcursesDisplay *ncurses = new NcursesDisplay();
-		ncurses->init(_modules);
-		_displays.push_back(ncurses);
+	while (display_options[i]) {
+		if (display_options[i] == 'h')
+			_modules["Hostname"] = new Hostname();
+		if (display_options[i] == 't')
+			_modules["time"] = new TimeModule();
+		if (display_options[i] == 'o')
+			_modules["main_cpu"] = new MainCpu();
+		if (display_options[i] == 'c')
+			_modules["main_cpu_2"] = new MainCpu();
+		if (display_options[i] == 'n')
+			_modules["net"] = new NetworkModule();
+		if (display_options[i] == 'a')
+			_modules["cat"] = new Cat();
+		// if (display_options[i] == 'r')
+			// _modules["ram"] = new RamModul();
+		i++;
 	}
+	i = 0;
+	while (display_options[i]) {
+		if (l == 0 && display_options[i] == 'l') {
+			l++;
+			NcursesDisplay *ncurses = new NcursesDisplay();
+			ncurses->init(_modules);
+			_displays.push_back(ncurses);
+		}
+		i++;
+	}
+	if (l == 0)
+		_displays.push_back(new BeautifulDisplay());
 }
 
 void Core::update()
@@ -62,11 +80,11 @@ void Core::render()
 		_displays[_activeDisplayIndex]->render(_modules);
 }
 
-void Core::start()
+void Core::start(char display_options[SIZE_OPT])
 {
 	_running = true;
 
-	init();
+	init(display_options);
 	loop();
 }
 
@@ -96,16 +114,21 @@ void Core::loop()
 	}
 }
 
-void Core::test()
+void Core::test(int iter)
 {
     // _displays.push_back(new DummyDisplay());
 
     // ADD YOUR MODULES HERE, AS A NEW ENTRY IN THE MAP
- //   _modules["dummy"] = new DummyModule();
+//    _modules["dummy"] = new DummyModule();
     _modules["hostname"] = new Hostname();
 //    _modules["os"] = new OSModule();
     _modules["time"] = new TimeModule();
+    _modules["main_cpu"] = new MainCpu();
+    _modules["net"] = new NetworkModule();
+    _modules["memory"] = new MainMemory();
 
-    update();
+    for (int i= 0; i < iter; i++) {
+        update();
+    }
     render();
 }

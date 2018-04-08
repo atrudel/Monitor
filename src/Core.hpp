@@ -15,7 +15,8 @@
 # include "modules/time/TimeModule.hpp"
 # include "modules/mainCpu/MainCpu.hpp"
 # include "modules/Network/NetworkModule.hpp"
-
+# include "modules/Cat/Cat.hpp"
+# include "modules/memory/MainMemory.hpp"
 #include "modules/Hostname/Hostname.hpp"
 #include "modules/os/OSModule.hpp"
 #include "modules/time/TimeModule.hpp"
@@ -23,6 +24,8 @@
 // # include "displays/dummy/DummyDisplay.hpp"
 // # include "modules/dummy/DummyModule.hpp"
 # include "modules/Hostname/Hostname.hpp"
+
+#define SIZE_OPT	10
 
 class IMonitorModule;
 class IMonitorDisplay;
@@ -34,7 +37,7 @@ private:
 	std::vector<IMonitorDisplay*>			_displays;
 	std::map<std::string, IMonitorModule*>	_modules;
 	int										_activeDisplayIndex;
-	
+
 
 public:
 	Core();
@@ -45,15 +48,15 @@ public:
 
 	Core &operator=(const Core &o);
 
-	void init();
+	void init(char display_options[SIZE_OPT]);
 	void update();
 	void render();
 
-	void start();
+	void start(char display_options[SIZE_OPT]);
 	void stop();
 	void loop();
 
-	void test();
+	void test(int iters);
 };
 
 #endif

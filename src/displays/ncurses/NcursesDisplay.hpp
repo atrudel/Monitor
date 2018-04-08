@@ -6,7 +6,7 @@
 /*   By: agrumbac <agrumbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 14:38:34 by agrumbac          #+#    #+#             */
-/*   Updated: 2018/04/07 17:22:01 by agrumbac         ###   ########.fr       */
+/*   Updated: 2018/04/08 15:50:33 by agrumbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,43 +21,54 @@
 
 class NcursesDisplay : public IMonitorDisplay {
 
+    typedef std::map<std::string, IMonitorModule*> module_map;
+    typedef module_map::const_iterator module_iterator;
+    typedef std::map<std::string, WINDOW *>::const_iterator window_map_iterator;
+
 public:
-	NcursesDisplay( void );
-	NcursesDisplay( NcursesDisplay const & src );
-	virtual ~NcursesDisplay();
 
-	NcursesDisplay &		operator=( NcursesDisplay const & rhs );
+    NcursesDisplay( void );
+    NcursesDisplay( NcursesDisplay const & src );
+    virtual ~NcursesDisplay();
 
-	virtual void 			init( void );
-	virtual void 			init( const std::map<std::string, IMonitorModule*> &disp );
-	virtual void 			update( void );
-	virtual void 			render( const std::map<std::string, IMonitorModule*> &disp ) ;
-	bool 					quit( void );
+    NcursesDisplay &        operator=( NcursesDisplay const & rhs );
+
+    virtual void             init( void );
+    virtual void             init( const module_map &disp );
+    virtual void             update( void );
+    virtual void             render( const module_map &disp ) ;
+    bool                     quit( void );
 
 private:
-	std::map<std::string, WINDOW *>         _fenetres;
-	const int                               _module_separation_size;
+
+    void                    _dispTitle( void );
+    void                    _dispAnime( void );
+    void                    _dispRefresh( void );
+    void                    _dispWindows( const module_map &disp );
+
+    std::map<std::string, WINDOW *>         _fenetres;
+    const int                               _module_separation_size;
     const int                               _module_height;
-	const int                               _max_module_width;
-	int										_module_width;
-    int                  		            _window_height;
-	int										_window_width;
-	int										_anime;
+    const int                               _max_module_width;
+    int                                     _module_width;
+    int                                     _window_height;
+    int                                     _window_width;
+    int                                     _anime;
 };
 
-# define MODULE_HEIGHT  10
-# define MODULE_WIDTH  	200
+# define MODULE_HEIGHT     10
+# define MODULE_WIDTH      COLS
 
-# define ANIME_WIDTH 100
+# define ANIME_WIDTH       1
 
-# define DISP_WHITE		0
-# define DISP_RED		1
-# define DISP_GREEN		2
-# define DISP_BLUE		3
-# define DISP_CYAN		4
-# define DISP_YELLOW	5
-# define DISP_MAGENTA	6
+# define DISP_WHITE        0
+# define DISP_RED          1
+# define DISP_GREEN        2
+# define DISP_BLUE         3
+# define DISP_CYAN         4
+# define DISP_YELLOW       5
+# define DISP_MAGENTA      6
 
-# define KEY_ESC		27
+# define KEY_ESC           27
 
 #endif
