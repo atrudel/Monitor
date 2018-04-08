@@ -6,7 +6,7 @@
 /*   By: agrumbac <agrumbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 14:38:03 by agrumbac          #+#    #+#             */
-/*   Updated: 2018/04/08 13:21:14 by agrumbac         ###   ########.fr       */
+/*   Updated: 2018/04/08 15:55:13 by agrumbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void                     NcursesDisplay::init(const std::map<std::string, \
 {
     this->init();
 
-    int i = 0;
+    int i = 1;
     for (module_iterator it = disp.begin(); it != disp.end(); it++, i++)
     {
         _fenetres[it->first] = subwin(stdscr, _module_height , _module_width, (_module_height + _module_separation_size) * i , 0);
@@ -89,95 +89,105 @@ void                     NcursesDisplay::update(void)
 
 }
 
-void                     NcursesDisplay::render( const std::map<std::string, \
-                            IMonitorModule*> &disp )
+inline void              NcursesDisplay::_dispTitle( void )
 {
-    erase();
+    int     position = (_window_width - 42) / 2;
 
-    getmaxyx(stdscr, _window_height, _window_width);
-    box(stdscr, 0, 0);
-    mvprintw(0, 50,"            _             _ _           ");
-    mvprintw(1, 50,"   __ _| | ___ __ ___| | |_ __ ___  ");
-    mvprintw(2, 50,"  / _` | |/ / '__/ _ \\ | | '_ ` _ \\ ");
-    mvprintw(3, 50," | (_| |   <| | |  __/ | | | | | | |");
-    mvprintw(4, 50,"  \\__, |_|\\_\\_|  \\___|_|_|_| |_| |_|");
-    mvprintw(5, 50,"  |___/                             ");
+    mvprintw(1, position,"        _             _ _           ");
+    mvprintw(2, position,"   __ _| | ___ __ ___| | |_ __ ___  ");
+    mvprintw(3, position,"  / _` | |/ / '__/ _ \\ | | '_ ` _ \\ ");
+    mvprintw(4, position," | (_| |   <| | |  __/ | | | | | | |");
+    mvprintw(5, position,"  \\__, |_|\\_\\_|  \\___|_|_|_| |_| |_|");
+    mvprintw(6, position,"  |___/                             ");
+}
 
-
+inline void              NcursesDisplay::_dispAnime( void )//Champion Gnebie's awesome art
+{
     _anime++;
     if (_anime >= 80)
     _anime = 0;
     if (_anime < 20) {
         if (_window_width - 20 > ANIME_WIDTH) {
-            mvprintw(1, ANIME_WIDTH, "  /\\**/\\");
-            mvprintw(2, ANIME_WIDTH, "  ( o_o  )_)");
-            mvprintw(3, ANIME_WIDTH, "  ,(u  u  ,),");
-            mvprintw(4, ANIME_WIDTH, " {}{}{}{}{}{}");
+            mvprintw(LINES - 4, ANIME_WIDTH, "  /\\**/\\");
+            mvprintw(LINES - 3, ANIME_WIDTH, "  ( o_o  )_)");
+            mvprintw(LINES - 2, ANIME_WIDTH, "  ,(u  u  ,),");
+            mvprintw(LINES - 1, ANIME_WIDTH, " {}{}{}{}{}{}   ");
             if (_window_width - 60 > ANIME_WIDTH) {
-                mvprintw(1, ANIME_WIDTH + 20, "    |\\_._/|   ");
-                mvprintw(2, ANIME_WIDTH + 20, "    | o o |   ");
-                mvprintw(3, ANIME_WIDTH + 20, "    (  T  )   ");
-                mvprintw(4, ANIME_WIDTH + 20, "   .^`-^-'^.  ");
-                mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'  ");
-                mvprintw(6, ANIME_WIDTH + 20, "   | | | | |  ");
-                mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_)) ");
+                mvprintw(LINES - 7, ANIME_WIDTH + 20, "    |\\_._/|   ");
+                mvprintw(LINES - 6, ANIME_WIDTH + 20, "    | o o |   ");
+                mvprintw(LINES - 5, ANIME_WIDTH + 20, "    (  T  )   ");
+                mvprintw(LINES - 4, ANIME_WIDTH + 20, "   .^`-^-'^.  ");
+                mvprintw(LINES - 3, ANIME_WIDTH + 20, "   `.  ;  .'  ");
+                mvprintw(LINES - 2, ANIME_WIDTH + 20, "   | | | | |  ");
+                mvprintw(LINES - 1, ANIME_WIDTH + 20, "  ((_((|))_))  ");
             }
         }
     } else if (_anime < 40) {
         if (_window_width - 20 > ANIME_WIDTH) {
-            mvprintw(1, ANIME_WIDTH, "   /\\**/\\");
-            mvprintw(2, ANIME_WIDTH, "   ( o_o  )_)");
-            mvprintw(3, ANIME_WIDTH, "   ,(u  u  ,),");
-            mvprintw(4, ANIME_WIDTH, "  {}{}{}{}{}{}");
+            mvprintw(LINES - 4, ANIME_WIDTH, "   /\\**/\\");
+            mvprintw(LINES - 3, ANIME_WIDTH, "   ( o_o  )_)");
+            mvprintw(LINES - 2, ANIME_WIDTH, "   ,(u  u  ,),");
+            mvprintw(LINES - 1, ANIME_WIDTH, "  {}{}{}{}{}{}  ");
             if (_window_width - 60 > ANIME_WIDTH) {
-                mvprintw(1, ANIME_WIDTH + 20, "    |,\\__/|    ");
-                mvprintw(2, ANIME_WIDTH + 20, "    |  o o|    ");
-                mvprintw(3, ANIME_WIDTH + 20, "    (   T )    ");
-                mvprintw(4, ANIME_WIDTH + 20, "   .^`--^'^.   ");
-                mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'   ");
-                mvprintw(6, ANIME_WIDTH + 20, "   | | | | |   ");
-                mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))  ");
+                mvprintw(LINES - 7, ANIME_WIDTH + 20, "    |,\\__/|    ");
+                mvprintw(LINES - 6, ANIME_WIDTH + 20, "    |  o o|    ");
+                mvprintw(LINES - 5, ANIME_WIDTH + 20, "    (   T )    ");
+                mvprintw(LINES - 4, ANIME_WIDTH + 20, "   .^`--^'^.   ");
+                mvprintw(LINES - 3, ANIME_WIDTH + 20, "   `.  ;  .'   ");
+                mvprintw(LINES - 2, ANIME_WIDTH + 20, "   | | | | |   ");
+                mvprintw(LINES - 1, ANIME_WIDTH + 20, "  ((_((|))_))  ");
             }
         }
     } else if (_anime < 60) {
         if (_window_width - 20 > ANIME_WIDTH) {
-            mvprintw(1, ANIME_WIDTH, "    /\\**/\\");
-            mvprintw(2, ANIME_WIDTH, "    ( o_o  )_)");
-            mvprintw(3, ANIME_WIDTH, "    ,(u  u  ,),");
-            mvprintw(4, ANIME_WIDTH, "  {}{}{}{}{}{}  ");
+            mvprintw(LINES - 4, ANIME_WIDTH, "    /\\**/\\");
+            mvprintw(LINES - 3, ANIME_WIDTH, "    ( o_o  )_)");
+            mvprintw(LINES - 2, ANIME_WIDTH, "    ,(u  u  ,),");
+            mvprintw(LINES - 1, ANIME_WIDTH, "  {}{}{}{}{}{}  ");
 
             if (_window_width - 60 > ANIME_WIDTH) {
-                mvprintw(1, ANIME_WIDTH + 20, "    |\\__/,|    ");
-                mvprintw(2, ANIME_WIDTH + 20, "    |o o  |    ");
-                mvprintw(3, ANIME_WIDTH + 20, "    ( T   )    ");
-                mvprintw(4, ANIME_WIDTH + 20, "   .^`^--'^.   ");
-                mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'   ");
-                mvprintw(6, ANIME_WIDTH + 20, "   | | | | |   ");
-                mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))  ");
+                mvprintw(LINES - 7, ANIME_WIDTH + 20, "    |\\__/,|    ");
+                mvprintw(LINES - 6, ANIME_WIDTH + 20, "    |o o  |    ");
+                mvprintw(LINES - 5, ANIME_WIDTH + 20, "    ( T   )    ");
+                mvprintw(LINES - 4, ANIME_WIDTH + 20, "   .^`^--'^.   ");
+                mvprintw(LINES - 3, ANIME_WIDTH + 20, "   `.  ;  .'   ");
+                mvprintw(LINES - 2, ANIME_WIDTH + 20, "   | | | | |   ");
+                mvprintw(LINES - 1, ANIME_WIDTH + 20, "  ((_((|))_))  ");
             }
         }
     } else {
         if (_window_width - 20 > ANIME_WIDTH) {
-            mvprintw(1, ANIME_WIDTH, "  /\\**/\\");
-            mvprintw(2, ANIME_WIDTH, "  ( o_o  )_)");
-            mvprintw(3, ANIME_WIDTH, "  ,(u  u  ,),");
-            mvprintw(4, ANIME_WIDTH, "  {}{}{}{}{}{}");
+            mvprintw(LINES - 4, ANIME_WIDTH, "  /\\**/\\");
+            mvprintw(LINES - 3, ANIME_WIDTH, "  ( o_o  )_)");
+            mvprintw(LINES - 2, ANIME_WIDTH, "  ,(u  u  ,),");
+            mvprintw(LINES - 1, ANIME_WIDTH, "  {}{}{}{}{}{}  ");
 
 
             if (_window_width - 60 > ANIME_WIDTH) {
-                mvprintw(1, ANIME_WIDTH + 20, "    |\\_._/|");
-                mvprintw(2, ANIME_WIDTH + 20, "    | 0 0 |");
-                mvprintw(3, ANIME_WIDTH + 20, "    (  T  )");
-                mvprintw(4, ANIME_WIDTH + 20, "   .^`-^-'^.");
-                mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'");
-                mvprintw(6, ANIME_WIDTH + 20, "   | | | | |");
-                mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))");
+                mvprintw(LINES - 7, ANIME_WIDTH + 20, "    |\\_._/|");
+                mvprintw(LINES - 6, ANIME_WIDTH + 20, "    | 0 0 |");
+                mvprintw(LINES - 5, ANIME_WIDTH + 20, "    (  T  )");
+                mvprintw(LINES - 4, ANIME_WIDTH + 20, "   .^`-^-'^.");
+                mvprintw(LINES - 3, ANIME_WIDTH + 20, "   `.  ;  .'");
+                mvprintw(LINES - 2, ANIME_WIDTH + 20, "   | | | | |");
+                mvprintw(LINES - 1, ANIME_WIDTH + 20, "  ((_((|))_))  ");
             }
         }
     }
+}
 
-    // content creation
-    for(std::map<std::string, WINDOW *>::const_iterator it=_fenetres.begin(); it != _fenetres.end(); it++) {
+inline void              NcursesDisplay::_dispRefresh( void )
+{
+    refresh();
+
+    for(window_map_iterator it=_fenetres.begin(); it != _fenetres.end(); it++)
+        wrefresh(it->second);
+}
+
+inline void              NcursesDisplay::_dispWindows( const module_map &disp )
+{
+    for (window_map_iterator it = _fenetres.begin(); it != _fenetres.end(); it++)
+    {
         // border box creation
         box(it->second, ACS_VLINE, ACS_HLINE);
         // titre du module
@@ -188,25 +198,41 @@ void                     NcursesDisplay::render( const std::map<std::string, \
         j++;
         int i = 0;
         float cpu = 0;
-        for (std::map<std::string, std::deque<float> >::const_iterator secondit = mainit->second->getGraphs().begin(); secondit != mainit->second->getGraphs().end();secondit++) {
-            for (std::deque<float>::const_reverse_iterator eqiter = secondit->second.rbegin(); eqiter != secondit->second.rend() || i < 20 ; eqiter++){
+        for (std::map<std::string, std::deque<float> >::const_iterator secondit = \
+            mainit->second->getGraphs().begin();
+            secondit != mainit->second->getGraphs().end();
+            secondit++)
+        {
+            for (std::deque<float>::const_reverse_iterator eqiter = secondit->second.rbegin();
+                eqiter != secondit->second.rend() || i < 20 ;
+                eqiter++, i++)
+            {
                 cpu += *eqiter;
-                i++;
             }
             mvwprintw(it->second,j,10, " [ %02i %%] %s  ",static_cast<int>(cpu / i * 100), secondit->first.c_str());
             j++;
         }
         j++;
-        for (std::map<std::string, std::string>::const_iterator datait =  mainit->second->getData().begin(); datait != mainit->second->getData().end(); datait++){
+        for (std::map<std::string, std::string>::const_iterator datait = \
+            mainit->second->getData().begin();
+            datait != mainit->second->getData().end();
+            datait++)
+        {
             mvwprintw(it->second,j,10, " [%6.2f %%] %s  ",cpu / i, datait->first.c_str());
         }
         j++;
     }
-    // refresh function
-    refresh();
-    for(std::map<std::string, WINDOW *>::const_iterator it=_fenetres.begin(); it != _fenetres.end(); it++) {
-        wrefresh(it->second);
-    }
-    //    attron(COLOR_PAIR(PLAYER_COLOR));
-    //    mvprintw(LINES, COLS);
+}
+
+void                     NcursesDisplay::render( const module_map &disp )
+{
+    erase();
+    getmaxyx(stdscr, _window_height, _window_width);
+    box(stdscr, 0, 0);
+
+    _dispTitle();
+    // if cats
+    _dispAnime();
+    _dispWindows(disp);
+    _dispRefresh();
 }
