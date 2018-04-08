@@ -28,20 +28,56 @@ Core &Core::operator=(const Core &o)
 	return *this;
 }
 
-void Core::init()
+void Core::init(char display_options[SIZE_OPT])
 {
-	_displays.push_back(new BeautifulDisplay());
-	_modules["time"] = new TimeModule();
-	_modules["main_cpu"] = new MainCpu();
-	_modules["net"] = new NetworkModule();
-	_modules["Hostname"] = new Hostname();
-	_modules["ram"] = new MainMemory();
-  if (_activeDisplayIndex == 1)
-	{
-		NcursesDisplay *ncurses = new NcursesDisplay();
-		ncurses->init(_modules);
-		_displays.push_back(ncurses);
+	int i = 0, l = 0;
+	char	rank = 48;
+	char	name[20];
+
+	while (display_options[i]) {
+		bzero(name, 20);
+		if (display_options[i] == 'h' && (name[0] = rank)) {
+			strcpy(&(name[1]), "Hostname");
+			_modules[name] = new Hostname();
+		}
+		if (display_options[i] == 't' && (name[0] = rank)) {
+			strcpy(&(name[1]), "time");
+			_modules[name] = new TimeModule();
+		}
+		if (display_options[i] == 'c' && (name[0] = rank)) {
+			strcpy(&(name[1]), "main_cpu");
+			_modules[name] = new MainCpu();
+		}
+		if (display_options[i] == 'r' && (name[0] = rank)) {
+			strcpy(&(name[1]), "ram");
+			_modules[name] = new MainMemory();
+		}
+		if (display_options[i] == 'n' && (name[0] = rank)) {
+			strcpy(&(name[1]), "net");
+			_modules[name] = new NetworkModule();
+		}
+		if (display_options[i] == 'a' && (name[0] = rank)) {
+			_modules["cat"] = new Cat();
+		}
+		if (display_options[i] == 'o') {
+			strcpy(&(name[1]), "os");
+			_modules[name] = new OSModule();
+		}
+		rank++;
+		i++;
 	}
+	i = 0;
+	while (display_options[i]) {
+		if (l == 0 && display_options[i] == 'l') {
+			l++;
+			NcursesDisplay *ncurses = new NcursesDisplay();
+			ncurses->init(_modules);
+			_displays.push_back(ncurses);
+		}
+		i++;
+	}
+	if (l == 0)
+		_displays.push_back(new BeautifulDisplay());
 }
 
 void Core::update()
@@ -61,11 +97,11 @@ void Core::render()
 		_displays[_activeDisplayIndex]->render(_modules);
 }
 
-void Core::start()
+void Core::start(char display_options[SIZE_OPT])
 {
 	_running = true;
 
-	init();
+	init(display_options);
 	loop();
 }
 

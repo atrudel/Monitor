@@ -1,0 +1,9 @@
+usage: ./ft_gkrellm [-lhtcrnao] 
+-l: display ncurses mode 
+-h: Hostname 
+-t: Time info 
+-c: CPU info 
+-r: RAM info 
+-n: Network info 
+-a: display cat 
+-o: OS info
