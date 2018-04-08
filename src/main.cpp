@@ -29,6 +29,8 @@ int main(int ac, char **av)
 				display_options[c++] = 't';
 			if (av[i][j] == 'n')
 				display_options[c++] = 'n';
+			if (av[i][j] == 'a')
+				display_options[c++] = 'a';
 			j++;
 		}
 		i++;

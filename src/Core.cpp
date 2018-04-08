@@ -42,6 +42,8 @@ void Core::init(char display_options[8])
 			_modules["main_cpu_2"] = new MainCpu();
 		if (display_options[i] == 'n')
 			_modules["net"] = new NetworkModule();
+		if (display_options[i] == 'a')
+			_modules["net"] = new Cat();
 		// if (display_options[i] == 'r')
 			// _modules["ram"] = new RamModul();
 		i++;

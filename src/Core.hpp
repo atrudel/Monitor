@@ -14,6 +14,7 @@
 # include "modules/time/TimeModule.hpp"
 # include "modules/mainCpu/MainCpu.hpp"
 # include "modules/Network/NetworkModule.hpp"
+# include "modules/Cat/Cat.hpp"
 
 # include "displays/dummy/DummyDisplay.hpp"
 # include "modules/dummy/DummyModule.hpp"
