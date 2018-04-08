@@ -1,6 +1,8 @@
 #include "TimeModule.hpp"
 
-TimeModule::TimeModule() : _name("uptime"), _min(0), _max(0) {}
+TimeModule::TimeModule() : _name("uptime"), _min(0), _max(0) {
+    this->update();
+}
 TimeModule::TimeModule(TimeModule const &src) {
     *this = src;
 }
