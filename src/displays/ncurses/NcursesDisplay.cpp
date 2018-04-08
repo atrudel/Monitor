@@ -28,10 +28,6 @@ NcursesDisplay::~NcursesDisplay()
 
 NcursesDisplay &        NcursesDisplay::operator=( NcursesDisplay const & rhs )
 {
-    this->_module_separation_size = rhs._module_separation_size;
-    this->_module_height = rhs._module_height;
-    this->_max_module_width = rhs._max_module_width;
-    this->_module_width = rhs._module_width;
     this->_window_height = rhs._window_height;
     this->_window_width = rhs._window_width;
     this->_anime = rhs._anime;
@@ -82,7 +78,7 @@ bool                     NcursesDisplay::quit( void )
     return false;
 }
 
-std::map<std::string, WINDOW *> getWindow() const
+std::map<std::string, WINDOW *> NcursesDisplay::getWindow() const
 {
     return this->_fenetres;
 }
