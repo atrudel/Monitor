@@ -1,9 +1,4 @@
 #include "Core.hpp"
-#include "displays/dummy/DummyDisplay.hpp"
-#include "modules/dummy/DummyModule.hpp"
-#include "modules/Hostname/Hostname.hpp"
-#include "modules/os/OSModule.hpp"
-#include "modules/time/TimeModule.hpp"
 
 Core::Core()
 	: _running(false),
@@ -38,7 +33,8 @@ void Core::init()
 //	_displays.push_back(new BeautifulDisplay());
 //	_modules["time"] = new TimeModule();
 	_modules["main_cpu"] = new MainCpu();
-	_modules["test_cpu"] = new MainCpu();
+//	_modules["net"] = new NetworkModule();
+//	_modules["main_cpu_2"] = new MainCpu();
 //	_modules["Hostname"] = new Hostname();
 	// _modules["ram"] = new RamModul();
 	NcursesDisplay *ncurses = new NcursesDisplay();

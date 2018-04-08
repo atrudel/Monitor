@@ -14,7 +14,6 @@
 #include "../IMonitorModule.hpp"
 
 #define BUFFERLEN 128
-#define DEQUE_SIZE 100
 #define WORLD_WIDE_MAX_CPU_ON_UNIT 100
 
 class MainCpu : public IMonitorModule

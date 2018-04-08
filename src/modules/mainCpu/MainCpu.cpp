@@ -44,8 +44,8 @@ void MainCpu::setCPUsLoad()
         std::ostringstream ss;
         ss << "cpu" << i << "Usage";
 
-        dequeUpdate(ss.str(), calculateCPULoad(system + user, _oldCpusWorkTicks[i], system + user + idle, _oldCpusTotalTicks[i]));
-        
+       dequeUpdate(ss.str(), calculateCPULoad(system + user, _oldCpusWorkTicks[i], system + user + idle, _oldCpusTotalTicks[i]));
+
         _oldCpusWorkTicks[i] = system + user;
         _oldCpusTotalTicks[i] = system + user + idle;
 
@@ -53,8 +53,8 @@ void MainCpu::setCPUsLoad()
         totalUserTime += user;
         totalIdleTime += idle;
     }
-       std::cout << std::endl
-                  << this->getName() << std::endl;
+       // std::cout << std::endl
+       //            << this->getName() << std::endl;
 
     size_t newTotal = totalIdleTime + totalSystemTime + totalUserTime;
     size_t newWork = totalSystemTime + totalUserTime;
@@ -71,16 +71,17 @@ float MainCpu::calculateCPULoad(size_t newWorkTicks, size_t oldWorkTicks,  size_
     float total = newTotalTicks - oldTotalTicks;
     if (!total)
         return 0.0f;
-    return work / total * 100;
+    return work / total;
 }
 
 void MainCpu::dequeUpdate(std::string name, float ret)
 {
+
     if (!this->_graphs[name].empty())
     {
         while (this->_graphs[name].size() > DEQUE_SIZE)
-            this->_graphs[name].pop_front();
-        this->_graphs[name].push_back(ret);
+            this->_graphs[name].pop_back();
+        this->_graphs[name].push_front(ret);
     }
     else
         this->_graphs[name] = std::deque<float>(DEQUE_SIZE, 0);
@@ -88,9 +89,6 @@ void MainCpu::dequeUpdate(std::string name, float ret)
 
 void MainCpu::update(void)
 {
-    char buff[BUFFERLEN];
-    size_t buffLen = BUFFERLEN;
-
     this->setCPUsLoad();
 }
 

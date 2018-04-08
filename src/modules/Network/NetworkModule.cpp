@@ -110,7 +110,7 @@ void NetworkModule::dequeUpdate(std::string name, float ret)
    {
        if (this->_graphs[name].size() >= DEQUE_SIZE)
            this->_graphs[name].pop_back();
-       this->_graphs[name].push_front(ret);
+       this->_graphs[name].push_front(ret / 100.0f);
    }
    else
         this->_graphs[name] = std::deque<float>(DEQUE_SIZE, 0);
@@ -140,7 +140,6 @@ NetworkModule::NetworkModule(NetworkModule const &src)
     *this = src;
 }
 
-
 const std::string &NetworkModule::getName(void) const
 {
     return (this->_name);
@@ -148,6 +147,7 @@ const std::string &NetworkModule::getName(void) const
 
 NetworkModule &NetworkModule::operator=(NetworkModule const &rhs) {
 
+	(void) rhs;
     // this->_foo = rhs.getValue();
     return *this;
 }

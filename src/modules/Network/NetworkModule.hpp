@@ -8,7 +8,6 @@
 #include <iostream>
 #include <sstream>
 #include "../IMonitorModule.hpp"
-#define DEQUE_SIZE 400
 
 class NetworkModule : public IMonitorModule
 {
