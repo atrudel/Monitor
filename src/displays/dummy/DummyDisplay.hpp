@@ -21,7 +21,7 @@ private:
     void _displayModule(const IMonitorModule*) const;
     void _printData(const std::map<std::string, std::string>& data) const ;
     void _printGraphs(const std::map<std::string, std::deque<float> >) const ;
-    void _printQueue(const std::deque<float> queue) const ;
+    void _printQueue(const std::deque<float> &queue) const ;
 };
 
 

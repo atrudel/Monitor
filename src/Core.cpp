@@ -1,9 +1,11 @@
+#include <zconf.h>
 #include "Core.hpp"
 #include "modules/Hostname/Hostname.hpp"
 #include "modules/os/OSModule.hpp"
 #include "modules/time/TimeModule.hpp"
 #include "displays/dummy/DummyDisplay.hpp"
 #include "modules/memory/MainMemory.hpp"
+#include "modules/dummy/DummyModule.hpp"
 
 Core::Core()
 	: _running(false),
@@ -36,11 +38,12 @@ Core &Core::operator=(const Core &o)
 void Core::init()
 {
 	_displays.push_back(new BeautifulDisplay());
-//	 _modules["time"] = new TimeModule();
-//	_modules["main_cpu"] = new MainCpu();
+    _modules["Dummy"] = new DummyModule();
+	 _modules["time"] = new TimeModule();
+	_modules["main_cpu"] = new MainCpu();
 	 _modules["net"] = new NetworkModule();
 //	_modules["main_cpu_2"] = new MainCpu();
-//	 _modules["Hostname"] = new Hostname();
+	 _modules["Hostname"] = new Hostname();
 	 _modules["ram"] = new MainMemory();
   if (_activeDisplayIndex == 1)
 	{
@@ -83,7 +86,7 @@ void Core::stop()
 void Core::loop()
 {
 //	int seconds = 0;
-	double tickTime = 1000000.0 / 6.0;
+	double tickTime = 1000000.0 / 60.0;
 	clock_t beforeTime = clock();
 	while (_running)
 	{
@@ -108,16 +111,18 @@ void Core::test(int iterations)
 
     // ADD YOUR MODULES HERE, AS A NEW ENTRY IN THE MAP
     _modules["dummy"] = new DummyModule();
-    _modules["hostname"] = new Hostname();
+//    _modules["hostname"] = new Hostname();
 //    _modules["os"] = new OSModule();
-    _modules["time"] = new TimeModule();
-    _modules["time"] = new TimeModule();
-    _modules["main_cpu"] = new MainCpu();
+//    _modules["time"] = new TimeModule();
+//    _modules["time"] = new TimeModule();
+//    _modules["main_cpu"] = new MainCpu();
      _modules["net"] = new NetworkModule();
 //	_modules["main_cpu_2"] = new MainCpu();
     // _modules["ram"] = new RamModul();
 
-    while (iterations-- > 0)
+    while (iterations-- > 0) {
         update();
+        usleep(100000);
+    }
     render();
 }

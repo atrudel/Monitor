@@ -135,6 +135,6 @@ int	 BeautifulDisplay::_calculateModuleHeight(const IMonitorModule* module) cons
 }
 float   BeautifulDisplay::_scale(float data, const IMonitorModule& module) const {
     float range = module.getGraphMax() - module.getGraphMin();
-    std::cout << data << " -> " << data / range << " (" << range << ")" << std::endl;
+//    std::cout << data << " -> " << data / range << " (" << range << ")" << std::endl;
 	return data / range;
 }

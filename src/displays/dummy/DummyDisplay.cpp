@@ -50,9 +50,10 @@ void DummyDisplay::_printGraphs(const std::map<std::string, std::deque<float> > 
         std::cout << std::endl;
     }
 }
-void DummyDisplay::_printQueue(const std::deque<float> queue) const {
-    for(std::deque<float>::const_iterator i = queue.begin(); i != queue.end(); i++){
-        std::cout << *i << " | ";
+void DummyDisplay::_printQueue(const std::deque<float>& queue) const {
+
+    for(size_t i = queue.size(); i > 0; i--){
+        std::cout << queue[i] << " | ";
     }
     std::cout << std::endl;
 }
