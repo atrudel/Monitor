@@ -1,5 +1,5 @@
-#ifndef MAINCPU_HPP
-#define MAINCPU_HPP
+#ifndef MAINMEMORY_HPP
+#define MAINMEMORY_HPP
 
 #include <iostream>
 #include <map>
@@ -13,34 +13,31 @@
 
 #include "../IMonitorModule.hpp"
 
+#define BUFFERLEN 128
 //#define DEQUE_SIZE 100
 #define WORLD_WIDE_MAX_CPU_ON_UNIT 100
-#define BUFFERLEN 128
 
-class MainCpu : public IMonitorModule
+class MainMemory : public IMonitorModule
 {
     std::string _name;
     float _min, _max;
     std::map<std::string, std::deque<float> > _graphs;
     std::map<std::string, std::string> _data;
 
-    // unecessary to copy this block, it's reset on each loop
-    size_t _oldWorkTicks, _oldTotalTicks;
-    size_t _oldCpusWorkTicks[WORLD_WIDE_MAX_CPU_ON_UNIT], _oldCpusTotalTicks[WORLD_WIDE_MAX_CPU_ON_UNIT];  
+    float _frame;
 
-    float calculateCPULoad(size_t newWorkTicks, size_t oldWorkTicks,  size_t newTotalTicks, size_t oldTotalTicks);
-    void setCPUsLoad();
-    void setCpuDatas();
     void dequeUpdate(std::string name, float ret);
 
+    float getSystemMemoryUsagePercentage();
+    double parseMemValue(const char * b);
+
   public:
-    MainCpu(void);
-    MainCpu(MainCpu const &src);
-    virtual ~MainCpu(void);
+    MainMemory(void);
+    MainMemory(MainMemory const &src);
+    virtual ~MainMemory(void);
 
-    MainCpu &operator=(MainCpu const &rhs);
+    MainMemory &operator=(MainMemory const &rhs);
 
-    void fetch(void);
     void update(void);
 
     void setName(std::string name);

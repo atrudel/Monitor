@@ -14,9 +14,10 @@
 # include "modules/time/TimeModule.hpp"
 # include "modules/mainCpu/MainCpu.hpp"
 # include "modules/Network/NetworkModule.hpp"
+# include "modules/memory/MainMemory.hpp"
 
-# include "displays/dummy/DummyDisplay.hpp"
-# include "modules/dummy/DummyModule.hpp"
+// # include "displays/dummy/DummyDisplay.hpp"
+// # include "modules/dummy/DummyModule.hpp"
 # include "modules/Hostname/Hostname.hpp"
 
 class IMonitorModule;
@@ -48,7 +49,7 @@ public:
 	void stop();
 	void loop();
 
-	void test();
+	void test(int iters);
 };
 
 #endif
