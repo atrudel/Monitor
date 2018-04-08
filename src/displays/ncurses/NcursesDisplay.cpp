@@ -101,6 +101,12 @@ void 					NcursesDisplay::render( const std::map<std::string, IMonitorModule*> &
 	(void)disp;
 	erase();
 	box(stdscr, 0, 0);
+mvprintw(0, 50,"	        _             _ _           ");
+mvprintw(1, 50,"   __ _| | ___ __ ___| | |_ __ ___  ");
+mvprintw(2, 50,"  / _` | |/ / '__/ _ \\ | | '_ ` _ \\ ");
+mvprintw(3, 50," | (_| |   <| | |  __/ | | | | | | |");
+mvprintw(4, 50,"  \\__, |_|\\_\\_|  \\___|_|_|_| |_| |_|");
+mvprintw(5, 50,"  |___/                             ");
 	// border box creation
 	for(std::map<std::string, WINDOW *>::const_iterator it=_fenetres.begin(); it != _fenetres.end(); it++) {
         box(it->second, ACS_VLINE, ACS_HLINE);
