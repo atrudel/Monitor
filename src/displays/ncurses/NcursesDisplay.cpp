@@ -59,9 +59,9 @@ void                     NcursesDisplay::init(const std::map<std::string, \
     int i = 0;
     for (module_iterator it = modules.begin(); it != modules.end(); it++)
     {
-		if (it->first != "cat")
-        	_fenetres[it->first] = subwin(stdscr, _module_height , _module_width, \
-            	(_module_height + _module_separation_size) * ++i , 0);
+        if (it->first != "cat")
+            _fenetres[it->first] = subwin(stdscr, _module_height , _module_width, \
+                (_module_height + _module_separation_size) * ++i , 0);
     }
 }
 
@@ -69,6 +69,7 @@ bool                     NcursesDisplay::quit( void )
 {
     if (getch() == 27) {
         endwin();
+        exit(0);
         return true;
     }
     return false;
@@ -187,9 +188,9 @@ inline void              NcursesDisplay::_dispWindows( const module_map &modules
         module_iterator  mainit = modules.find(it->first);
         int              range_str_pos = mainit->second->getName().length() + 4;
 
-		//cat box
-		if (mainit->second->getName() == "cat")
-			continue;
+        //cat box
+        if (mainit->second->getName() == "cat")
+            continue;
         //module name
         wattron(it->second, COLOR_PAIR(MODULE_COLOR));
         box(it->second, ACS_VLINE, ACS_HLINE);
@@ -241,4 +242,5 @@ void                     NcursesDisplay::render( const module_map &modules )
     if (modules.count("cat"))
         _dispAnime();
     _dispRefresh();
+    this->quit();
 }
