@@ -62,6 +62,17 @@ void BeautifulDisplay::renderModule(const IMonitorModule &module, int &curr_x, i
 		_display.drawString(name, curr_x, curr_y);
 
 		std::deque<float> data = it->second;
+
+		if (_time % 10 == 0)
+			_values[it->first] = data.front();
+
+		if (_values.find(it->first) != _values.end())
+		{
+			std::ostringstream os;
+			os << _values[it->first];
+			_display.drawString(os.str(), curr_x + 10, curr_y + GRAPH_HEIGHT / 2);
+		}
+
 		for (size_t x = data.size() - 1; x > 0; x--)
 		{
 			for (int y = _scale(x, data, module) * GRAPH_HEIGHT - 1; y > 0; y--)
@@ -84,6 +95,7 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 	(void) modules;
 	static int i = 0;
 	i++;
+	_time++;
 
 	_display.swap();
 

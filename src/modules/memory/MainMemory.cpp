@@ -65,7 +65,7 @@ void MainMemory::update(void)
 {
 	try
 	{
-		this->dequeUpdate("memoryUsage", this->getSystemMemoryUsagePercentage());
+		this->dequeUpdate("Memory usage (%)", this->getSystemMemoryUsagePercentage());
 	}
 	catch (std::exception &e)
 	{

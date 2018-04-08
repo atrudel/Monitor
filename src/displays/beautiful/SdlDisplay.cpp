@@ -6,7 +6,7 @@ SdlDisplay::SdlDisplay()
 }
 
 SdlDisplay::SdlDisplay(const int &w, const int &h)
-	: _width(w), _height(h), _font("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.;,:=+-*/\\()!?@ "), _clicked(false)
+	: _width(w), _height(h), _font("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.;,:=+-*/%()!?@ "), _clicked(false)
 {
 	try
 	{
