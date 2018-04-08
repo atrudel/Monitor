@@ -4,6 +4,7 @@
 NetworkModule::NetworkModule(void) : _name(""), _graphMin(0), _graphMax(0)
     , _graphs(std::map<std::string, std::deque<float> >()), _datas(std::map<std::string, std::string>())
 {
+    _time = 0;
     _graphMin = 0.0f;
     _graphMax = 100000.0f;
     //
@@ -17,12 +18,13 @@ NetworkModule::~NetworkModule()
 
 void NetworkModule::update(void)
 {   
-    if ( i % 60 == 0)
+    std::cout << _time << std::endl;
+    if ( _time % 60 == 0)
     {
         reset_net();
-        i = 0;
+        _time = 0;
     }
-    i++;
+    _time++;
 }
 
 

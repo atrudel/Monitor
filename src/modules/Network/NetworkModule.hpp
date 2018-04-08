@@ -37,8 +37,8 @@ class NetworkModule : public IMonitorModule
     std::map<std::string, std::string> _datas;
     float _lastin;
     float _lastout;
+    int _time;
 
 };
-  static int i = 0;
 
 #endif
