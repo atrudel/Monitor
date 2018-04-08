@@ -34,28 +34,27 @@ void BeautifulDisplay::update(void)
 	_display.update();
 }
 
-void BeautifulDisplay::renderModule(const IMonitorModule &module, int index)
+void BeautifulDisplay::renderModule(const IMonitorModule &module, int &curr_x, int &curr_y)
 {
-	int j = -1;
-	int size = 120;
+	_display.drawString(module.getName(), curr_x, curr_y);
+	curr_y += TITLE_HEIGHT;
 
 	typedef std::map<std::string, std::string>::const_iterator	data_iterator;
 	for (data_iterator it = module.getData().begin(); it != module.getData().end(); it++)
 	{
-		j++;
 		std::string str = it->first + ": " + it->second;
-		_display.drawString(str, 5, 20 + j * 10);
-		size = 25 + j * 10;
-		// std::cout << str << ", x " << 5 << ", y " << size << ", j " << j << ", index " << index << std::endl;
+		_display.drawString(str, curr_x, curr_y);
+		curr_y += DATA_HEIGHT;
 	}
 
+	int j = -1;
 	typedef std::map<std::string, std::deque<float> >::const_iterator	graph_iterator;
 	for (graph_iterator it = module.getGraphs().begin(); it != module.getGraphs().end(); it++)
 	{
-		j++;
+		++j;
 		std::string name = it->first;
-		_display.drawString(name, 5, 5 + (index + j) * (size + 5));
-		std::cout << name << ", x " <<  5 << ", y " << 5 + (index + j) * (size + 5) << ", j " << j << ", index " << index << std::endl;
+
+		_display.drawString(name, curr_x, curr_y);
 
 		std::deque<float> data = it->second;
 		for (size_t x = data.size() - 1; x > 0; x--)
@@ -66,16 +65,17 @@ void BeautifulDisplay::renderModule(const IMonitorModule &module, int index)
 				int g = 128 + j * 50;
 				int b = y * 2;
 				int color = (r << 16) | (g << 8) | b;
-				_display.drawPix(static_cast<int>(x) + 100, (100 + module.getData().size() * 10) - y + (index + j) * size, color);
+
+				_display.drawPix(static_cast<int>(x) + (curr_x + LEFT_MARGIN_GR), (100 + curr_y - y) , color);
 			}
 		}
-		size = 120;
+		curr_y += GRAPH_HEIGHT;
 	}
 }
 
-void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &module)
+void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modules)
 {
-	(void) module;
+	(void) modules;
 	static int i = 0;
 	i++;
 
@@ -91,7 +91,7 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 		}
 	}
 
-//	 _display.setSize(200, static_cast<int>(module.size() * 100));
+//	 _display.setSize(200, static_cast<int>(modules.size() * 100));
 
 	for (int y = 0; y < _display.getHeight(); y++)
 		for (int x = 0; x < _display.getWidth(); x++)
@@ -99,11 +99,12 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 
 	typedef std::map<std::string, IMonitorModule*>::const_iterator iterator;
 
-	int index = 0;
-	for (iterator it = module.begin(); it != module.end(); it++)
+	int curr_x = LEFT_OFFSET;
+	int curr_y = TOP_OFFSET;
+	for (iterator it = modules.begin(); it != modules.end(); it++)
 	{
-		renderModule(*it->second, index);
-		index++;
+		renderModule(*it->second, curr_x, curr_y);
+		curr_y += MODULE_GAP;
 	}
 
 	_display.draw();
