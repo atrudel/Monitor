@@ -48,7 +48,7 @@ public:
 	void stop();
 	void loop();
 
-	void test();
+	void test(int iterations);
 };
 
 #endif
