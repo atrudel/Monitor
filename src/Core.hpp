@@ -22,13 +22,6 @@
 class IMonitorModule;
 class IMonitorDisplay;
 
-#define LIB_OPT		0b10000000
-#define OS_OPT		0b00000001
-#define CPU_OPT		0b00000010
-#define RAM_OPT		0b00000100
-#define TIME_OPT	0b00001000
-#define NETWORK_OPT	0b00010000
-
 class Core
 {
 private:
@@ -47,11 +40,11 @@ public:
 
 	Core &operator=(const Core &o);
 
-	void init(int display_options);
+	void init(char display_options[8]);
 	void update();
 	void render();
 
-	void start(int display_options);
+	void start(char display_options[8]);
 	void stop();
 	void loop();
 
