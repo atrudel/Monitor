@@ -20,7 +20,6 @@
 class NcursesDisplay : public IMonitorDisplay {
 
 public:
-
 	NcursesDisplay( void );
 	NcursesDisplay( NcursesDisplay const & src );
 	virtual ~NcursesDisplay();

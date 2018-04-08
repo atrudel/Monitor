@@ -25,9 +25,15 @@ public:
 
 	SdlDisplay &operator=(const SdlDisplay &o);
 
-	void drawPix(int x, int y, int color);
+	void update();
+
+	void drawPix(const int &x, const int &y, const int &color);
 	void init();
 	void swap();
+
+	void handleEvents(const SDL_Event &e);
+
+	void resize(const int &w, const int &h);
 
 	int getWidth() const;
 

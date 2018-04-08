@@ -36,8 +36,10 @@ Core &Core::operator=(const Core &o)
 void Core::init()
 {
 	_displays.push_back(new BeautifulDisplay());
-	_modules["time"] = new TimeModule();
-	// _modules["gpu"] = new GpuModul();
+
+//	_modules["time"] = new TimeModule();
+	_modules["main_cpu"] = new MainCpu();
+//	_modules["Hostname"] = new Hostname();
 	// _modules["ram"] = new RamModul();
 }
 
@@ -85,9 +87,9 @@ void Core::loop()
 //			if (seconds % 60 == 0)
 //				std::cout << (seconds / 60) << " seconds..." << std::endl;
 			update();
+			render();
 			beforeTime = clock();
 		}
-		render();
 	}
 }
 
