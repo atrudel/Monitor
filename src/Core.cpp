@@ -37,6 +37,7 @@ void Core::init(char display_options[SIZE_OPT])
 	char	rank = 48;
 	char	name[20];
 	while (display_options[i]) {
+		dprintf(2, "%s\n", display_options);
 		bzero(name, 20);
 		if (modules >= 7)
 			break;
