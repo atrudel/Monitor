@@ -4,13 +4,15 @@
 int main()
 {
     MainCpu toto;
-    for (int i=0; i < 50; i++){
-        usleep(1000);
-        std::cout << toto.GetCPULoad() << std::endl;
+    for (int i = 0; i < 50; i++)
+    {
+        toto.update();
+        usleep(1000000);
+ 
+        std::map<std::string, std::deque<float> > pouet = toto.getGraphs();
+        for (std::map<std::string, std::deque<float> >::iterator i = pouet.begin(); i != pouet.end(); ++i)
+            for (std::deque<float>::iterator it = i->second.begin(); it != i->second.end(); ++it)
+                std::cout << ' ' << *it;
     }
-    // std::map< std::string, std::deque<float> > pouet = toto.getGraphs();
-    // for (std::deque<float>::iterator it = pouet["cpuUsage"].begin(); it!=pouet["cpuUsage"].end(); ++it)
-    //     std::cout << ' ' << *it;
-    // std::cout << std::endl << toto.getName() << std::endl;
     return 0;
 }

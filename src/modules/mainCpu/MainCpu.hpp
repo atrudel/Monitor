@@ -9,14 +9,28 @@
 #include <mach/mach_error.h>
 #include <mach/mach_host.h>
 #include <mach/vm_map.h>
+#include <sstream>
 
 #include "IMonitorModule.hpp"
 
 #define BUFFERLEN 128
 #define DEQUE_SIZE 100
+#define WORLD_WIDE_MAX_CPU_ON_UNIT 100
 
 class MainCpu : public IMonitorModule
 {
+    std::string _name;
+    float _min, _max;
+    std::map<std::string, std::deque<float> > _graphs;
+    std::map<std::string, std::string> _data;
+
+    size_t _oldWorkTicks, _oldTotalTicks;
+    size_t _oldCpusWorkTicks[WORLD_WIDE_MAX_CPU_ON_UNIT], _oldCpusTotalTicks[WORLD_WIDE_MAX_CPU_ON_UNIT];  
+
+    float calculateCPULoad(size_t newWorkTicks, size_t oldWorkTicks,  size_t newTotalTicks, size_t oldTotalTicks);
+    void setCPUsLoad();
+    void dequeUpdate(std::string name, float ret);
+
   public:
     MainCpu(void);
     MainCpu(MainCpu const &src);
@@ -30,25 +44,10 @@ class MainCpu : public IMonitorModule
     void setName(std::string name);
     virtual const std::string &getName(void) const;
 
-    virtual const std::map< std::string, std::deque<float> > &getGraphs(void) const;
+    virtual const std::map<std::string, std::deque<float> > &getGraphs(void) const;
     virtual const float &getGraphMin(void) const;
     virtual const float &getGraphMax(void) const;
     virtual const std::map<std::string, std::string> &getData(void) const;
-
-    float CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks);
-    float GetCPULoad();
-    void dequeUpdate(std::string name, float ret);
-    
-
-  private:
-    std::string _name;
-    float _min;
-    float _max;
-    std::map< std::string, std::deque<float> > _graphs;
-    std::map<std::string, std::string> _data;
-    static unsigned long long _previousTotalTicks;
-    static unsigned long long _previousIdleTicks;
 };
 
-
-#endif //MAINCPU_HPP
+#endif
