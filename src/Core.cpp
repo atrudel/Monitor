@@ -57,8 +57,7 @@ void Core::init(char display_options[SIZE_OPT])
 			_modules[name] = new NetworkModule();
 		}
 		if (display_options[i] == 'a' && (name[0] = rank)) {
-			strcpy(&(name[1]), "cat");
-			_modules[name] = new Cat();
+			_modules["cat"] = new Cat();
 		}
 		if (display_options[i] == 'o') {
 			strcpy(&(name[1]), "os");
