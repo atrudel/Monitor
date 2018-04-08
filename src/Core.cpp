@@ -28,16 +28,23 @@ Core &Core::operator=(const Core &o)
 	return *this;
 }
 
-void Core::init()
+void Core::init(int display_options)
 {
-	_displays.push_back(new BeautifulDisplay());
-	_modules["time"] = new TimeModule();
-	_modules["main_cpu"] = new MainCpu();
-	_modules["net"] = new NetworkModule();
-//	_modules["main_cpu_2"] = new MainCpu();
 	_modules["Hostname"] = new Hostname();
-	// _modules["ram"] = new RamModul();
-  if (_activeDisplayIndex == 1)
+	if (!(display_options & LIB_OPT))
+		_displays.push_back(new BeautifulDisplay());
+
+	if (!(display_options & TIME_OPT))
+		_modules["time"] = new TimeModule();
+	if (!(display_options & CPU_OPT))
+		_modules["main_cpu"] = new MainCpu();
+	if (!(display_options & TIME_OPT))
+		_modules["main_cpu_2"] = new MainCpu();
+	if (!(display_options & NETWORK_OPT))
+		_modules["net"] = new NetworkModule();
+	// if (!(display_options & RAM_OPT))
+	// 	_modules["ram"] = new RamModul();
+	if (display_options & LIB_OPT)
 	{
 		NcursesDisplay *ncurses = new NcursesDisplay();
 		ncurses->init(_modules);
@@ -62,11 +69,11 @@ void Core::render()
 		_displays[_activeDisplayIndex]->render(_modules);
 }
 
-void Core::start()
+void Core::start(int display_options)
 {
 	_running = true;
 
-	init();
+	init(display_options);
 	loop();
 }
 

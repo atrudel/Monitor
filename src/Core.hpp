@@ -22,6 +22,13 @@
 class IMonitorModule;
 class IMonitorDisplay;
 
+#define LIB_OPT		0b10000000
+#define OS_OPT		0b00000001
+#define CPU_OPT		0b00000010
+#define RAM_OPT		0b00000100
+#define TIME_OPT	0b00001000
+#define NETWORK_OPT	0b00010000
+
 class Core
 {
 private:
@@ -29,7 +36,7 @@ private:
 	std::vector<IMonitorDisplay*>			_displays;
 	std::map<std::string, IMonitorModule*>	_modules;
 	int										_activeDisplayIndex;
-	
+
 
 public:
 	Core();
@@ -40,11 +47,11 @@ public:
 
 	Core &operator=(const Core &o);
 
-	void init();
+	void init(int display_options);
 	void update();
 	void render();
 
-	void start();
+	void start(int display_options);
 	void stop();
 	void loop();
 
