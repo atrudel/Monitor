@@ -6,7 +6,7 @@
 /*   By: agrumbac <agrumbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 14:38:34 by agrumbac          #+#    #+#             */
-/*   Updated: 2018/04/07 17:22:01 by agrumbac         ###   ########.fr       */
+/*   Updated: 2018/04/08 13:18:10 by agrumbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ public:
 	bool 					quit( void );
 
 private:
+
+	typedef std::map<std::string, IMonitorModule*>::const_iterator module_iterator;
+
 	std::map<std::string, WINDOW *>         _fenetres;
 	const int                               _module_separation_size;
     const int                               _module_height;
