@@ -126,7 +126,7 @@ int	 BeautifulDisplay::calculateTotalHeight(const std::map<std::string, IMonitor
 int	 BeautifulDisplay::calculateModuleHeight(const IMonitorModule* module) const {
     int height = 0;
     height += TITLE_HEIGHT;
-    height += (DATA_HEIGHT + DATA_GAP) * module->getData().size();
+    height += DATA_HEIGHT * module->getData().size();
     height += GRAPH_HEIGHT * module->getGraphs().size(); // to change
     height += MODULE_GAP * (module->getGraphs().size() -1); // to change
     return height;

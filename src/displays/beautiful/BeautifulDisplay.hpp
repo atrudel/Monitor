@@ -18,7 +18,6 @@
 //** Y dimension
 # define TITLE_HEIGHT   10
 # define DATA_HEIGHT    5
-# define DATA_GAP       2
 # define GRAPH_HEIGHT   125
 
 //** X dimension
