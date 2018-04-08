@@ -13,9 +13,9 @@
 
 #include "../IMonitorModule.hpp"
 
-#define BUFFERLEN 128
 #define DEQUE_SIZE 100
 #define WORLD_WIDE_MAX_CPU_ON_UNIT 100
+#define BUFFERLEN 128
 
 class MainCpu : public IMonitorModule
 {
@@ -29,6 +29,7 @@ class MainCpu : public IMonitorModule
 
     float calculateCPULoad(size_t newWorkTicks, size_t oldWorkTicks,  size_t newTotalTicks, size_t oldTotalTicks);
     void setCPUsLoad();
+    void setCpuDatas();
     void dequeUpdate(std::string name, float ret);
 
   public:

@@ -86,12 +86,25 @@ void MainCpu::dequeUpdate(std::string name, float ret)
         this->_graphs[name] = std::deque<float>(DEQUE_SIZE, 0);
 }
 
+void MainCpu::setCpuDatas()
+{
+    char buffer[BUFFERLEN];
+    size_t bufferlen = BUFFERLEN;
+
+    sysctlbyname("machdep.cpu.brand_string",&buffer,&bufferlen,NULL,0);
+
+    std::ostringstream ss;
+    ss << buffer;
+
+    printf("%s\n", buffer);
+
+    _data["cpuBrand"] = buffer;
+}
+
 void MainCpu::update(void)
 {
-    char buff[BUFFERLEN];
-    size_t buffLen = BUFFERLEN;
-
     this->setCPUsLoad();
+    this->setCpuDatas();
 }
 
 const float &MainCpu::getGraphMin(void) const
