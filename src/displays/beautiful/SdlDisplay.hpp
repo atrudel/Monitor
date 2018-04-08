@@ -31,6 +31,8 @@ public:
 	void init();
 	void swap();
 
+	void setSize(const int &w, const int &h);
+
 	void handleEvents(const SDL_Event &e);
 
 	void resize(const int &w, const int &h);

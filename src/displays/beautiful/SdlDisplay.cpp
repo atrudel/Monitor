@@ -36,6 +36,14 @@ SdlDisplay &SdlDisplay::operator=(const SdlDisplay &o)
 	return *this;
 }
 
+void SdlDisplay::setSize(const int &w, const int &h)
+{
+	if (w <= 0 || h <= 0 || w > 10000 || h > 10000)
+		return;
+	if (_width != w || _height != h)
+		resize(w, h);
+}
+
 void SdlDisplay::update()
 {
 	int rx, sx;

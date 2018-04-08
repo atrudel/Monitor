@@ -35,7 +35,7 @@ void BeautifulDisplay::update(void)
 	_display.update();
 }
 
-void BeautifulDisplay::renderModule(const IMonitorModule &module)
+void BeautifulDisplay::renderModule(const IMonitorModule &module, int index)
 {
 	(void) module;
 //	for (int y = _display.getWidth() - 1; y > 100; y++)
@@ -53,11 +53,7 @@ void BeautifulDisplay::renderModule(const IMonitorModule &module)
 			{
 				for (int y = data[x] * 100 - 1; y > 0; y--)
 				{
-					_display.drawPix(static_cast<int>(x), 100 - y, 0x00ffff);
-				}
-				for (int y = data[x] * 100 - 1; y > 0; y--)
-				{
-					_display.drawPix(static_cast<int>(x), 100 - y + 100, 0x00ffff);
+					_display.drawPix(static_cast<int>(x), 150 - y + index * 150, 0x00ffff);
 				}
 			}
 		}
@@ -81,12 +77,18 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 		}
 	}
 
+	_display.setSize(200, static_cast<int>(module.size() * 150));
+
 	for (int y = 0; y < _display.getHeight(); y++)
 		for (int x = 0; x < _display.getWidth(); x++)
 			_display.drawPix(x, y, 0);
 
 	typedef std::map<std::string, IMonitorModule*>::const_iterator iterator;
 
+	int index = 0;
 	for (iterator it = module.begin(); it != module.end(); it++)
-		renderModule(*it->second);
+	{
+		renderModule(*it->second, index);
+		index++;
+	}
 }

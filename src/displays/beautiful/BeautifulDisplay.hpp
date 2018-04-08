@@ -13,7 +13,7 @@ public:
 
     BeautifulDisplay& operator=(const BeautifulDisplay& rhs);
 
-	void renderModule(const IMonitorModule &module);
+	void renderModule(const IMonitorModule &module, int index);
 	void init(void);
     void update(void);
 	void render(const std::map<std::string, IMonitorModule*> &module);
@@ -21,6 +21,5 @@ public:
 private:
 	SdlDisplay	_display;
 };
-
 
 #endif
