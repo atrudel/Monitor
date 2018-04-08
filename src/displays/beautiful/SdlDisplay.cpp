@@ -20,8 +20,6 @@ SdlDisplay::SdlDisplay(const int &w, const int &h)
 	SDL_SetWindowResizable(_window, SDL_TRUE);
 	SDL_SetWindowBordered(_window, SDL_FALSE);
 
-
-
 }
 
 SdlDisplay::SdlDisplay(const SdlDisplay &o)
@@ -34,9 +32,18 @@ SdlDisplay::~SdlDisplay()
 	delete _pixels;
 }
 
-SdlDisplay &SdlDisplay::operator=(const SdlDisplay &o)
+SdlDisplay &SdlDisplay::operator=(const SdlDisplay &rhs)
 {
-	(void) o;
+	_width = rhs._width;
+	_height = rhs._height;
+	_clicked = rhs._clicked;
+	_pixels = rhs.getPixels();
+	_window = rhs.getWindow();
+	_renderer = rhs.getRenderer();
+	_texture = rhs.getTexture();
+	_fontImg = rhs.getFontImg();
+	_font = rhs.getFont();
+
 	return *this;
 }
 
@@ -219,4 +226,29 @@ int SdlDisplay::getHeight() const
 int *SdlDisplay::getPixels() const
 {
 	return _pixels;
+}
+
+SDL_Window *SdlDisplay::getWindow() const
+{
+	return _window;
+}
+
+SDL_Renderer *SdlDisplay::getRenderer() const
+{
+	return _renderer;
+}
+
+SDL_Texture *SdlDisplay::getTexture() const
+{
+	return _texture;
+}
+
+SDL_Texture *SdlDisplay::getFontImg() const
+{
+	return _fontImg;
+}
+
+std::string SdlDisplay::getFont() const
+{
+	return _font;
 }

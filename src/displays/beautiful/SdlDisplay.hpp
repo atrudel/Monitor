@@ -55,6 +55,15 @@ public:
 
 	int *getPixels() const;
 
+	SDL_Window *getWindow() const;
+	SDL_Renderer *getRenderer() const;
+
+	SDL_Texture *getTexture() const;
+
+	SDL_Texture *getFontImg() const;
+
+	std::string getFont() const;
+
 };
 
 #endif
