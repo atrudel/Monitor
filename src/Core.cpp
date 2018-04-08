@@ -96,16 +96,21 @@ void Core::loop()
 	}
 }
 
-void Core::test()
+void Core::test(int iter)
 {
-    // _displays.push_back(new DummyDisplay());
+//    _displays.push_back(new DummyDisplay());
 
     // ADD YOUR MODULES HERE, AS A NEW ENTRY IN THE MAP
- //   _modules["dummy"] = new DummyModule();
+//    _modules["dummy"] = new DummyModule();
     _modules["hostname"] = new Hostname();
 //    _modules["os"] = new OSModule();
     _modules["time"] = new TimeModule();
+    _modules["main_cpu"] = new MainCpu();
+    _modules["net"] = new NetworkModule();
+    _modules["memory"] = new MainMemory();
 
-    update();
+    for (int i= 0; i < iter; i++) {
+        update();
+    }
     render();
 }

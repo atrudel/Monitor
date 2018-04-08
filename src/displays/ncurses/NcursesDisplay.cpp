@@ -93,7 +93,6 @@ bool 					NcursesDisplay::quit( void )
 
 void 					NcursesDisplay::update(void)
 { 
-    getmaxyx(stdscr, _window_height, _window_width);
 
 }
 
@@ -101,78 +100,87 @@ void 					NcursesDisplay::render( const std::map<std::string, IMonitorModule*> &
 {
 	(void)disp;
 	erase();
+
+    getmaxyx(stdscr, _window_height, _window_width);
 	box(stdscr, 0, 0);
-mvprintw(0, 50,"	        _             _ _           ");
-mvprintw(1, 50,"   __ _| | ___ __ ___| | |_ __ ___  ");
-mvprintw(2, 50,"  / _` | |/ / '__/ _ \\ | | '_ ` _ \\ ");
-mvprintw(3, 50," | (_| |   <| | |  __/ | | | | | | |");
-mvprintw(4, 50,"  \\__, |_|\\_\\_|  \\___|_|_|_| |_| |_|");
-mvprintw(5, 50,"  |___/                             ");
+	mvprintw(0, 50,"	        _             _ _           ");
+	mvprintw(1, 50,"   __ _| | ___ __ ___| | |_ __ ___  ");
+	mvprintw(2, 50,"  / _` | |/ / '__/ _ \\ | | '_ ` _ \\ ");
+	mvprintw(3, 50," | (_| |   <| | |  __/ | | | | | | |");
+	mvprintw(4, 50,"  \\__, |_|\\_\\_|  \\___|_|_|_| |_| |_|");
+	mvprintw(5, 50,"  |___/                             ");
 
 
 	_anime++;
 if (_anime >= 80)
 	_anime = 0;
 if (_anime < 20) {
-	mvprintw(1, ANIME_WIDTH, "   /\\**/\\");
-	mvprintw(2, ANIME_WIDTH, "   ( o_o  )_)");
-	mvprintw(3, ANIME_WIDTH, "   ,(u  u  ,),");
-	mvprintw(4, ANIME_WIDTH, "  {}{}{}{}{}{}");
-
-
-mvprintw(1, ANIME_WIDTH + 20, "    |\\_._/|   ");
-mvprintw(2, ANIME_WIDTH + 20, "    | o o |   ");
-mvprintw(3, ANIME_WIDTH + 20, "    (  T  )   ");
-mvprintw(4, ANIME_WIDTH + 20, "   .^`-^-'^.  ");
-mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'  ");
-mvprintw(6, ANIME_WIDTH + 20, "   | | | | |  ");
-mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_)) ");
-
-
-
-
+	if (_window_width - 20 > ANIME_WIDTH) {
+		mvprintw(1, ANIME_WIDTH, "  /\\**/\\");
+		mvprintw(2, ANIME_WIDTH, "  ( o_o  )_)");
+		mvprintw(3, ANIME_WIDTH, "  ,(u  u  ,),");
+		mvprintw(4, ANIME_WIDTH, " {}{}{}{}{}{}");
+		if (_window_width - 60 > ANIME_WIDTH) {
+			mvprintw(1, ANIME_WIDTH + 20, "    |\\_._/|   ");
+			mvprintw(2, ANIME_WIDTH + 20, "    | o o |   ");
+			mvprintw(3, ANIME_WIDTH + 20, "    (  T  )   ");
+			mvprintw(4, ANIME_WIDTH + 20, "   .^`-^-'^.  ");
+			mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'  ");
+			mvprintw(6, ANIME_WIDTH + 20, "   | | | | |  ");
+			mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_)) ");
+		}
+	}
 } else if (_anime < 40) {
-	mvprintw(1, ANIME_WIDTH, "   /\\**/\\");
-	mvprintw(2, ANIME_WIDTH, "   ( o_o  )_)");
-	mvprintw(3, ANIME_WIDTH, "   ,(u  u  ,),");
-	mvprintw(4, ANIME_WIDTH, "  {}{}{}{}{}{}");
-
-mvprintw(1, ANIME_WIDTH + 20, "    |,\\__/|    ");
-mvprintw(2, ANIME_WIDTH + 20, "    |  o o|    ");
-mvprintw(3, ANIME_WIDTH + 20, "    (   T )    ");
-mvprintw(4, ANIME_WIDTH + 20, "   .^`--^'^.   ");
-mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'   ");
-mvprintw(6, ANIME_WIDTH + 20, "   | | | | |   ");
-mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))  ");
+		if (_window_width - 20 > ANIME_WIDTH) {
+			mvprintw(1, ANIME_WIDTH, "   /\\**/\\");
+			mvprintw(2, ANIME_WIDTH, "   ( o_o  )_)");
+			mvprintw(3, ANIME_WIDTH, "   ,(u  u  ,),");
+			mvprintw(4, ANIME_WIDTH, "  {}{}{}{}{}{}");
+		if (_window_width - 60 > ANIME_WIDTH) {
+			mvprintw(1, ANIME_WIDTH + 20, "    |,\\__/|    ");
+			mvprintw(2, ANIME_WIDTH + 20, "    |  o o|    ");
+			mvprintw(3, ANIME_WIDTH + 20, "    (   T )    ");
+			mvprintw(4, ANIME_WIDTH + 20, "   .^`--^'^.   ");
+			mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'   ");
+			mvprintw(6, ANIME_WIDTH + 20, "   | | | | |   ");
+			mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))  ");
+		}
+	}
 } else if (_anime < 60) {
-	mvprintw(1, ANIME_WIDTH, "   /\\**/\\");
-	mvprintw(2, ANIME_WIDTH, "   ( o_o  )_)");
-	mvprintw(3, ANIME_WIDTH, "   ,(u  u  ,),");
-	mvprintw(4, ANIME_WIDTH, " {}{}{}{}{}{}  ");
+	if (_window_width - 20 > ANIME_WIDTH) {
+		mvprintw(1, ANIME_WIDTH, "    /\\**/\\");
+		mvprintw(2, ANIME_WIDTH, "    ( o_o  )_)");
+		mvprintw(3, ANIME_WIDTH, "    ,(u  u  ,),");
+		mvprintw(4, ANIME_WIDTH, "  {}{}{}{}{}{}  ");
 
-mvprintw(1, ANIME_WIDTH + 20, "    |\\__/,|    ");
-mvprintw(2, ANIME_WIDTH + 20, "    |o o  |    ");
-mvprintw(3, ANIME_WIDTH + 20, "    ( T   )    ");
-mvprintw(4, ANIME_WIDTH + 20, "   .^`^--'^.   ");
-mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'   ");
-mvprintw(6, ANIME_WIDTH + 20, "   | | | | |   ");
-mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))  ");
-
+		if (_window_width - 60 > ANIME_WIDTH) {
+			mvprintw(1, ANIME_WIDTH + 20, "    |\\__/,|    ");
+			mvprintw(2, ANIME_WIDTH + 20, "    |o o  |    ");
+			mvprintw(3, ANIME_WIDTH + 20, "    ( T   )    ");
+			mvprintw(4, ANIME_WIDTH + 20, "   .^`^--'^.   ");
+			mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'   ");
+			mvprintw(6, ANIME_WIDTH + 20, "   | | | | |   ");
+			mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))  ");
+		}
+	}
 } else {
-	mvprintw(1, ANIME_WIDTH, "   /\\**/\\");
-	mvprintw(2, ANIME_WIDTH, "   ( o_o  )_)");
-	mvprintw(3, ANIME_WIDTH, "   ,(u  u  ,),");
-	mvprintw(4, ANIME_WIDTH, "   {}{}{}{}{}{}");
+if (_window_width - 20 > ANIME_WIDTH) {
+		mvprintw(1, ANIME_WIDTH, "  /\\**/\\");
+		mvprintw(2, ANIME_WIDTH, "  ( o_o  )_)");
+		mvprintw(3, ANIME_WIDTH, "  ,(u  u  ,),");
+		mvprintw(4, ANIME_WIDTH, "  {}{}{}{}{}{}");
 
 
-
-mvprintw(1, ANIME_WIDTH + 20, "    |\\_._/|");
-mvprintw(2, ANIME_WIDTH + 20, "    | 0 0 |");
-mvprintw(3, ANIME_WIDTH + 20, "    (  T  )");
-mvprintw(4, ANIME_WIDTH + 20, "   .^`-^-'^.");
-mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'");
-mvprintw(6, ANIME_WIDTH + 20, "   | | | | |");
-mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))");
+		if (_window_width - 60 > ANIME_WIDTH) {
+			mvprintw(1, ANIME_WIDTH + 20, "    |\\_._/|");
+			mvprintw(2, ANIME_WIDTH + 20, "    | 0 0 |");
+			mvprintw(3, ANIME_WIDTH + 20, "    (  T  )");
+			mvprintw(4, ANIME_WIDTH + 20, "   .^`-^-'^.");
+			mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'");
+			mvprintw(6, ANIME_WIDTH + 20, "   | | | | |");
+			mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))");
+		}
+	}
 }
 
 	// border box creation
@@ -190,11 +198,11 @@ mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))");
 		int i = 0;
 		float cpu = 0;
 		for (std::map<std::string, std::deque<float> >::const_iterator secondit = mainit->second->getGraphs().begin(); secondit != mainit->second->getGraphs().end();secondit++) {
-			for (std::deque<float>::const_iterator eqiter = secondit->second.begin(); eqiter !=  secondit->second.end(); eqiter++){
+			for (std::deque<float>::const_reverse_iterator eqiter = secondit->second.rbegin(); eqiter != secondit->second.rend() || i < 20 ; eqiter++){
 				cpu += *eqiter;
 				i++;
 			}
-			mvwprintw(it->second,j,10, " [%6.2f %%] %s  ",cpu / i, secondit->first.c_str());
+			mvwprintw(it->second,j,10, " [ %02i %%] %s  ",static_cast<int>(cpu / i * 100), secondit->first.c_str());
 			j++;
 		}
 		j++;

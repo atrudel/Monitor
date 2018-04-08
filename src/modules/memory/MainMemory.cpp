@@ -1,6 +1,6 @@
 #include "MainMemory.hpp"
 
-MainMemory::MainMemory(void) : _name("CPU"), _min(0.0f), _max(100.0f), _graphs(std::map< std::string, std::deque<float> >()), _data(std::map<std::string, std::string>())
+MainMemory::MainMemory(void) : _name("CPU"), _min(0.0f), _max(100.0f), _graphs(std::map< std::string, std::deque<float> >()), _data(std::map<std::string, std::string>()), _frame(0)
 {
     this->update();
 }
@@ -53,8 +53,11 @@ float MainMemory::getSystemMemoryUsagePercentage()
     }
     pclose(fpIn);
 
-    if (totalPages > 0.0)
-        return static_cast<float>(pagesUsed / totalPages * 100);
+    if (totalPages > 0.0){
+        float tmp = static_cast<float>(pagesUsed / totalPages);
+        std::cout << "memory " << tmp << std::endl;  
+        return tmp;
+    }
     return 0.0f;
 }
 
@@ -100,5 +103,6 @@ MainMemory &MainMemory::operator=(MainMemory const &rhs)
     this->_data = rhs.getData();
     this->_min = rhs.getGraphMin();
     this->_max = rhs.getGraphMax();
+    this->_frame = rhs._frame;
 return *this;
 }
