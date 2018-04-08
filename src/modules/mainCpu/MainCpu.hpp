@@ -11,7 +11,7 @@
 #include <mach/vm_map.h>
 #include <sstream>
 
-#include "IMonitorModule.hpp"
+#include "../IMonitorModule.hpp"
 
 #define BUFFERLEN 128
 #define DEQUE_SIZE 100
