@@ -17,7 +17,7 @@ int main(int ac, char **av)
 		return 0;
 	}
 	bzero(display_options, SIZE_OPT);
-	if (ac == 1) {
+	if (ac == 1 || (ac == 2 && !strcmp(av[1], "-l"))) {
 		display_options[0] = 'h';
 		display_options[1] = 't';
 		display_options[2] = 'c';
@@ -25,6 +25,8 @@ int main(int ac, char **av)
 		display_options[4] = 'n';
 		display_options[5] = 'a';
 		display_options[6] = 'o';
+		if (ac == 2 && !strcmp(av[1], "-l"))
+			display_options[6] = 'l';
 	}
 	while (i < ac) {
 		j = 0;
