@@ -1,6 +1,5 @@
 #include "Core.hpp"
 #include "displays/dummy/DummyDisplay.hpp"
-#include "modules/dummy/DummyModule.hpp"
 #include "modules/Hostname/Hostname.hpp"
 #include "modules/os/OSModule.hpp"
 #include "modules/time/TimeModule.hpp"
@@ -98,7 +97,7 @@ void Core::test()
     _displays.push_back(new DummyDisplay());
 
     // ADD YOUR MODULES HERE, AS A NEW ENTRY IN THE MAP
-    _modules["dummy"] = new DummyModule();
+ //   _modules["dummy"] = new DummyModule();
     _modules["hostname"] = new Hostname();
 //    _modules["os"] = new OSModule();
     _modules["time"] = new TimeModule();

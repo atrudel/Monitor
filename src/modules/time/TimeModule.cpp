@@ -1,7 +1,9 @@
 #include "TimeModule.hpp"
 
 TimeModule::TimeModule() : _name("uptime"), _min(0), _max(0) {}
-TimeModule::TimeModule(TimeModule const &src) {}
+TimeModule::TimeModule(TimeModule const &src) {
+    *this = src;
+}
 TimeModule::~TimeModule(void) {}
 
 void TimeModule::fetch(void) {}
@@ -78,4 +80,5 @@ TimeModule &TimeModule::operator=(TimeModule const &rhs)
     this->_data = rhs.getData();
     this->_min = rhs.getGraphMin();
     this->_max = rhs.getGraphMax();
+    return *this;
 }
