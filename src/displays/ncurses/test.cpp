@@ -16,11 +16,13 @@ int		main( void )
 {
 	NcursesDisplay	dsp;
 
-	dsp.init();
+	std::map<std::string, IMonitorModule*>	modules;
+	modules["test"] = nullptr;
+	dsp.init(modules);
 	while (!dsp.quit())
 	{
 		dsp.update();
-		dsp.render();
+		dsp.render(modules);
 	}
 	return (0);
 }

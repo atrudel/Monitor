@@ -9,6 +9,7 @@
 # include "displays/IMonitorDisplay.hpp"
 # include "displays/beautiful/BeautifulDisplay.hpp"
 # include "modules/IMonitorModule.hpp"
+# include "displays/ncurses/NcursesDisplay.hpp"
 
 # include "modules/time/Time.hpp"
 

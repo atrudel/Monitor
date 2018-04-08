@@ -12,10 +12,16 @@
 
 #include "NcursesDisplay.hpp"
 
-NcursesDisplay::NcursesDisplay( void )
+NcursesDisplay::NcursesDisplay( void ) : 
+            _module_separation_size(1), _module_height(10),
+			_max_module_width(70), _module_width(_max_module_width),
+			_window_height(LINES), _window_width(COLS)
 { }
 
-NcursesDisplay::NcursesDisplay( NcursesDisplay const & src )
+NcursesDisplay::NcursesDisplay( NcursesDisplay const & src ) :
+            _module_separation_size(1), _module_height(10),
+			_max_module_width(70), _module_width(_max_module_width),
+			_window_height(LINES), _window_width(COLS)
 {
 	*this = src;
 }
@@ -52,18 +58,67 @@ void 					NcursesDisplay::init(void)
 	init_pair(DISP_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
 }
 
+void 					NcursesDisplay::init(const std::map<std::string, IMonitorModule*> &disp)
+{
+	initscr();
+	cbreak();
+	noecho();
+	curs_set(0);
+	keypad(stdscr, TRUE);
+	nodelay(stdscr, TRUE);
+
+	start_color();
+	init_pair(DISP_WHITE, COLOR_WHITE, COLOR_BLACK);
+	init_pair(DISP_RED, COLOR_RED, COLOR_BLACK);
+	init_pair(DISP_GREEN, COLOR_GREEN, COLOR_BLACK);
+	init_pair(DISP_BLUE, COLOR_BLUE, COLOR_BLACK);
+	init_pair(DISP_CYAN, COLOR_CYAN, COLOR_BLACK);
+	init_pair(DISP_YELLOW, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(DISP_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
+	int i = 0;
+	for (std::map<std::string, IMonitorModule*>::const_iterator it = disp.begin(); it != disp.end(); it++) {
+		_fenetres[it->first] = subwin(stdscr, _module_height , _module_width, (_module_height + _module_separation_size) * i , 0);
+		i++;
+	}
+}
+
 bool 					NcursesDisplay::quit( void )
 {
-	endwin();
-	return true;
+	if (getch() == 27) {
+		endwin();
+		return true;
+	}
+	return false;
 }
 
 void 					NcursesDisplay::update(void)
-{ }
+{ 
+    getmaxyx(stdscr, _window_height, _window_width);
+}
 
-void 					NcursesDisplay::render(void) const
+void 					NcursesDisplay::render( const std::map<std::string, IMonitorModule*> &disp ) const
 {
+	(void)disp;
+	erase();
 	box(stdscr, 0, 0);
+	// border box creation
+	for(std::map<std::string, WINDOW *>::const_iterator it=_fenetres.begin(); it != _fenetres.end(); it++) {
+        box(it->second, ACS_VLINE, ACS_HLINE);
+    }
+	// content creation
+	for(std::map<std::string, WINDOW *>::const_iterator it=_fenetres.begin(); it != _fenetres.end(); it++) {
+		
+
+        mvwprintw(it->second, 1, 1,("Ceci est la fenetre du " + it->first).c_str());
+//		mvwprintw(it->second, 1, 1, "%p", &disp[it->first]);
+    
+	
+	}
+	// refresh function
+    refresh();
+    for(std::map<std::string, WINDOW *>::const_iterator it=_fenetres.begin(); it != _fenetres.end(); it++) {
+        wrefresh(it->second);
+    }
 //	attron(COLOR_PAIR(PLAYER_COLOR));
 //	mvprintw(LINES, COLS);
 }
