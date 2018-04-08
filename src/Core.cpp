@@ -32,37 +32,47 @@ Core &Core::operator=(const Core &o)
 
 void Core::init(char display_options[SIZE_OPT])
 {
+	static int modules = 0;
 	int i = 0, l = 0;
 	char	rank = 48;
 	char	name[20];
 	while (display_options[i]) {
 		bzero(name, 20);
+		if (modules >= 7)
+			break;
 		if (display_options[i] == 'h' && (name[0] = rank)) {
 			strcpy(&(name[1]), "Hostname");
 			_modules[name] = new Hostname();
+			modules++;
 		}
 		if (display_options[i] == 't' && (name[0] = rank)) {
 			strcpy(&(name[1]), "time");
 			_modules[name] = new TimeModule();
+			modules++;
 		}
 		if (display_options[i] == 'c' && (name[0] = rank)) {
 			strcpy(&(name[1]), "main_cpu");
 			_modules[name] = new MainCpu();
+			modules++;
 		}
 		if (display_options[i] == 'r' && (name[0] = rank)) {
 			strcpy(&(name[1]), "ram");
 			_modules[name] = new MainMemory();
+			modules++;
 		}
 		if (display_options[i] == 'n' && (name[0] = rank)) {
 			strcpy(&(name[1]), "net");
 			_modules[name] = new NetworkModule();
+			modules++;
 		}
 		if (display_options[i] == 'a' && (name[0] = rank)) {
 			_modules["cat"] = new Cat();
+			modules++;
 		}
 		if (display_options[i] == 'o' && (name[0] = rank)) {
 			strcpy(&(name[1]), "os");
 			_modules[name] = new OSModule();
+			modules++;
 		}
 		rank++;
 		i++;
