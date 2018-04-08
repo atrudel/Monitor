@@ -81,7 +81,7 @@ void Core::stop()
 void Core::loop()
 {
 //	int seconds = 0;
-	double tickTime = 1000000.0 / 1.0;
+	double tickTime = 1000000.0 / 6.0;
 	clock_t beforeTime = clock();
 	while (_running)
 	{

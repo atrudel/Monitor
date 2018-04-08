@@ -91,7 +91,7 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 		}
 	}
 
-	// _display.setSize(200, static_cast<int>(module.size() * 100));
+//	 _display.setSize(200, static_cast<int>(module.size() * 100));
 
 	for (int y = 0; y < _display.getHeight(); y++)
 		for (int x = 0; x < _display.getWidth(); x++)
@@ -107,4 +107,22 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 	}
 
 	_display.draw();
+}
+
+int	 BeautifulDisplay::calculateTotalHeight(const std::map<std::string, IMonitorModule*> &module) const {
+    int height= 0;
+
+    height += TOP_OFFSET;
+
+    typedef std::map<std::string, IMonitorModule*>::const_iterator iterator;
+    for (iterator it = module.begin(); it != module.end(); it++)
+    {
+        height += calculateModuleHeight(it->second);
+    }
+    return height;
+}
+
+int	 BeautifulDisplay::calculateModuleHeight(const IMonitorModule* module) const {
+    (void)(module);
+    return 0;
 }
