@@ -48,9 +48,9 @@ void Core::init(char display_options[SIZE_OPT])
 			strcpy(&(name[1]), "main_cpu");
 			_modules[name] = new MainCpu();
 		}
-		if (display_options[i] == 'o' && (name[0] = rank)) {
-			strcpy(&(name[1]), "main_cpu_2");
-			_modules[name] = new MainCpu();
+		if (display_options[i] == 'r' && (name[0] = rank)) {
+			strcpy(&(name[1]), "ram");
+			_modules[name] = new MainMemory();
 		}
 		if (display_options[i] == 'n' && (name[0] = rank)) {
 			strcpy(&(name[1]), "net");
@@ -60,8 +60,10 @@ void Core::init(char display_options[SIZE_OPT])
 			strcpy(&(name[1]), "cat");
 			_modules[name] = new Cat();
 		}
-		// if (display_options[i] == 'r')
-			// _modules["ram"] = new RamModul();
+		if (display_options[i] == 'o') {
+			strcpy(&(name[1]), "os");
+			_modules[name] = new OSModule();
+		}
 		rank++;
 		i++;
 	}

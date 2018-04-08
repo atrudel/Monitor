@@ -12,8 +12,8 @@ int main(int ac, char **av)
 	char display_options[SIZE_OPT];
 	Core core;
 
-	if (ac == 2 && !strcmp(av[1], "-help")) {
-		std::cout << "usage: ./ft_gkrellm [-locrtn] \n-l: display ncurses mode\n-o: OS info\n-c: CPU info\n-r: RAM info\n-t: Time info\n-n: Network info" << std::endl;
+	if (ac == 1 || (ac == 2 && !strcmp(av[1], "-help"))) {
+		std::cout << "usage: ./ft_gkrellm [-lhtcrnao] \n-l: display ncurses mode \n-h: Hostname \n-t: Time info \n-c: CPU info \n-r: RAM info \n-n: Network info \n-a: display cat \n-o: OS info" << std::endl;
 		return 0;
 	}
 	bzero(display_options, SIZE_OPT);
