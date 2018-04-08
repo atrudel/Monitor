@@ -6,6 +6,8 @@
 #include <map>
 #include <queue>
 
+#define DEQUE_SIZE 400
+
 class IMonitorModule
 {
 

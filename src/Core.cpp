@@ -34,8 +34,8 @@ void Core::init()
 
 //	_modules["time"] = new TimeModule();
 	_modules["main_cpu"] = new MainCpu();
-	_modules["net"] = new NetworkModule();
-	_modules["main_cpu_2"] = new MainCpu();
+//	_modules["net"] = new NetworkModule();
+//	_modules["main_cpu_2"] = new MainCpu();
 //	_modules["Hostname"] = new Hostname();
 	// _modules["ram"] = new RamModul();
 }

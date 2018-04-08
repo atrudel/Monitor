@@ -6,7 +6,7 @@ SdlDisplay::SdlDisplay()
 }
 
 SdlDisplay::SdlDisplay(const int &w, const int &h)
-	: _width(w), _height(h)
+	: _width(w), _height(h), _font("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.;,:=+-*/\\()!?@ ")
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		throw  std::runtime_error("sdl error: unable to initialize sdl !");
@@ -16,6 +16,7 @@ SdlDisplay::SdlDisplay(const int &w, const int &h)
 	_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_PRESENTVSYNC);
 	_texture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, w, h);
 	_pixels = new int[w * h];
+	_fontImg = SDL_CreateTextureFromSurface(_renderer, SDL_LoadBMP("font.bmp"));
 	SDL_SetWindowResizable(_window, SDL_TRUE);
 	SDL_SetWindowBordered(_window, SDL_FALSE);
 }
@@ -81,10 +82,41 @@ void SdlDisplay::init()
 	SDL_RenderClear(_renderer);
 }
 
+void SdlDisplay::drawString(const std::string &str, const int &x, const int &y)
+{
+	(void) str;
+	(void) x;
+	(void) y;
+
+	for (size_t i = 0; i < str.length(); i++)
+	{
+		char c = std::toupper(str[static_cast<int>(i)]);
+		int index = _font.find(c);
+
+		SDL_Rect imgPartRect;
+		imgPartRect.x = (index % 26) * 8;
+		imgPartRect.y = (index / 26) * 8;
+		imgPartRect.w = 8;
+		imgPartRect.h = 8;
+
+		SDL_Rect dst;
+		dst.x = x + static_cast<int>(i) * 8;
+		dst.y = y;
+		dst.w = 8;
+		dst.h = 8;
+
+		SDL_RenderCopy(_renderer, _fontImg, &imgPartRect, &dst);
+	}
+}
+
 void SdlDisplay::swap()
 {
 	SDL_UpdateTexture(_texture, NULL, _pixels, _width * sizeof(int));
 	SDL_RenderCopy(_renderer, _texture, NULL, NULL);
+}
+
+void SdlDisplay::draw()
+{
 	SDL_RenderPresent(_renderer);
 }
 

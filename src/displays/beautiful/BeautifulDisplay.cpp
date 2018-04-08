@@ -37,24 +37,34 @@ void BeautifulDisplay::update(void)
 
 void BeautifulDisplay::renderModule(const IMonitorModule &module, int index)
 {
-	(void) module;
-//	for (int y = _display.getWidth() - 1; y > 100; y++)
-//		for (int x = 0; x < _display.getWidth(); x++)
-//			_display.drawPix(x, y, 0x000000);
-	typedef std::map<std::string, std::deque<float> >::const_iterator	module_iterator;
+	int j = -1;
 
-	for (module_iterator it = module.getGraphs().begin(); it != module.getGraphs().end(); it++)
+	typedef std::map<std::string, std::string>::const_iterator	data_iterator;
+	for (data_iterator it = module.getData().begin(); it != module.getData().end(); it++)
 	{
-//		for (int x = 0; x < _display.getWidth(); x++)
+		j++;
+		std::string str = it->first + ": " + it->second;
+		_display.drawString(str, 10, 20 + j * 10);
+	}
+
+	j = -1;
+	typedef std::map<std::string, std::deque<float> >::const_iterator	graph_iterator;
+	for (graph_iterator it = module.getGraphs().begin(); it != module.getGraphs().end(); it++)
+	{
+		j++;
+		std::string name = it->first;
+		std::cout << name << std::endl;
+		_display.drawString(name, 5, 5 + (index + j) * 120);
+		std::deque<float> data = it->second;
+		for (size_t x = data.size() - 1; x > 0; x--)
 		{
-			std::deque<float> data = it->second;
-			std::cout << data.size() << std::endl;
-			for (size_t x = data.size() - 1; x > 0; x--)
+			for (int y = data[x] * 100 - 1; y > 0; y--)
 			{
-				for (int y = data[x] * 100 - 1; y > 0; y--)
-				{
-					_display.drawPix(static_cast<int>(x), 150 - y + index * 150, 0x00ffff);
-				}
+				int r = 255 - j * 50;
+				int g = 128 + j * 50;
+				int b = y * 2;
+				int color = (r << 16) | (g << 8) | b;
+				_display.drawPix(static_cast<int>(x) + 100, (100 + module.getData().size() * 10) - y + (index + j) * 120, color);
 			}
 		}
 	}
@@ -63,9 +73,10 @@ void BeautifulDisplay::renderModule(const IMonitorModule &module, int index)
 void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &module)
 {
 	(void) module;
-	_display.swap();
 	static int i = 0;
 	i++;
+
+	_display.swap();
 
 	SDL_Event event;
 	while (SDL_PollEvent(&event) != 0)
@@ -77,7 +88,7 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 		}
 	}
 
-	_display.setSize(200, static_cast<int>(module.size() * 150));
+	// _display.setSize(200, static_cast<int>(module.size() * 100));
 
 	for (int y = 0; y < _display.getHeight(); y++)
 		for (int x = 0; x < _display.getWidth(); x++)
@@ -91,4 +102,6 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 		renderModule(*it->second, index);
 		index++;
 	}
+
+	_display.draw();
 }

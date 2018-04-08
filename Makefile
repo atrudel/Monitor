@@ -59,6 +59,8 @@ INC_FILES = #$(SRC:.cpp=.hpp)# ls -1 > src.txt &&
 
 DEPS_DIR = dep
 SDL_DIR = $(DEPS_DIR)/SDL2-2.0.8
+SDL_TTF_DIR = $(DEPS_DIR)/SDL2_ttf-2.0.14
+FREE_TYPE_DIR = $(DEPS_DIR)/freetype-2.9
 SDL_LIB_DIR = $(SDL_DIR)/build/.libs
 SDL_LIB = $(SDL_LIB_DIR)/libSDL2.a
 SDL_INCLUDES = $(SDL_DIR)/include
@@ -108,10 +110,25 @@ install : $(SDL_LIB)
 $(SDL_LIB):
 	@printf "\r$(YELLOW)  Building SDL2...$(NO_COLOR)                   \r";
 	@$(shell tar -xzf $(SDL_DIR).tar.gz -C $(DEPS_DIR))
-	@printf "\r$(YELLOW)  Building SDL2: Configuring...$(NO_COLOR)      \r";
+	# @$(shell tar -xzf $(SDL_TTF_DIR).tar.gz -C $(DEPS_DIR))
+	# @$(shell tar -xzf $(FREE_TYPE_DIR).tar.bz2 -C $(DEPS_DIR))
+
+
+	# @printf "\r$(YELLOW)  Building SDL2: Freetype...$(NO_COLOR)      \r";
+	# @cd $(FREE_TYPE_DIR) && ./configure > /dev/null
+	# # @make -C $(FREE_TYPE_DIR) -j4 > /dev/null 2> /dev/null
+	# # @make -C $(FREE_TYPE_DIR) install > /dev/null 2> /dev/null
+
+	# @printf "\r$(YELLOW)  Building SDL2: SDL2 ttf...$(NO_COLOR)           \r";
+	# @cd $(SDL_TTF_DIR) && ./configure --with-freetype-prefix=$(FREE_TYPE_DIR) > /dev/null
+	# @make -C $(SDL_TTF_DIR) -j4 > /dev/null 2> /dev/null
+
+
+	@printf "\r$(YELLOW)  Building SDL2: SDL2 core...$(NO_COLOR)           \r";
 	@cd $(SDL_DIR) && ./configure > /dev/null
-	@printf "\r$(YELLOW)  Building SDL2: Making...$(NO_COLOR)           \r";
 	@make -C $(SDL_DIR) -j4 > /dev/null 2> /dev/null
+
+
 	@printf "\r$(YELLOW)  Building SDL2: Removing dylib...$(NO_COLOR)   \r";
 	@rm -rf $(SDL_LIB_DIR)/libSDL2-2.0.0.dylib
 	@printf "\r$(GREEN)Building SDL2: DONE !$(NO_COLOR)                 \n";

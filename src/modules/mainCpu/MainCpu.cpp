@@ -1,15 +1,13 @@
 #include "MainCpu.hpp"
 
-unsigned long long MainCpu::_previousTotalTicks = 0;
-unsigned long long MainCpu::_previousIdleTicks = 0;
-
 MainCpu::MainCpu(void) : _name("CPU"), _min(0.0f), _max(100.0f), _graphs(std::map< std::string, std::deque<float> >()), _data(std::map<std::string, std::string>())
 {
+    this->update();
 }
 
 MainCpu::MainCpu(MainCpu const &src)
 {
-	*this = src;
+    *this = src;
 }
 
 MainCpu::~MainCpu()
@@ -20,95 +18,112 @@ void MainCpu::fetch(void)
 {
 }
 
-float MainCpu::CalculateCPULoad(unsigned long long idleTicks, unsigned long long totalTicks)
+
+void MainCpu::setCPUsLoad()
 {
-	unsigned long long totalTicksSinceLastTime = totalTicks - this->_previousTotalTicks;
-	unsigned long long idleTicksSinceLastTime = idleTicks - this->_previousIdleTicks;
+    natural_t                       cpuCount;
+    processor_cpu_load_info_t       cpuInfo;
+    mach_msg_type_number_t          nbInfo;
+    size_t    totalSystemTime = 0, totalUserTime = 0, totalIdleTime = 0;
 
-	float ret = 1.0f - ((totalTicksSinceLastTime > 0) ? ((float)idleTicksSinceLastTime) / totalTicksSinceLastTime : 0);
+    if (host_processor_info(mach_host_self(),
+                        PROCESSOR_CPU_LOAD_INFO,
+                        &cpuCount,
+                        reinterpret_cast<processor_info_array_t *>(&cpuInfo),
+                        &nbInfo) != KERN_SUCCESS)
+        throw std::runtime_error("cpu module: host_processor_info failed");
 
-	this->_previousTotalTicks = totalTicks;
-	this->_previousIdleTicks = idleTicks;
-	return ret;
+    for (natural_t i = 0; i < cpuCount; i++)
+    {
+        if (i >= WORLD_WIDE_MAX_CPU_ON_UNIT)
+            throw std::runtime_error("cpu error: world wide max cpu record beaten");
+        size_t system = cpuInfo[i].cpu_ticks[CPU_STATE_SYSTEM];
+        size_t user = cpuInfo[i].cpu_ticks[CPU_STATE_USER] + cpuInfo[i].cpu_ticks[CPU_STATE_NICE];
+        size_t idle = cpuInfo[i].cpu_ticks[CPU_STATE_IDLE];
+
+        std::ostringstream ss;
+        ss << "cpu" << i << "Usage";
+
+       dequeUpdate(ss.str(), calculateCPULoad(system + user, _oldCpusWorkTicks[i], system + user + idle, _oldCpusTotalTicks[i]));
+
+        _oldCpusWorkTicks[i] = system + user;
+        _oldCpusTotalTicks[i] = system + user + idle;
+
+        totalSystemTime += system;
+        totalUserTime += user;
+        totalIdleTime += idle;
+    }
+       // std::cout << std::endl
+       //            << this->getName() << std::endl;
+
+    size_t newTotal = totalIdleTime + totalSystemTime + totalUserTime;
+    size_t newWork = totalSystemTime + totalUserTime;
+
+    dequeUpdate("cpuTotalUsage", calculateCPULoad(newWork, _oldWorkTicks, newTotal, _oldTotalTicks));
+
+    _oldTotalTicks = newTotal;
+    _oldWorkTicks = newWork;
 }
 
-float MainCpu::GetCPULoad()
+float MainCpu::calculateCPULoad(size_t newWorkTicks, size_t oldWorkTicks,  size_t newTotalTicks, size_t oldTotalTicks)
 {
-	host_cpu_load_info_data_t cpuinfo;
-	mach_msg_type_number_t count;
-	count = HOST_CPU_LOAD_INFO_COUNT;
-	std::memset(&cpuinfo, 0, sizeof(host_cpu_load_info_data_t));
-	if (host_statistics(mach_host_self(), HOST_CPU_LOAD_INFO, (host_info_t)&cpuinfo, &count) == KERN_SUCCESS)
-	{
-		unsigned long long totalTicks = 0;
-		for (int i = 0; i < CPU_STATE_MAX; i++)
-		{
-//			std::cout << "by cpu " << cpuinfo.cpu_ticks[i] << std::endl;
-			totalTicks += cpuinfo.cpu_ticks[i];
-		}
-
-		// std::cout << "in get cpu load " << this->CalculateCPULoad(cpuinfo.cpu_ticks[CPU_STATE_IDLE], totalTicks) << std::endl;
-		return this->CalculateCPULoad(cpuinfo.cpu_ticks[CPU_STATE_IDLE], totalTicks);
-	}
-	else
-		return -1.0f;
+    float work = newWorkTicks - oldWorkTicks;
+    float total = newTotalTicks - oldTotalTicks;
+    if (!total)
+        return 0.0f;
+    return work / total;
 }
 
 void MainCpu::dequeUpdate(std::string name, float ret)
 {
-	if (!this->_graphs[name].empty())
-	{
-		if (this->_graphs[name].size() >= DEQUE_SIZE)
-			this->_graphs[name].pop_back();
-		this->_graphs[name].push_front(ret);
-	}
-	else
-		this->_graphs[name] = std::deque<float>(DEQUE_SIZE, -1);
+
+    if (!this->_graphs[name].empty())
+    {
+        while (this->_graphs[name].size() > DEQUE_SIZE)
+            this->_graphs[name].pop_back();
+        this->_graphs[name].push_front(ret);
+    }
+    else
+        this->_graphs[name] = std::deque<float>(DEQUE_SIZE, 0);
 }
 
 void MainCpu::update(void)
 {
-//	char buff[BUFFERLEN];
-//	size_t buffLen = BUFFERLEN;
-
-	float ret = this->GetCPULoad();
-//	std::cout << "ret val" << ret << std::endl;
-
-	MainCpu::dequeUpdate("cpuUsage", ret);
+    this->setCPUsLoad();
 }
 
 const float &MainCpu::getGraphMin(void) const
 {
-	return this->_min;
+    return this->_min;
 }
 
 const float &MainCpu::getGraphMax(void) const
 {
-	return this->_max;
+    return this->_max;
 }
 
 const std::map< std::string, std::deque<float> > &MainCpu::getGraphs(void) const
 {
-	return this->_graphs;
+    return this->_graphs;
 }
 
 const std::map<std::string, std::string> &MainCpu::getData(void) const
 {
-	return this->_data;
+    return this->_data;
 }
 
 const std::string &MainCpu::getName(void) const
 {
-	return this->_name;
+    return this->_name;
 }
 
 void MainCpu::setName(std::string name)
 {
-	this->_name = name;
+    this->_name = name;
 }
 
 MainCpu &MainCpu::operator=(MainCpu const &rhs)
 {
-	this->_name = rhs.getName();
-	return *this;
+    this->_name = rhs.getName();
+    return *this;
 }

@@ -1,8 +1,12 @@
 
 #include "NetworkModule.hpp"
 
-NetworkModule::NetworkModule(void) : _name(""), _graphMin(0), _graphMax(0), _graphs(std::map<std::string, std::deque<float> >()), _datas(std::map<std::string, std::string>())
+NetworkModule::NetworkModule(void) : _name(""), _graphMin(0), _graphMax(0)
+    , _graphs(std::map<std::string, std::deque<float> >()), _datas(std::map<std::string, std::string>())
 {
+    _graphMin = 0.0f;
+    _graphMax = 100000.0f;
+    //
     reset_net();
 }
 
@@ -106,7 +110,7 @@ void NetworkModule::dequeUpdate(std::string name, float ret)
    {
        if (this->_graphs[name].size() >= DEQUE_SIZE)
            this->_graphs[name].pop_back();
-       this->_graphs[name].push_front(ret / 100000.0f);
+       this->_graphs[name].push_front(ret / 100.0f);
    }
    else
         this->_graphs[name] = std::deque<float>(DEQUE_SIZE, 0);

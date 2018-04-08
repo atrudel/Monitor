@@ -13,6 +13,8 @@ private:
 	int				_width;
 	int				_height;
 	int				*_pixels;
+	SDL_Texture		*_fontImg;
+	std::string		_font;
 
 	SdlDisplay();
 public:
@@ -30,6 +32,9 @@ public:
 	void drawPix(const int &x, const int &y, const int &color);
 	void init();
 	void swap();
+	void draw();
+
+	void drawString(const std::string &str, const int &x, const int &y);
 
 	void setSize(const int &w, const int &h);
 
