@@ -3,6 +3,10 @@
 BeautifulDisplay::BeautifulDisplay(void)
 	: _display(SdlDisplay(500, 1000))
 {
+    SDL_DisplayMode screen;
+    SDL_GetCurrentDisplayMode(0, &screen);
+
+    _display.setMove(screen.w - TOTAL_WIDTH, 0);
 }
 
 BeautifulDisplay::BeautifulDisplay(const BeautifulDisplay& src)
@@ -93,7 +97,7 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 		}
 	}
 
-//	 _display.setSize(200, static_cast<int>(modules.size() * 100));
+	 _display.setSize(TOTAL_WIDTH, static_cast<int>(_calculateTotalHeight(modules)));
 
 	for (int y = 0; y < _display.getHeight(); y++)
 		for (int x = 0; x < _display.getWidth(); x++)

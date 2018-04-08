@@ -29,7 +29,6 @@
 # define TOTAL_WIDTH  (LEFT_OFFSET + LEFT_MARGIN_GR + GRAPH_WIDTH + RIGHT_OFFSET)
 //** total height can be calculated using calculageTotalHeight() method
 
-
 class BeautifulDisplay : public IMonitorDisplay {
 
 public:

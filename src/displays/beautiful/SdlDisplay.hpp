@@ -43,6 +43,8 @@ public:
 
 	void setSize(const int &w, const int &h);
 
+	void setMove(const int &x, const int &y);
+
 	void handleEvents(const SDL_Event &e);
 
 	void resize(const int &w, const int &h);
