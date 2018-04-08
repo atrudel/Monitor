@@ -60,7 +60,7 @@ void BeautifulDisplay::renderModule(const IMonitorModule &module, int &curr_x, i
 		std::deque<float> data = it->second;
 		for (size_t x = data.size() - 1; x > 0; x--)
 		{
-			for (int y = data[x] * 100 - 1; y > 0; y--)
+			for (int y = _scale(data[x], module) * GRAPH_HEIGHT - 1; y > 0; y--)
 			{
 				int r = 255 - j * 50;
 				int g = 128 + j * 50;
@@ -124,7 +124,7 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 	_display.draw();
 }
 
-int	 BeautifulDisplay::calculateTotalHeight(const std::map<std::string, IMonitorModule*> &modules) const {
+int	 BeautifulDisplay::_calculateTotalHeight(const std::map<std::string, IMonitorModule*> &modules) const {
     int height= 0;
 
     height += TOP_OFFSET;
@@ -132,18 +132,23 @@ int	 BeautifulDisplay::calculateTotalHeight(const std::map<std::string, IMonitor
     typedef std::map<std::string, IMonitorModule*>::const_iterator iterator;
     for (iterator it = modules.begin(); it != modules.end(); it++)
     {
-        height += calculateModuleHeight(it->second);
+        height += _calculateModuleHeight(it->second);
     }
     height += MODULE_GAP * (modules.size() - 1);
     height += BOTTOM_OFFSET;
     return height;
 }
 
-int	 BeautifulDisplay::calculateModuleHeight(const IMonitorModule* module) const {
+int	 BeautifulDisplay::_calculateModuleHeight(const IMonitorModule* module) const {
     int height = 0;
     height += TITLE_HEIGHT;
     height += DATA_HEIGHT * module->getData().size();
     height += GRAPH_HEIGHT * module->getGraphs().size(); // to change
     height += MODULE_GAP * (module->getGraphs().size() -1); // to change
     return height;
+}
+float   BeautifulDisplay::_scale(float data, const IMonitorModule& module) const {
+    float range = module.getGraphMax() - module.getGraphMin();
+//    std::cout << data << " -> " << data / range << " (" << range << ")" << std::endl;
+	return data / range;
 }

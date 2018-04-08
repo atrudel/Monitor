@@ -109,7 +109,7 @@ void NetworkModule::dequeUpdate(std::string name, float ret)
    {
        if (this->_graphs[name].size() >= DEQUE_SIZE)
            this->_graphs[name].pop_back();
-       this->_graphs[name].push_front(ret / 100.0f);
+       this->_graphs[name].push_front(ret);
    }
    else
         this->_graphs[name] = std::deque<float>(DEQUE_SIZE, 0);
