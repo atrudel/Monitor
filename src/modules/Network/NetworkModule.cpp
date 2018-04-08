@@ -152,5 +152,6 @@ NetworkModule &NetworkModule::operator=(NetworkModule const &rhs) {
     this->_graphMax = rhs.getGraphMax();
     this->_lastin = rhs._lastin;
     this->_lastout = rhs._lastout;
+    this->_time = rhs._time;
     return *this;
 }

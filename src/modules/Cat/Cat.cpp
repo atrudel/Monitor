@@ -57,5 +57,9 @@ void Cat::setName(std::string name)
 Cat &Cat::operator=(Cat const &rhs)
 {
     this->_name = rhs.getName();
+    this->_min = rhs.getGraphMin();
+    this->_max = rhs.getGraphMax();
+    this->_graphs = rhs.getGraphs();
+    this->_data = rhs.getData();
     return *this;
 }

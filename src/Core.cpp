@@ -25,6 +25,7 @@ Core &Core::operator=(const Core &o)
 		_running = o._running;
 		_displays = o._displays;
 		_modules = o._modules;
+		_activeDisplayIndex = o._activeDisplayIndex;
 	}
 	return *this;
 }
