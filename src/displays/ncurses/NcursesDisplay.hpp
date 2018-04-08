@@ -6,7 +6,7 @@
 /*   By: agrumbac <agrumbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 14:38:34 by agrumbac          #+#    #+#             */
-/*   Updated: 2018/04/08 15:50:33 by agrumbac         ###   ########.fr       */
+/*   Updated: 2018/04/08 17:31:51 by agrumbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ private:
     int                                     _anime;
 };
 
-# define MODULE_HEIGHT     10
+# define MODULE_HEIGHT     12
 # define MODULE_WIDTH      COLS
-
+# define INFO_PADDING      5
 # define ANIME_WIDTH       1
 
 # define DISP_WHITE        0
@@ -68,6 +68,12 @@ private:
 # define DISP_CYAN         4
 # define DISP_YELLOW       5
 # define DISP_MAGENTA      6
+
+# define TITLE_COLOR       DISP_RED
+# define CATS_COLOR        DISP_MAGENTA
+# define MODULE_COLOR      DISP_GREEN
+# define RANGE_INFO_COLOR  DISP_BLUE
+# define INFO_COLOR        DISP_MAGENTA
 
 # define KEY_ESC           27
 
