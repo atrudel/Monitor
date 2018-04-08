@@ -44,6 +44,7 @@ displays/dummy/DummyDisplay.cpp\
 displays/ncurses/Module.cpp\
 displays/ncurses/NcursesDisplay.cpp\
 main.cpp\
+modules/dummy/Dummymodule.cpp\
 modules/Hostname/Hostname.cpp\
 modules/mainCpu/MainCpu.cpp\
 modules/Network/NetworkModule.cpp\

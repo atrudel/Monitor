@@ -98,12 +98,13 @@ void Core::loop()
 	}
 }
 
+#include "modules/dummy/DummyModule.hpp"
 void Core::test()
 {
     // _displays.push_back(new DummyDisplay());
 
     // ADD YOUR MODULES HERE, AS A NEW ENTRY IN THE MAP
- //   _modules["dummy"] = new DummyModule();
+    _modules["dummy"] = new DummyModule();
     _modules["hostname"] = new Hostname();
 //    _modules["os"] = new OSModule();
     _modules["time"] = new TimeModule();
