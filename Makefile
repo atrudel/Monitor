@@ -122,7 +122,7 @@ $(SDL_LIB):
 	@printf "\r$(GREEN)Building SDL2: DONE !$(NO_COLOR)                 \n";
 
 uninstall : fclean
-	@(rm -rf $(SDL_LIB))
+	@(rm -rf $(SDL_DIR))
 
 horse:
 	@(echo "	                                               \`T\",.\`-, ");
