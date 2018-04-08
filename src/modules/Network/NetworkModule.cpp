@@ -1,7 +1,7 @@
 
 #include "NetworkModule.hpp"
 
-NetworkModule::NetworkModule(void) : _name(""), _graphMin(0), _graphMax(-1)
+NetworkModule::NetworkModule(void) : _name("Network"), _graphMin(0), _graphMax(-1)
     , _graphs(std::map<std::string, std::deque<float> >()), _datas(std::map<std::string, std::string>())
 {
     _time = 0;
