@@ -31,7 +31,7 @@ public:
 	virtual void 			init( void );
 	virtual void 			init( const std::map<std::string, IMonitorModule*> &disp );
 	virtual void 			update( void );
-	virtual void 			render( const std::map<std::string, IMonitorModule*> &disp ) const;
+	virtual void 			render( const std::map<std::string, IMonitorModule*> &disp ) ;
 	bool 					quit( void );
 
 private:

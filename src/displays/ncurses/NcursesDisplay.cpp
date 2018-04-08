@@ -96,7 +96,7 @@ void 					NcursesDisplay::update(void)
     getmaxyx(stdscr, _window_height, _window_width);
 }
 
-void 					NcursesDisplay::render( const std::map<std::string, IMonitorModule*> &disp ) const
+void 					NcursesDisplay::render( const std::map<std::string, IMonitorModule*> &disp ) 
 {
 	(void)disp;
 	erase();
@@ -110,7 +110,14 @@ void 					NcursesDisplay::render( const std::map<std::string, IMonitorModule*> &
 		
 
         mvwprintw(it->second, 1, 1,("Ceci est la fenetre du " + it->first).c_str());
-//		mvwprintw(it->second, 1, 1, "%p", &disp[it->first]);
+		mvwprintw(it->second, 2, 1, "test [%s]", disp.find(it->first)->second->getName().c_str());
+		std::map<std::string, std::deque<float> > modulegraph = disp.find(it->first)->second->getGraphs();
+		int i = 3;
+		for (std::map<std::string, std::deque<float> >::const_iterator  mdlit = modulegraph.begin(); mdlit != modulegraph.end(); mdlit++) {
+			mvwprintw(it->second, i, 1, "modulegraph %i : [%s]", i, mdlit->first.c_str());
+			i++;
+		}
+		mvwprintw(it->second, 4, 1, "test [%s]", disp.find(it->first)->second->getName().c_str());
     
 	
 	}
