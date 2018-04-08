@@ -71,7 +71,7 @@ float MainCpu::calculateCPULoad(size_t newWorkTicks, size_t oldWorkTicks,  size_
     float total = newTotalTicks - oldTotalTicks;
     if (!total)
         return 0.0f;
-    return work / total;
+    return (work / total) * 100;
 }
 
 void MainCpu::dequeUpdate(std::string name, float ret)
