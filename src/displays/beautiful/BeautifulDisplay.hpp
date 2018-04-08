@@ -14,6 +14,9 @@
 // Spacing between modules
 # define MODULE_GAP     10
 
+// Top buttom
+# define TOP_BTN_HEIGHT 12
+
 // Module elements
 //** Y dimension
 # define TITLE_HEIGHT   25
