@@ -31,22 +31,38 @@ Core &Core::operator=(const Core &o)
 void Core::init(char display_options[SIZE_OPT])
 {
 	int i = 0, l = 0;
+	char	rank = 48;
+	char	name[20];
 
 	while (display_options[i]) {
-		if (display_options[i] == 'h')
-			_modules["Hostname"] = new Hostname();
-		if (display_options[i] == 't')
-			_modules["time"] = new TimeModule();
-		if (display_options[i] == 'o')
-			_modules["main_cpu"] = new MainCpu();
-		if (display_options[i] == 'c')
-			_modules["main_cpu_2"] = new MainCpu();
-		if (display_options[i] == 'n')
-			_modules["net"] = new NetworkModule();
-		if (display_options[i] == 'a')
-			_modules["cat"] = new Cat();
+		bzero(name, 20);
+		if (display_options[i] == 'h' && (name[0] = rank)) {
+			strcpy(&(name[1]), "Hostname");
+			_modules[name] = new Hostname();
+		}
+		if (display_options[i] == 't' && (name[0] = rank)) {
+			strcpy(&(name[1]), "time");
+			_modules[name] = new TimeModule();
+		}
+		if (display_options[i] == 'c' && (name[0] = rank)) {
+			strcpy(&(name[1]), "main_cpu");
+			_modules[name] = new MainCpu();
+		}
+		if (display_options[i] == 'o' && (name[0] = rank)) {
+			strcpy(&(name[1]), "main_cpu_2");
+			_modules[name] = new MainCpu();
+		}
+		if (display_options[i] == 'n' && (name[0] = rank)) {
+			strcpy(&(name[1]), "net");
+			_modules[name] = new NetworkModule();
+		}
+		if (display_options[i] == 'a' && (name[0] = rank)) {
+			strcpy(&(name[1]), "cat");
+			_modules[name] = new Cat();
+		}
 		// if (display_options[i] == 'r')
 			// _modules["ram"] = new RamModul();
+		rank++;
 		i++;
 	}
 	i = 0;
