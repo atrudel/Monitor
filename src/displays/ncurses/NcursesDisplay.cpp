@@ -14,14 +14,14 @@
 
 NcursesDisplay::NcursesDisplay( void ) : 
             _module_separation_size(1), _module_height(MODULE_HEIGHT),
-			_max_module_width(MODULE_WIDTH), _module_width(_max_module_width),
-			_window_height(LINES), _window_width(COLS)
+			_max_module_width(MODULE_WIDTH), _module_width(_max_module_width < COLS ? COLS : _max_module_width),
+			_window_height(LINES), _window_width(COLS), _anime(0)
 { }
 
 NcursesDisplay::NcursesDisplay( NcursesDisplay const & src ) :
             _module_separation_size(1), _module_height(MODULE_HEIGHT),
 			_max_module_width(MODULE_WIDTH), _module_width(_max_module_width),
-			_window_height(LINES), _window_width(COLS)
+			_window_height(LINES), _window_width(COLS), _anime(0)
 {
 	*this = src;
 }
@@ -94,6 +94,7 @@ bool 					NcursesDisplay::quit( void )
 void 					NcursesDisplay::update(void)
 { 
     getmaxyx(stdscr, _window_height, _window_width);
+
 }
 
 void 					NcursesDisplay::render( const std::map<std::string, IMonitorModule*> &disp ) 
@@ -107,6 +108,73 @@ mvprintw(2, 50,"  / _` | |/ / '__/ _ \\ | | '_ ` _ \\ ");
 mvprintw(3, 50," | (_| |   <| | |  __/ | | | | | | |");
 mvprintw(4, 50,"  \\__, |_|\\_\\_|  \\___|_|_|_| |_| |_|");
 mvprintw(5, 50,"  |___/                             ");
+
+
+	_anime++;
+if (_anime >= 80)
+	_anime = 0;
+if (_anime < 20) {
+	mvprintw(1, ANIME_WIDTH, "   /\\**/\\");
+	mvprintw(2, ANIME_WIDTH, "   ( o_o  )_)");
+	mvprintw(3, ANIME_WIDTH, "   ,(u  u  ,),");
+	mvprintw(4, ANIME_WIDTH, "  {}{}{}{}{}{}");
+
+
+mvprintw(1, ANIME_WIDTH + 20, "    |\\_._/|   ");
+mvprintw(2, ANIME_WIDTH + 20, "    | o o |   ");
+mvprintw(3, ANIME_WIDTH + 20, "    (  T  )   ");
+mvprintw(4, ANIME_WIDTH + 20, "   .^`-^-'^.  ");
+mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'  ");
+mvprintw(6, ANIME_WIDTH + 20, "   | | | | |  ");
+mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_)) ");
+
+
+
+
+} else if (_anime < 40) {
+	mvprintw(1, ANIME_WIDTH, "   /\\**/\\");
+	mvprintw(2, ANIME_WIDTH, "   ( o_o  )_)");
+	mvprintw(3, ANIME_WIDTH, "   ,(u  u  ,),");
+	mvprintw(4, ANIME_WIDTH, "  {}{}{}{}{}{}");
+
+mvprintw(1, ANIME_WIDTH + 20, "    |,\\__/|    ");
+mvprintw(2, ANIME_WIDTH + 20, "    |  o o|    ");
+mvprintw(3, ANIME_WIDTH + 20, "    (   T )    ");
+mvprintw(4, ANIME_WIDTH + 20, "   .^`--^'^.   ");
+mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'   ");
+mvprintw(6, ANIME_WIDTH + 20, "   | | | | |   ");
+mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))  ");
+} else if (_anime < 60) {
+	mvprintw(1, ANIME_WIDTH, "   /\\**/\\");
+	mvprintw(2, ANIME_WIDTH, "   ( o_o  )_)");
+	mvprintw(3, ANIME_WIDTH, "   ,(u  u  ,),");
+	mvprintw(4, ANIME_WIDTH, " {}{}{}{}{}{}  ");
+
+mvprintw(1, ANIME_WIDTH + 20, "    |\\__/,|    ");
+mvprintw(2, ANIME_WIDTH + 20, "    |o o  |    ");
+mvprintw(3, ANIME_WIDTH + 20, "    ( T   )    ");
+mvprintw(4, ANIME_WIDTH + 20, "   .^`^--'^.   ");
+mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'   ");
+mvprintw(6, ANIME_WIDTH + 20, "   | | | | |   ");
+mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))  ");
+
+} else {
+	mvprintw(1, ANIME_WIDTH, "   /\\**/\\");
+	mvprintw(2, ANIME_WIDTH, "   ( o_o  )_)");
+	mvprintw(3, ANIME_WIDTH, "   ,(u  u  ,),");
+	mvprintw(4, ANIME_WIDTH, "   {}{}{}{}{}{}");
+
+
+
+mvprintw(1, ANIME_WIDTH + 20, "    |\\_._/|");
+mvprintw(2, ANIME_WIDTH + 20, "    | 0 0 |");
+mvprintw(3, ANIME_WIDTH + 20, "    (  T  )");
+mvprintw(4, ANIME_WIDTH + 20, "   .^`-^-'^.");
+mvprintw(5, ANIME_WIDTH + 20, "   `.  ;  .'");
+mvprintw(6, ANIME_WIDTH + 20, "   | | | | |");
+mvprintw(7, ANIME_WIDTH + 20, "  ((_((|))_))");
+}
+
 	// border box creation
 	for(std::map<std::string, WINDOW *>::const_iterator it=_fenetres.begin(); it != _fenetres.end(); it++) {
         box(it->second, ACS_VLINE, ACS_HLINE);

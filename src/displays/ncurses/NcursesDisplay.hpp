@@ -42,10 +42,13 @@ private:
 	int										_module_width;
     int                  		            _window_height;
 	int										_window_width;
+	int										_anime;
 };
 
 # define MODULE_HEIGHT  10
 # define MODULE_WIDTH  	200
+
+# define ANIME_WIDTH 100
 
 # define DISP_WHITE		0
 # define DISP_RED		1
