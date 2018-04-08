@@ -30,16 +30,19 @@ Core &Core::operator=(const Core &o)
 
 void Core::init()
 {
-//	_displays.push_back(new BeautifulDisplay());
-//	_modules["time"] = new TimeModule();
+	_displays.push_back(new BeautifulDisplay());
+	_modules["time"] = new TimeModule();
 	_modules["main_cpu"] = new MainCpu();
-//	_modules["net"] = new NetworkModule();
+	_modules["net"] = new NetworkModule();
 //	_modules["main_cpu_2"] = new MainCpu();
-//	_modules["Hostname"] = new Hostname();
+	_modules["Hostname"] = new Hostname();
 	// _modules["ram"] = new RamModul();
-	NcursesDisplay *ncurses = new NcursesDisplay();
-	ncurses->init(_modules);
-	_displays.push_back(ncurses);
+  if (_activeDisplayIndex == 1)
+	{
+		NcursesDisplay *ncurses = new NcursesDisplay();
+		ncurses->init(_modules);
+		_displays.push_back(ncurses);
+	}
 }
 
 void Core::update()

@@ -29,6 +29,7 @@ private:
 	std::vector<IMonitorDisplay*>			_displays;
 	std::map<std::string, IMonitorModule*>	_modules;
 	int										_activeDisplayIndex;
+	
 
 public:
 	Core();
