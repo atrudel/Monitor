@@ -19,7 +19,7 @@ BeautifulDisplay::~BeautifulDisplay(void) {
 BeautifulDisplay& BeautifulDisplay::operator=(const BeautifulDisplay& rhs) {
     if (this != &rhs)
 	{
-        // TODO
+        _display = rhs._display;
     }
     return *this;
 }
@@ -110,20 +110,26 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 	_display.draw();
 }
 
-int	 BeautifulDisplay::calculateTotalHeight(const std::map<std::string, IMonitorModule*> &module) const {
+int	 BeautifulDisplay::calculateTotalHeight(const std::map<std::string, IMonitorModule*> &modules) const {
     int height= 0;
 
     height += TOP_OFFSET;
 
     typedef std::map<std::string, IMonitorModule*>::const_iterator iterator;
-    for (iterator it = module.begin(); it != module.end(); it++)
+    for (iterator it = modules.begin(); it != modules.end(); it++)
     {
         height += calculateModuleHeight(it->second);
     }
+    height += MODULE_GAP * (modules.size() - 1);
+    height += BOTTOM_OFFSET;
     return height;
 }
 
 int	 BeautifulDisplay::calculateModuleHeight(const IMonitorModule* module) const {
-    (void)(module);
-    return 0;
+    int height = 0;
+    height += TITLE_HEIGHT;
+    height += DATA_HEIGHT * module->getData().size();
+    height += GRAPH_HEIGHT * module->getGraphs().size(); // to change
+    height += MODULE_GAP * (module->getGraphs().size() -1); // to change
+    return height;
 }
