@@ -36,4 +36,11 @@ cmake-build-debug/
 
 # Other
 .makefile_saves/
-wxWidgets/
+dep/SDL2-2.0.8/
+SDL2-2.0.8/
+.idea/
+cmake-build-debug/
+CMakeLists.txt
+
+# Executable
+ft_gkrellm
