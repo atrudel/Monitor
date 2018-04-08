@@ -19,7 +19,7 @@ BeautifulDisplay::~BeautifulDisplay(void) {
 BeautifulDisplay& BeautifulDisplay::operator=(const BeautifulDisplay& rhs) {
     if (this != &rhs)
 	{
-        // TODO
+        _display = rhs._display;
     }
     return *this;
 }
@@ -55,7 +55,7 @@ void BeautifulDisplay::renderModule(const IMonitorModule &module, int index)
 		j++;
 		std::string name = it->first;
 		_display.drawString(name, 5, 5 + (index + j) * (size + 5));
-		std::cout << name << ", x " <<  5 << ", y " << 5 + (index + j) * (size + 5) << ", j " << j << ", index " << index << std::endl;
+//		std::cout << name << ", x " <<  5 << ", y " << 5 + (index + j) * (size + 5) << ", j " << j << ", index " << index << std::endl;
 
 		std::deque<float> data = it->second;
 		for (size_t x = data.size() - 1; x > 0; x--)
@@ -90,8 +90,7 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 			exit(0);
 		}
 	}
-
-//	 _display.setSize(200, static_cast<int>(module.size() * 100));
+	 _display.setSize(200, static_cast<int>(calculateTotalHeight(module)));
 
 	for (int y = 0; y < _display.getHeight(); y++)
 		for (int x = 0; x < _display.getWidth(); x++)
@@ -109,20 +108,26 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 	_display.draw();
 }
 
-int	 BeautifulDisplay::calculateTotalHeight(const std::map<std::string, IMonitorModule*> &module) const {
+int	 BeautifulDisplay::calculateTotalHeight(const std::map<std::string, IMonitorModule*> &modules) const {
     int height= 0;
 
     height += TOP_OFFSET;
 
     typedef std::map<std::string, IMonitorModule*>::const_iterator iterator;
-    for (iterator it = module.begin(); it != module.end(); it++)
+    for (iterator it = modules.begin(); it != modules.end(); it++)
     {
         height += calculateModuleHeight(it->second);
     }
+    height += MODULE_GAP * (modules.size() - 1);
+    height += BOTTOM_OFFSET;
     return height;
 }
 
 int	 BeautifulDisplay::calculateModuleHeight(const IMonitorModule* module) const {
-    (void)(module);
-    return 0;
+    int height = 0;
+    height += TITLE_HEIGHT;
+    height += (DATA_HEIGHT + DATA_GAP) * module->getData().size();
+    height += GRAPH_HEIGHT * module->getGraphs().size(); // to change
+    height += MODULE_GAP * (module->getGraphs().size() -1); // to change
+    return height;
 }

@@ -3,7 +3,7 @@
 
 #include "SdlDisplay.hpp"
 #include "../IMonitorDisplay.hpp"
-#Include "../../modules/IMonitorModule.hpp"
+#include "../../modules/IMonitorModule.hpp"
 
 // Contour
 # define TOP_OFFSET     5
@@ -20,7 +20,7 @@
 # define DATA_HEIGHT    5
 # define DATA_GAP       2
 # define GRAPH_HEIGHT   125
-# define
+
 //** X dimension
 # define LEFT_MARGIN_GR 100
 # define GRAPH_WIDTH    DEQUE_SIZE
@@ -44,7 +44,7 @@ public:
 	void init(void);
     void update(void);
 	void render(const std::map<std::string, IMonitorModule*> &module);
-	int	 calculateTotalHeight(const std::map<std::string, IMonitorModule*> &module) const;
+	int	 calculateTotalHeight(const std::map<std::string, IMonitorModule*> &modules) const;
     int	 calculateModuleHeight(const IMonitorModule* module) const;
 private:
 	SdlDisplay	_display;
