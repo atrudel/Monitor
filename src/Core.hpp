@@ -18,7 +18,7 @@
 # include "modules/Cat/Cat.hpp"
 # include "modules/memory/MainMemory.hpp"
 #include "modules/Hostname/Hostname.hpp"
-#include "modules/os/OSModule.hpp"
+#include "modules/Os/OSModule.hpp"
 #include "modules/time/TimeModule.hpp"
 
 // # include "displays/dummy/DummyDisplay.hpp"
