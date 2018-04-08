@@ -49,7 +49,7 @@ public:
 	void stop();
 	void loop();
 
-	void test();
+	void test(int iters);
 };
 
 #endif
