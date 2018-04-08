@@ -49,7 +49,7 @@ private:
 
     int     _calculateTotalHeight(const std::map<std::string, IMonitorModule*> &modules) const;
     int	    _calculateModuleHeight(const IMonitorModule* module) const;
-    float   _scale(float data, const IMonitorModule& module) const;
+    float   _scale(size_t x, std::deque<float> data, const IMonitorModule& module) const;
 };
 
 #endif
