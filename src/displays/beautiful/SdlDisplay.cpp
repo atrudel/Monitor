@@ -1,12 +1,12 @@
 #include "SdlDisplay.hpp"
 
 SdlDisplay::SdlDisplay()
-	: _width(0), _height(0)
+	: _width(0), _height(0), _clicked(false)
 {
 }
 
 SdlDisplay::SdlDisplay(const int &w, const int &h)
-	: _width(w), _height(h), _font("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.;,:=+-*/\\()!?@ ")
+	: _width(w), _height(h), _font("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.;,:=+-*/\\()!?@ "), _clicked(false)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		throw  std::runtime_error("sdl error: unable to initialize sdl !");
@@ -109,6 +109,45 @@ void SdlDisplay::drawString(const std::string &str, const int &x, const int &y)
 	}
 }
 
+bool SdlDisplay::button(const std::string &str, const int &x, const int &y, const int &w, const int &h)
+{
+	return button(str, x, y, w, h, 0x0000aa, 0xff0000);
+}
+
+bool SdlDisplay::button(const std::string &str, const int &x, const int &y, const int &w, const int &h, const int &color)
+{
+	return button(str, x, y, w, h, color, 0xff0000);
+}
+
+bool SdlDisplay::button(const std::string &str, const int &x, const int &y, const int &w, const int &h, const int &color, const int &clickColor)
+{
+	int textWidth = static_cast<int>(str.length() * 8);
+	for (int xx = x; xx < x + w; xx++)
+		for (int yy = y; yy < y + h; yy++)
+			drawPix(xx, yy, color);
+	drawString(str, x + w / 2 - textWidth / 2 + 2, y + h / 2 - 4);
+	if (!_clicked)
+	{
+		int mx = 0;
+		int my = 0;
+		if (SDL_GetMouseState(&mx, &my))
+		{
+			if (mx >= x && my >= y && mx <= x + w && my <= y + h)
+			{
+				for (int xx = x; xx < x + w; xx++)
+					for (int yy = y; yy < y + h; yy++)
+						drawPix(xx, yy, clickColor);
+				drawString(str, x + w / 2 - textWidth / 2 + 2, y + h / 2 - 4);
+
+				_clicked = true;
+				return true;
+			}
+		}
+		return false;
+	}
+	return false;
+}
+
 void SdlDisplay::swap()
 {
 	SDL_UpdateTexture(_texture, NULL, _pixels, _width * sizeof(int));
@@ -145,6 +184,12 @@ void SdlDisplay::handleEvents(const SDL_Event &e)
 	{
 		case SDL_WINDOWEVENT_RESIZED:
 			resize(e.window.data1, e.window.data2);
+			break;
+	}
+	switch (e.type)
+	{
+		case SDL_MOUSEBUTTONUP:
+			_clicked = false;
 			break;
 	}
 }

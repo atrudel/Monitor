@@ -24,6 +24,8 @@ class MainMemory : public IMonitorModule
     std::map<std::string, std::deque<float> > _graphs;
     std::map<std::string, std::string> _data;
 
+    float _frame;
+
     void dequeUpdate(std::string name, float ret);
 
     float getSystemMemoryUsagePercentage();

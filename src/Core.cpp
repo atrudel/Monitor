@@ -7,6 +7,7 @@
 #include "modules/memory/MainMemory.hpp"
 #include "modules/dummy/DummyModule.hpp"
 
+
 Core::Core()
 	: _running(false),
 	  _displays(std::vector<IMonitorDisplay*>()),
@@ -38,13 +39,14 @@ Core &Core::operator=(const Core &o)
 void Core::init()
 {
 	_displays.push_back(new BeautifulDisplay());
-    _modules["Dummy"] = new DummyModule();
+//    _modules["Dummy"] = new DummyModule();
 	 _modules["time"] = new TimeModule();
 	_modules["main_cpu"] = new MainCpu();
 	 _modules["net"] = new NetworkModule();
 //	_modules["main_cpu_2"] = new MainCpu();
 	 _modules["Hostname"] = new Hostname();
 	 _modules["ram"] = new MainMemory();
+
   if (_activeDisplayIndex == 1)
 	{
 		NcursesDisplay *ncurses = new NcursesDisplay();
@@ -100,12 +102,15 @@ void Core::loop()
 			render();
 			beforeTime = clock();
 		}
+
 	}
 }
 
 
-#include "modules/dummy/DummyModule.hpp"
+
+
 void Core::test(int iterations)
+
 {
      _displays.push_back(new DummyDisplay());
 
@@ -123,6 +128,7 @@ void Core::test(int iterations)
     while (iterations-- > 0) {
         update();
         usleep(100000);
+
     }
     render();
 }

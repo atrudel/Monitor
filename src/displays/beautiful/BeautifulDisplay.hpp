@@ -6,7 +6,7 @@
 #include "../../modules/IMonitorModule.hpp"
 
 // Contour
-# define TOP_OFFSET     5
+# define TOP_OFFSET     20
 # define BOTTOM_OFFSET  5
 # define LEFT_OFFSET    5
 # define RIGHT_OFFSET   5
