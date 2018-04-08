@@ -8,10 +8,10 @@ void printUsage(void) {
 
 bool	checkFlag(char display_options[SIZE_OPT], char c) {
 	for (int i = 0; i < SIZE_OPT; i++) {
-		if (display_options[SIZE_OPT] == c)
-		 	return (1);
+		if (display_options[i] == c)
+		 	return (0);
 	}
-	return (0);
+	return (1);
 }
 
 
@@ -42,27 +42,27 @@ int main(int ac, char **av)
 			display_options[7] = 'l';
 	} else {
 		while (i < ac) {
-			j = 0;
+			j = 1;
 			if (av[i][0] != '-') {
 				printUsage();
-				return (1);
+				return (2);
 			}
 			while (av[i][j]) {
-				if (av[i][j] == 'l' || checkFlag(display_options, 'l'))
+				if (av[i][j] == 'l' && checkFlag(display_options, 'l'))
 					display_options[c++] = 'l';
-				else if (av[i][j] == 'h' || checkFlag(display_options, 'h'))
+				else if (av[i][j] == 'h' && checkFlag(display_options, 'h'))
 					display_options[c++] = 'h';
-				else if (av[i][j] == 't' || checkFlag(display_options, 't'))
+				else if (av[i][j] == 't' && checkFlag(display_options, 't'))
 					display_options[c++] = 't';
-				else if (av[i][j] == 'c' || checkFlag(display_options, 'c'))
+				else if (av[i][j] == 'c' && checkFlag(display_options, 'c'))
 					display_options[c++] = 'c';
-				else if (av[i][j] == 'r' || checkFlag(display_options, 'r'))
+				else if (av[i][j] == 'r' && checkFlag(display_options, 'r'))
 					display_options[c++] = 'r';
-				else if (av[i][j] == 'n' || checkFlag(display_options, 'n'))
+				else if (av[i][j] == 'n' && checkFlag(display_options, 'n'))
 					display_options[c++] = 'n';
-				else if (av[i][j] == 'a' || checkFlag(display_options, 'a'))
+				else if (av[i][j] == 'a' && checkFlag(display_options, 'a'))
 					display_options[c++] = 'a';
-				else if (av[i][j] == 'o' || checkFlag(display_options, 'o'))
+				else if (av[i][j] == 'o' && checkFlag(display_options, 'o'))
 					display_options[c++] = 'o';
 				else
 				{
@@ -76,4 +76,5 @@ int main(int ac, char **av)
 	}
 	core.start(display_options);
 	// std::cout.rdbuf(coutbuf);
+	return 0;
 }
