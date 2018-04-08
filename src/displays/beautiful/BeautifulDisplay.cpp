@@ -154,7 +154,5 @@ float   BeautifulDisplay::_scale(size_t x, std::deque<float> data, const IMonito
 		range = *std::max_element(data.begin(), data.end()) - module.getGraphMin();
 	else
 		range = module.getGraphMax() - module.getGraphMin();
-
-//    std::cout << data << " -> " << data / range << " (" << range << ")" << std::endl;
 	return data[x] / range;
 }
