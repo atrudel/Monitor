@@ -208,8 +208,11 @@ inline void              NcursesDisplay::_dispWindows( const module_map &modules
 
         //range infos
         wattron(it->second, COLOR_PAIR(RANGE_INFO_COLOR));
-        mvwprintw(it->second, print_position++, range_str_pos, "(range %.2f to %.2f)", \
-            mainit->second->getGraphMin(), mainit->second->getGraphMax());
+        if (mainit->second->getGraphMin() < mainit->second->getGraphMax())
+            mvwprintw(it->second, print_position++, range_str_pos, "(range %.2f to %.2f)", \
+                mainit->second->getGraphMin(), mainit->second->getGraphMax());
+        else
+            print_position++;
         wattroff(it->second, COLOR_PAIR(RANGE_INFO_COLOR));
 
         //info percentages
@@ -221,13 +224,13 @@ inline void              NcursesDisplay::_dispWindows( const module_map &modules
             secondit != mainit->second->getGraphs().end();
             secondit++)
         {
-            for (std::deque<float>::const_reverse_iterator eqiter = secondit->second.rbegin();
-                eqiter != secondit->second.rend() || i < 20 ;
+            for (std::deque<float>::const_iterator eqiter = secondit->second.begin();
+                eqiter != secondit->second.end() || i < 2 ;
                 eqiter++, i++)
             {
                 cpu += *eqiter;
             }
-            mvwprintw(it->second,print_position++, INFO_PADDING, "[ %02i %% ] %s  ",static_cast<int>(cpu / i), secondit->first.c_str());
+            mvwprintw(it->second,print_position++, INFO_PADDING, "[ %02i ] %s  ",static_cast<int>(cpu / i), secondit->first.c_str());
         }
 
         for (std::map<std::string, std::string>::const_iterator datait = \
