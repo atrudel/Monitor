@@ -1,6 +1,6 @@
 #include "Hostname.hpp"
 
-Hostname::Hostname(void): _name(""), _min(0), _max(0), _graphs(std::map< std::string, std::deque<float> >()), _data(std::map<std::string, std::string>())
+Hostname::Hostname(void): _name("Hostname"), _min(0), _max(0), _graphs(std::map< std::string, std::deque<float> >()), _data(std::map<std::string, std::string>())
 {
 }
 
@@ -22,7 +22,9 @@ void Hostname::update(void)
 
     std::string name(buff);
     // // std::cout << name << std::endl;//WHO THE FUCK DID THIS!!???
-    this->setName(name);
+	this->_data["Hostname"] = name;
+
+    // this->setName(name);
 }
 
 const float &Hostname::getGraphMin(void) const

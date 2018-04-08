@@ -129,7 +129,7 @@ void	Core::deleteModule(std::string name)
 	for (it = _modules.begin(); it != _modules.end(); it++ ) {
 		if ((std::isalpha(it->first.front()) ? it->first.c_str() : it->first.substr(1,it->first.length()).c_str()) == name)
 		{
-			std::cout << "exit name find " << it->first << std::endl;
+		//	std::cout << "exit name find " << it->first << std::endl;
 			_modules.erase (it);
 			return ;
 		}
@@ -140,28 +140,33 @@ void	Core::deleteModule(std::string name)
 
 void	Core::addModule(std::string name)
 {
-	std::map<std::string, IMonitorModule*>::iterator it = _modules.find(name);
+	std::map<std::string, IMonitorModule*>::iterator it;
 
-	if (it == _modules.end()) {
-		if (name == "Intel(R) Core(TM) i5-3470S") {
-			_modules[name] = new Hostname();
-		}
-		if (name == "uptime") {
-			_modules[name] = new TimeModule();
-		}
-		if (name == "CPU") {
-			_modules[name] = new MainCpu();
-		}
-		if (name == "Memory") {
-			_modules[name] = new MainMemory();
-		}
-		if (name == "Network") {
-			_modules[name] = new NetworkModule();
-		}
-		if (name == "OS") {
-			_modules[name] = new OSModule();
+	for (it = _modules.begin(); it != _modules.end(); it++ ) {
+		if ((std::isalpha(it->first.front()) ? it->first.c_str() : it->first.substr(1,it->first.length()).c_str()) == name)
+		{
+			return ;
 		}
 	}
+	if (name == "Intel(R) Core(TM) i5-3470S") {
+		_modules[name] = new Hostname();
+	}
+	if (name == "uptime") {
+		_modules[name] = new TimeModule();
+	}
+	if (name == "CPU") {
+		_modules[name] = new MainCpu();
+	}
+	if (name == "Memory") {
+		_modules[name] = new MainMemory();
+	}
+	if (name == "Network") {
+		_modules[name] = new NetworkModule();
+	}
+	if (name == "OS") {
+		_modules[name] = new OSModule();
+	}
+
 }
 
 void Core::loop()

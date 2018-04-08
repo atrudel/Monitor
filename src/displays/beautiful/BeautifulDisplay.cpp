@@ -40,16 +40,13 @@ void BeautifulDisplay::update(void)
 
 bool BeautifulDisplay::renderModule(const IMonitorModule &module, int &curr_x, int &curr_y, Core &core)
 {
-<<<<<<< HEAD
+
 	if (_display.button("x", _display.getWidth() - 16 - 5, curr_y + 16, 16, 16, 0xaa0000))
 	{
 		std::string newname = module.getName();
 		core.deleteModule(newname);
 		return true;
 	}
-=======
-	// _display.button("x", _display.getWidth() - 16 - 5, curr_y + 16, 16, 16, 0xaa0000);
->>>>>>> dcd42ee98d9dc87560c813dd9e1b50bdd6558250
 	_display.drawString(module.getName(), curr_x, curr_y);
 	curr_y += TITLE_HEIGHT;
 
@@ -133,7 +130,6 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 
 	if (_display.button("OS", 5, 5, 40, 12, 0x00aa00))
 		core.addModule("OS");
-
 	if (_display.button("CPU", 5 + 45, 5, 40, TOP_BTN_HEIGHT, 0x00aa00))
 		core.addModule("CPU");
 	if (_display.button("RAM", 5 + 45 * 2, 5, 40, TOP_BTN_HEIGHT, 0x00aa00))
