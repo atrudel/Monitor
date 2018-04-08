@@ -6,7 +6,7 @@
 /*   By: agrumbac <agrumbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 14:38:34 by agrumbac          #+#    #+#             */
-/*   Updated: 2018/04/07 17:22:01 by agrumbac         ###   ########.fr       */
+/*   Updated: 2018/04/07 17:35:43 by agrumbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <ncurses.h>
 #include <iostream>
-#include "IMonitorDisplay.hpp"
+#include "../IMonitorDisplay.hpp"
 
 class NcursesDisplay : public IMonitorDisplay {
 

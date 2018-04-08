@@ -6,7 +6,7 @@
 /*   By: agrumbac <agrumbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 14:38:03 by agrumbac          #+#    #+#             */
-/*   Updated: 2018/04/07 17:19:59 by agrumbac         ###   ########.fr       */
+/*   Updated: 2018/04/07 17:36:03 by agrumbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void 					NcursesDisplay::update(void)
 void 					NcursesDisplay::render(void) const
 {
 	box(stdscr, 0, 0);
-	attron(COLOR_PAIR(PLAYER_COLOR));
-	mvprintw(LINES, COLS);
+	attron(COLOR_PAIR(DISP_RED));
+	mvprintw(1, 1, "hello");
+	attroff(COLOR_PAIR(DISP_RED));
 }
