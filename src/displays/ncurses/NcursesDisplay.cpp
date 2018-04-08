@@ -6,7 +6,7 @@
 /*   By: agrumbac <agrumbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 14:38:03 by agrumbac          #+#    #+#             */
-/*   Updated: 2018/04/08 15:55:13 by agrumbac         ###   ########.fr       */
+/*   Updated: 2018/04/08 17:33:34 by agrumbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,15 @@ void                     NcursesDisplay::init(void)
 }
 
 void                     NcursesDisplay::init(const std::map<std::string, \
-                            IMonitorModule*> &disp)
+                            IMonitorModule*> &modules)
 {
     this->init();
 
     int i = 1;
-    for (module_iterator it = disp.begin(); it != disp.end(); it++, i++)
+    for (module_iterator it = modules.begin(); it != modules.end(); it++, i++)
     {
-        _fenetres[it->first] = subwin(stdscr, _module_height , _module_width, (_module_height + _module_separation_size) * i , 0);
+        _fenetres[it->first] = subwin(stdscr, _module_height , _module_width, \
+            (_module_height + _module_separation_size) * i , 0);
     }
 }
 
@@ -93,16 +94,20 @@ inline void              NcursesDisplay::_dispTitle( void )
 {
     int     position = (_window_width - 42) / 2;
 
+    wattron(stdscr, COLOR_PAIR(TITLE_COLOR));
+    box(stdscr, 0, 0);
     mvprintw(1, position,"        _             _ _           ");
     mvprintw(2, position,"   __ _| | ___ __ ___| | |_ __ ___  ");
     mvprintw(3, position,"  / _` | |/ / '__/ _ \\ | | '_ ` _ \\ ");
     mvprintw(4, position," | (_| |   <| | |  __/ | | | | | | |");
     mvprintw(5, position,"  \\__, |_|\\_\\_|  \\___|_|_|_| |_| |_|");
     mvprintw(6, position,"  |___/                             ");
+    wattroff(stdscr, COLOR_PAIR(TITLE_COLOR));
 }
 
 inline void              NcursesDisplay::_dispAnime( void )//Champion Gnebie's awesome art
 {
+    wattron(stdscr, COLOR_PAIR(CATS_COLOR));
     _anime++;
     if (_anime >= 80)
     _anime = 0;
@@ -174,6 +179,7 @@ inline void              NcursesDisplay::_dispAnime( void )//Champion Gnebie's a
             }
         }
     }
+    wattroff(stdscr, COLOR_PAIR(CATS_COLOR));
 }
 
 inline void              NcursesDisplay::_dispRefresh( void )
@@ -184,18 +190,28 @@ inline void              NcursesDisplay::_dispRefresh( void )
         wrefresh(it->second);
 }
 
-inline void              NcursesDisplay::_dispWindows( const module_map &disp )
+inline void              NcursesDisplay::_dispWindows( const module_map &modules )
 {
     for (window_map_iterator it = _fenetres.begin(); it != _fenetres.end(); it++)
     {
-        // border box creation
+        int              print_position = 1;
+        module_iterator  mainit = modules.find(it->first);
+        int              range_str_pos = mainit->second->getName().length() + 4;
+
+        //module name
+        wattron(it->second, COLOR_PAIR(MODULE_COLOR));
         box(it->second, ACS_VLINE, ACS_HLINE);
-        // titre du module
-        mvwprintw(it->second, 1, 1,("Ceci est la fenetre du " + it->first).c_str());
-        int j = 2;
-        module_iterator mainit = disp.find(it->first);
-        mvwprintw(it->second, j, 1, "[%s] min %6.2f max %6.2f ", mainit->second->getName().c_str(), mainit->second->getGraphMin(), mainit->second->getGraphMax());
-        j++;
+        mvwprintw(it->second, print_position, 1,("[" + mainit->second->getName() + "]").c_str());
+        wattroff(it->second, COLOR_PAIR(MODULE_COLOR));
+
+        //range infos
+        wattron(it->second, COLOR_PAIR(RANGE_INFO_COLOR));
+        mvwprintw(it->second, print_position++, range_str_pos, "(range %.2f to %.2f)", \
+            mainit->second->getGraphMin(), mainit->second->getGraphMax());
+        wattroff(it->second, COLOR_PAIR(RANGE_INFO_COLOR));
+
+        //info percentages
+        wattron(it->second, COLOR_PAIR(INFO_COLOR));
         int i = 0;
         float cpu = 0;
         for (std::map<std::string, std::deque<float> >::const_iterator secondit = \
@@ -209,30 +225,28 @@ inline void              NcursesDisplay::_dispWindows( const module_map &disp )
             {
                 cpu += *eqiter;
             }
-            mvwprintw(it->second,j,10, " [ %02i %%] %s  ",static_cast<int>(cpu / i * 100), secondit->first.c_str());
-            j++;
+            mvwprintw(it->second,print_position++, INFO_PADDING, "[ %02i %% ] %s  ",static_cast<int>(cpu / i * 100), secondit->first.c_str());
         }
-        j++;
+
         for (std::map<std::string, std::string>::const_iterator datait = \
             mainit->second->getData().begin();
             datait != mainit->second->getData().end();
             datait++)
         {
-            mvwprintw(it->second,j,10, " [%6.2f %%] %s  ",cpu / i, datait->first.c_str());
+            mvwprintw(it->second,print_position++, INFO_PADDING, "[ %.2f %% ] %s  ", cpu / i, datait->first.c_str());
         }
-        j++;
+        wattroff(it->second, COLOR_PAIR(INFO_COLOR));
     }
 }
 
-void                     NcursesDisplay::render( const module_map &disp )
+void                     NcursesDisplay::render( const module_map &modules )
 {
     erase();
     getmaxyx(stdscr, _window_height, _window_width);
-    box(stdscr, 0, 0);
 
     _dispTitle();
-    if (disp.count("cat"))
-    	_dispAnime();
-    _dispWindows(disp);
+    _dispWindows(modules);
+    if (modules.count("cat"))
+        _dispAnime();
     _dispRefresh();
 }
