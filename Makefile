@@ -40,11 +40,9 @@ FILES =\
 Core.cpp\
 displays/beautiful/BeautifulDisplay.cpp\
 displays/beautiful/SdlDisplay.cpp\
-displays/dummy/DummyDisplay.cpp\
 displays/ncurses/Module.cpp\
 displays/ncurses/NcursesDisplay.cpp\
 main.cpp\
-modules/dummy/DummyModule.cpp\
 modules/Hostname/Hostname.cpp\
 modules/mainCpu/MainCpu.cpp\
 modules/Network/NetworkModule.cpp\
