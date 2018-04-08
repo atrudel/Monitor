@@ -34,11 +34,11 @@ Core &Core::operator=(const Core &o)
 void Core::init()
 {
 	_displays.push_back(new BeautifulDisplay());
-	_modules["time"] = new TimeModule();
+	// _modules["time"] = new TimeModule();
 	_modules["main_cpu"] = new MainCpu();
-	_modules["net"] = new NetworkModule();
+	// _modules["net"] = new NetworkModule();
 //	_modules["main_cpu_2"] = new MainCpu();
-	_modules["Hostname"] = new Hostname();
+	// _modules["Hostname"] = new Hostname();
 	// _modules["ram"] = new RamModul();
   if (_activeDisplayIndex == 1)
 	{
@@ -81,7 +81,7 @@ void Core::stop()
 void Core::loop()
 {
 //	int seconds = 0;
-	double tickTime = 1000000.0 / 60.0;
+	double tickTime = 1000000.0 / 1.0;
 	clock_t beforeTime = clock();
 	while (_running)
 	{

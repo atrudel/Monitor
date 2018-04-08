@@ -97,7 +97,7 @@ void MainCpu::setCpuDatas()
     std::ostringstream ss;
     ss << buffer;
 
-    printf("%s\n", buffer);
+    // std::cout << buffer << std::endl;
 
     _data["cpuBrand"] = buffer;
 }

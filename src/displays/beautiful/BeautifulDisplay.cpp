@@ -1,9 +1,8 @@
 #include "BeautifulDisplay.hpp"
 
 BeautifulDisplay::BeautifulDisplay(void)
-	: _display(SdlDisplay(200, 200))
+	: _display(SdlDisplay(500, 1000))
 {
-
 }
 
 BeautifulDisplay::BeautifulDisplay(const BeautifulDisplay& src)
@@ -38,23 +37,26 @@ void BeautifulDisplay::update(void)
 void BeautifulDisplay::renderModule(const IMonitorModule &module, int index)
 {
 	int j = -1;
+	int size = 120;
 
 	typedef std::map<std::string, std::string>::const_iterator	data_iterator;
 	for (data_iterator it = module.getData().begin(); it != module.getData().end(); it++)
 	{
 		j++;
 		std::string str = it->first + ": " + it->second;
-		_display.drawString(str, 10, 20 + j * 10);
+		_display.drawString(str, 5, 20 + j * 10);
+		size = 25 + j * 10;
+		// std::cout << str << ", x " << 5 << ", y " << size << ", j " << j << ", index " << index << std::endl;
 	}
 
-	j = -1;
 	typedef std::map<std::string, std::deque<float> >::const_iterator	graph_iterator;
 	for (graph_iterator it = module.getGraphs().begin(); it != module.getGraphs().end(); it++)
 	{
 		j++;
 		std::string name = it->first;
-		std::cout << name << std::endl;
-		_display.drawString(name, 5, 5 + (index + j) * 120);
+		_display.drawString(name, 5, 5 + (index + j) * (size + 5));
+		std::cout << name << ", x " <<  5 << ", y " << 5 + (index + j) * (size + 5) << ", j " << j << ", index " << index << std::endl;
+
 		std::deque<float> data = it->second;
 		for (size_t x = data.size() - 1; x > 0; x--)
 		{
@@ -64,9 +66,10 @@ void BeautifulDisplay::renderModule(const IMonitorModule &module, int index)
 				int g = 128 + j * 50;
 				int b = y * 2;
 				int color = (r << 16) | (g << 8) | b;
-				_display.drawPix(static_cast<int>(x) + 100, (100 + module.getData().size() * 10) - y + (index + j) * 120, color);
+				_display.drawPix(static_cast<int>(x) + 100, (100 + module.getData().size() * 10) - y + (index + j) * size, color);
 			}
 		}
+		size = 120;
 	}
 }
 
