@@ -1,6 +1,8 @@
 #ifndef MONITOR_BEAUTIFULDISPLAY_HPP
 # define MONITOR_BEAUTIFULDISPLAY_HPP
 
+#include <sstream>
+#include <iomanip>
 #include "SdlDisplay.hpp"
 #include "../IMonitorDisplay.hpp"
 #include "../../modules/IMonitorModule.hpp"
@@ -24,7 +26,7 @@
 # define GRAPH_HEIGHT   100
 
 //** X dimension
-# define LEFT_MARGIN_GR 100
+# define LEFT_MARGIN_GR 130
 # define GRAPH_WIDTH    DEQUE_SIZE
 
 
@@ -47,7 +49,9 @@ public:
 	void    render(const std::map<std::string, IMonitorModule*> &modules);
 
 private:
-    SdlDisplay	_display;
+    SdlDisplay							_display;
+	int									_time;
+	std::map	<std::string, float> 	_values;
 
     int     _calculateTotalHeight(const std::map<std::string, IMonitorModule*> &modules) const;
     int	    _calculateModuleHeight(const IMonitorModule* module) const;

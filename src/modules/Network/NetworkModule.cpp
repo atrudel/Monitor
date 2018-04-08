@@ -67,8 +67,8 @@ void NetworkModule::reset_net()
         }
     }
 
-    dequeUpdate("ins", static_cast<float>(pkibytes) - _lastin);
-    dequeUpdate("outs", static_cast<float>(pkobytes) - _lastout);
+    dequeUpdate("in (B/s)", static_cast<float>(pkibytes) - _lastin);
+    dequeUpdate("out (B/s)", static_cast<float>(pkobytes) - _lastout);
 
     _lastin = static_cast<float>(pkibytes);
     _lastout = static_cast<float>(pkobytes);
@@ -88,7 +88,7 @@ void NetworkModule::reset_net()
     _datas["out_b"] += " Gb OUT";
 
      std::ostringstream stream3;
-   stream3 <<  pkibytes;
+   stream3 << pkibytes;
    std::string str3 = stream3.str().substr(0, 5);
     _datas["pk_in"] = str3.c_str();
     _datas["pk_in"] += " pck IN";

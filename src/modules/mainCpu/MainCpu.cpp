@@ -42,7 +42,7 @@ void MainCpu::setCPUsLoad()
         size_t idle = cpuInfo[i].cpu_ticks[CPU_STATE_IDLE];
 
         std::ostringstream ss;
-        ss << "cpu" << i << "Usage";
+        ss << "CPU " << i << " Usage (%)";
 
        dequeUpdate(ss.str(), calculateCPULoad(system + user, _oldCpusWorkTicks[i], system + user + idle, _oldCpusTotalTicks[i]));
 
@@ -59,7 +59,7 @@ void MainCpu::setCPUsLoad()
     size_t newTotal = totalIdleTime + totalSystemTime + totalUserTime;
     size_t newWork = totalSystemTime + totalUserTime;
 
-    dequeUpdate("cpuTotalUsage", calculateCPULoad(newWork, _oldWorkTicks, newTotal, _oldTotalTicks));
+    dequeUpdate("CPU Total Usage (%)", calculateCPULoad(newWork, _oldWorkTicks, newTotal, _oldTotalTicks));
 
     _oldTotalTicks = newTotal;
     _oldWorkTicks = newWork;
