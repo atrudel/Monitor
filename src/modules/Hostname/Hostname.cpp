@@ -57,5 +57,9 @@ void Hostname::setName(std::string name)
 Hostname &Hostname::operator=(Hostname const &rhs)
 {
     this->_name = rhs.getName();
+    this->_graphs = rhs.getGraphs();
+    this->_data = rhs.getData();
+    this->_min = rhs.getGraphMin();
+    this->_max = rhs.getGraphMax();
     return *this;
 }

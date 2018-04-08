@@ -1,9 +1,8 @@
 #include "BeautifulDisplay.hpp"
 
 BeautifulDisplay::BeautifulDisplay(void)
-	: _display(SdlDisplay(200, 200))
+	: _display(SdlDisplay(500, 1000))
 {
-
 }
 
 BeautifulDisplay::BeautifulDisplay(const BeautifulDisplay& src)
@@ -20,7 +19,7 @@ BeautifulDisplay::~BeautifulDisplay(void) {
 BeautifulDisplay& BeautifulDisplay::operator=(const BeautifulDisplay& rhs) {
     if (this != &rhs)
 	{
-        // TODO
+        _display = rhs._display;
     }
     return *this;
 }
@@ -35,26 +34,29 @@ void BeautifulDisplay::update(void)
 	_display.update();
 }
 
-void BeautifulDisplay::renderModule(const IMonitorModule &module, int index)
+void BeautifulDisplay::renderModule(const IMonitorModule &module, int &curr_x, int &curr_y)
 {
-	int j = -1;
+	_display.button("x", _display.getWidth() - 16 - 5, curr_y + 16, 16, 16, 0xaa0000);
+	_display.drawString(module.getName(), curr_x, curr_y);
+	curr_y += TITLE_HEIGHT;
 
 	typedef std::map<std::string, std::string>::const_iterator	data_iterator;
 	for (data_iterator it = module.getData().begin(); it != module.getData().end(); it++)
 	{
-		j++;
 		std::string str = it->first + ": " + it->second;
-		_display.drawString(str, 10, 20 + j * 10);
+		_display.drawString(str, curr_x, curr_y);
+		curr_y += DATA_HEIGHT;
 	}
 
-	j = -1;
+	int j = -1;
 	typedef std::map<std::string, std::deque<float> >::const_iterator	graph_iterator;
 	for (graph_iterator it = module.getGraphs().begin(); it != module.getGraphs().end(); it++)
 	{
-		j++;
+		++j;
 		std::string name = it->first;
-		std::cout << name << std::endl;
-		_display.drawString(name, 5, 5 + (index + j) * 120);
+
+		_display.drawString(name, curr_x, curr_y);
+
 		std::deque<float> data = it->second;
 		for (size_t x = data.size() - 1; x > 0; x--)
 		{
@@ -64,15 +66,18 @@ void BeautifulDisplay::renderModule(const IMonitorModule &module, int index)
 				int g = 128 + j * 50;
 				int b = y * 2;
 				int color = (r << 16) | (g << 8) | b;
-				_display.drawPix(static_cast<int>(x) + 100, (100 + module.getData().size() * 10) - y + (index + j) * 120, color);
+
+				_display.drawPix(static_cast<int>(x) + (curr_x + LEFT_MARGIN_GR), (100 + curr_y - y) , color);
 			}
 		}
+		curr_y += GRAPH_HEIGHT;
 	}
+
 }
 
-void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &module)
+void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modules)
 {
-	(void) module;
+	(void) modules;
 	static int i = 0;
 	i++;
 
@@ -88,20 +93,57 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 		}
 	}
 
-	// _display.setSize(200, static_cast<int>(module.size() * 100));
+//	 _display.setSize(200, static_cast<int>(modules.size() * 100));
 
 	for (int y = 0; y < _display.getHeight(); y++)
 		for (int x = 0; x < _display.getWidth(); x++)
-			_display.drawPix(x, y, 0);
+			_display.drawPix(x, y, 0x111111);
 
 	typedef std::map<std::string, IMonitorModule*>::const_iterator iterator;
 
-	int index = 0;
-	for (iterator it = module.begin(); it != module.end(); it++)
+	if (_display.button("Exit", _display.getWidth() - 45, 5, 40, 12, 0xaa0000))
+		exit(0);
+
+	if (_display.button("OS", 5, 5, 40, 12, 0x00aa00))
 	{
-		renderModule(*it->second, index);
-		index++;
+
+	}
+
+	_display.button("CPU", 5 + 45, 5, 40, 12, 0x00aa00);
+	_display.button("RAM", 5 + 45 * 2, 5, 40, 12, 0x00aa00);
+	_display.button("NET", 5 + 45 * 3, 5, 40, 12, 0x00aa00);
+
+	int curr_x = LEFT_OFFSET;
+	int curr_y = TOP_OFFSET;
+	for (iterator it = modules.begin(); it != modules.end(); it++)
+	{
+		renderModule(*it->second, curr_x, curr_y);
+		curr_y += MODULE_GAP;
 	}
 
 	_display.draw();
+}
+
+int	 BeautifulDisplay::calculateTotalHeight(const std::map<std::string, IMonitorModule*> &modules) const {
+    int height= 0;
+
+    height += TOP_OFFSET;
+
+    typedef std::map<std::string, IMonitorModule*>::const_iterator iterator;
+    for (iterator it = modules.begin(); it != modules.end(); it++)
+    {
+        height += calculateModuleHeight(it->second);
+    }
+    height += MODULE_GAP * (modules.size() - 1);
+    height += BOTTOM_OFFSET;
+    return height;
+}
+
+int	 BeautifulDisplay::calculateModuleHeight(const IMonitorModule* module) const {
+    int height = 0;
+    height += TITLE_HEIGHT;
+    height += DATA_HEIGHT * module->getData().size();
+    height += GRAPH_HEIGHT * module->getGraphs().size(); // to change
+    height += MODULE_GAP * (module->getGraphs().size() -1); // to change
+    return height;
 }

@@ -43,12 +43,12 @@ displays/beautiful/SdlDisplay.cpp\
 displays/dummy/DummyDisplay.cpp\
 displays/ncurses/NcursesDisplay.cpp\
 main.cpp\
-modules/dummy/DummyModule.cpp\
 modules/Hostname/Hostname.cpp\
 modules/mainCpu/MainCpu.cpp\
 modules/Cat/Cat.cpp\
 modules/Network/NetworkModule.cpp\
 modules/os/OSModule.cpp\
+modules/memory/MainMemory.cpp\
 modules/time/TimeModule.cpp
 
 OBJ_DIR = bin/

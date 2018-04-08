@@ -16,7 +16,7 @@ NetworkModule::~NetworkModule()
 }
 
 void NetworkModule::update(void)
-{   
+{
     if ( i % 60 == 0)
     {
         reset_net();
@@ -50,14 +50,14 @@ void NetworkModule::reset_net()
 
     char *lim = buf + len;
     char *next = NULL;
-    
-    
+
+
     for (next = buf; next < lim; ) {
         struct if_msghdr *ifm = (struct if_msghdr *)next;
         next += ifm->ifm_msglen;
         if (ifm->ifm_type == RTM_IFINFO2) {
             struct if_msghdr2 *if2m = (struct if_msghdr2 *)ifm;
-            
+
             if(if2m->ifm_data.ifi_type != 18)
             {
                 totalibytes += if2m->ifm_data.ifi_ibytes;
@@ -69,7 +69,7 @@ void NetworkModule::reset_net()
     }
 
     dequeUpdate("ins", static_cast<float>(pkibytes) - _lastin);
-    dequeUpdate("outs", static_cast<float>(pkobytes) - _lastout);   
+    dequeUpdate("outs", static_cast<float>(pkobytes) - _lastout);
 
     _lastin = static_cast<float>(pkibytes);
     _lastout = static_cast<float>(pkobytes);
@@ -77,7 +77,7 @@ void NetworkModule::reset_net()
     std::ostringstream stream;
     stream << static_cast<double>(totalibytes) / 1000000000.0;
     std::string str = stream.str().substr(0, 7);
-    
+
     _datas["in_b"] = str.c_str();
     _datas["in_b"] += " Gb IN";
 
@@ -116,21 +116,21 @@ void NetworkModule::dequeUpdate(std::string name, float ret)
         this->_graphs[name] = std::deque<float>(DEQUE_SIZE, 0);
 }
 
-const std::map<std::string, std::deque<float> > &NetworkModule::getGraphs(void) const 
+const std::map<std::string, std::deque<float> > &NetworkModule::getGraphs(void) const
 {
     return this->_graphs;
 }
 
-const float &NetworkModule::getGraphMin(void) const 
+const float &NetworkModule::getGraphMin(void) const
 {
     return this->_graphMin;
 }
- const float &NetworkModule::getGraphMax(void) const 
+ const float &NetworkModule::getGraphMax(void) const
  {
     return this->_graphMax;
  }
 
-const std::map<std::string, std::string> &NetworkModule::getData(void) const 
+const std::map<std::string, std::string> &NetworkModule::getData(void) const
   {
       return this->_datas;
     }
@@ -146,8 +146,12 @@ const std::string &NetworkModule::getName(void) const
 }
 
 NetworkModule &NetworkModule::operator=(NetworkModule const &rhs) {
-
-	(void) rhs;
-    // this->_foo = rhs.getValue();
+    this->_name = rhs.getName();
+    this->_graphs = rhs.getGraphs();
+    this->_datas = rhs.getData();
+    this->_graphMin = rhs.getGraphMin();
+    this->_graphMax = rhs.getGraphMax();
+    this->_lastin = rhs._lastin;
+    this->_lastout = rhs._lastout;
     return *this;
 }

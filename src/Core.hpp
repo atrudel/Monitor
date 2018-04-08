@@ -1,6 +1,7 @@
 #ifndef CORE_HPP
 # define CORE_HPP
 
+# include <unistd.h>
 # include <iostream>
 # include <vector>
 # include <map>
@@ -15,9 +16,13 @@
 # include "modules/mainCpu/MainCpu.hpp"
 # include "modules/Network/NetworkModule.hpp"
 # include "modules/Cat/Cat.hpp"
+# include "modules/memory/MainMemory.hpp"
+#include "modules/Hostname/Hostname.hpp"
+#include "modules/os/OSModule.hpp"
+#include "modules/time/TimeModule.hpp"
 
-# include "displays/dummy/DummyDisplay.hpp"
-# include "modules/dummy/DummyModule.hpp"
+// # include "displays/dummy/DummyDisplay.hpp"
+// # include "modules/dummy/DummyModule.hpp"
 # include "modules/Hostname/Hostname.hpp"
 
 #define SIZE_OPT	10
@@ -51,7 +56,7 @@ public:
 	void stop();
 	void loop();
 
-	void test();
+	void test(int iters);
 };
 
 #endif
