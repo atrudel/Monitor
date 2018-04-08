@@ -63,7 +63,15 @@ float MainMemory::getSystemMemoryUsagePercentage()
 
 void MainMemory::update(void)
 {
-    this->dequeUpdate("memoryUsage", this->getSystemMemoryUsagePercentage());
+	try
+	{
+		this->dequeUpdate("memoryUsage", this->getSystemMemoryUsagePercentage());
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+		exit(0);
+	}
 }
 
 const float &MainMemory::getGraphMin(void) const

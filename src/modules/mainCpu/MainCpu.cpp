@@ -104,8 +104,16 @@ void MainCpu::setCpuDatas()
 
 void MainCpu::update(void)
 {
-    this->setCPUsLoad();
-    this->setCpuDatas();
+    try
+	{
+		this->setCPUsLoad();
+		this->setCpuDatas();
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+		exit(0);
+	}
 }
 
 const float &MainCpu::getGraphMin(void) const

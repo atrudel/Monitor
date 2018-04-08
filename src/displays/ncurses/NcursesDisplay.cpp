@@ -32,7 +32,7 @@ NcursesDisplay &        NcursesDisplay::operator=( NcursesDisplay const & rhs )
     this->_window_width = rhs._window_width;
     this->_anime = rhs._anime;
     this->_fenetres = rhs.getWindow();
-    
+
     return *this;
 }
 
@@ -63,9 +63,9 @@ void                     NcursesDisplay::init(const std::map<std::string, \
     int i = 0;
     for (module_iterator it = modules.begin(); it != modules.end(); it++)
     {
-		if (it->first != "cat")
-        	_fenetres[it->first] = subwin(stdscr, _module_height , _module_width, \
-            	(_module_height + _module_separation_size) * ++i , 0);
+        if (it->first != "cat")
+            _fenetres[it->first] = subwin(stdscr, _module_height , _module_width, \
+                (_module_height + _module_separation_size) * ++i , 0);
     }
 }
 
@@ -73,6 +73,7 @@ bool                     NcursesDisplay::quit( void )
 {
     if (getch() == 27) {
         endwin();
+        exit(0);
         return true;
     }
     return false;
@@ -116,12 +117,12 @@ inline void              NcursesDisplay::_dispAnime( void )//Champion Gnebie's a
             mvprintw(LINES - 2, ANIME_WIDTH, "  ,(u  u  ,),");
             mvprintw(LINES - 1, ANIME_WIDTH, " {}{}{}{}{}{}   ");
             if (_window_width - 60 > ANIME_WIDTH) {
-                mvprintw(LINES - 7, ANIME_WIDTH + 20, "    |\\_._/|   ");
-                mvprintw(LINES - 6, ANIME_WIDTH + 20, "    | o o |   ");
-                mvprintw(LINES - 5, ANIME_WIDTH + 20, "    (  T  )   ");
-                mvprintw(LINES - 4, ANIME_WIDTH + 20, "   .^`-^-'^.  ");
-                mvprintw(LINES - 3, ANIME_WIDTH + 20, "   `.  ;  .'  ");
-                mvprintw(LINES - 2, ANIME_WIDTH + 20, "   | | | | |  ");
+                mvprintw(LINES - 7, ANIME_WIDTH + 20, "    |\\_._/|    ");
+                mvprintw(LINES - 6, ANIME_WIDTH + 20, "    | o o |    ");
+                mvprintw(LINES - 5, ANIME_WIDTH + 20, "    (  T  )    ");
+                mvprintw(LINES - 4, ANIME_WIDTH + 20, "   .^`-^-'^.   ");
+                mvprintw(LINES - 3, ANIME_WIDTH + 20, "   `.  ;  .'   ");
+                mvprintw(LINES - 2, ANIME_WIDTH + 20, "   | | | | |   ");
                 mvprintw(LINES - 1, ANIME_WIDTH + 20, "  ((_((|))_))  ");
             }
         }
@@ -167,12 +168,12 @@ inline void              NcursesDisplay::_dispAnime( void )//Champion Gnebie's a
 
 
             if (_window_width - 60 > ANIME_WIDTH) {
-                mvprintw(LINES - 7, ANIME_WIDTH + 20, "    |\\_._/|");
-                mvprintw(LINES - 6, ANIME_WIDTH + 20, "    | 0 0 |");
-                mvprintw(LINES - 5, ANIME_WIDTH + 20, "    (  T  )");
-                mvprintw(LINES - 4, ANIME_WIDTH + 20, "   .^`-^-'^.");
-                mvprintw(LINES - 3, ANIME_WIDTH + 20, "   `.  ;  .'");
-                mvprintw(LINES - 2, ANIME_WIDTH + 20, "   | | | | |");
+                mvprintw(LINES - 7, ANIME_WIDTH + 20, "    |\\_._/|    ");
+                mvprintw(LINES - 6, ANIME_WIDTH + 20, "    | 0 0 |    ");
+                mvprintw(LINES - 5, ANIME_WIDTH + 20, "    (  T  )    ");
+                mvprintw(LINES - 4, ANIME_WIDTH + 20, "   .^`-^-'^.   ");
+                mvprintw(LINES - 3, ANIME_WIDTH + 20, "   `.  ;  .'   ");
+                mvprintw(LINES - 2, ANIME_WIDTH + 20, "   | | | | |   ");
                 mvprintw(LINES - 1, ANIME_WIDTH + 20, "  ((_((|))_))  ");
             }
         }
@@ -196,9 +197,9 @@ inline void              NcursesDisplay::_dispWindows( const module_map &modules
         module_iterator  mainit = modules.find(it->first);
         int              range_str_pos = mainit->second->getName().length() + 4;
 
-		//cat box
-		if (mainit->second->getName() == "cat")
-			continue;
+        //cat box
+        if (mainit->second->getName() == "cat")
+            continue;
         //module name
         wattron(it->second, COLOR_PAIR(MODULE_COLOR));
         box(it->second, ACS_VLINE, ACS_HLINE);
@@ -250,4 +251,5 @@ void                     NcursesDisplay::render( const module_map &modules )
     if (modules.count("cat"))
         _dispAnime();
     _dispRefresh();
+    this->quit();
 }
