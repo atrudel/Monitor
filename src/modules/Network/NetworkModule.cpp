@@ -1,11 +1,10 @@
 
 #include "NetworkModule.hpp"
 
-NetworkModule::NetworkModule(void) : _name(""), _graphMin(0), _graphMax(0)
+NetworkModule::NetworkModule(void) : _name(""), _graphMin(0), _graphMax(-1)
     , _graphs(std::map<std::string, std::deque<float> >()), _datas(std::map<std::string, std::string>())
 {
-    _graphMin = 0.0f;
-    _graphMax = 100000.0f;
+    _time = 0;
     //
     reset_net();
 }
@@ -17,12 +16,12 @@ NetworkModule::~NetworkModule()
 
 void NetworkModule::update(void)
 {
-    if ( i % 60 == 0)
+    if ( _time % 60 == 0)
     {
         reset_net();
-        i = 0;
+        _time = 0;
     }
-    i++;
+    _time++;
 }
 
 
