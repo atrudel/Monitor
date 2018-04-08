@@ -197,7 +197,6 @@ inline void              NcursesDisplay::_dispAnime( void )//Champion Gnebie's a
 inline void              NcursesDisplay::_dispRefresh( void )
 {
     refresh();
-
     for(window_map_iterator it=_fenetres.begin(); it != _fenetres.end(); it++)
         wrefresh(it->second);
 }
@@ -257,8 +256,9 @@ inline void              NcursesDisplay::_dispWindows( const module_map &modules
     }
 }
 
-void                     NcursesDisplay::render( const module_map &modules )
+void                     NcursesDisplay::render( const module_map &modules, Core &core)
 {
+    (void)core;
     erase();
     getmaxyx(stdscr, _window_height, _window_width);
 

@@ -6,6 +6,7 @@
 #include "SdlDisplay.hpp"
 #include "../IMonitorDisplay.hpp"
 #include "../../modules/IMonitorModule.hpp"
+#include "../../Core.hpp"
 
 // Contour
 # define TOP_OFFSET     20
@@ -43,10 +44,10 @@ public:
 
     BeautifulDisplay& operator=(const BeautifulDisplay& rhs);
 
-	void    renderModule(const IMonitorModule &module, int &curr_x, int &curr_y);
+	bool    renderModule(const IMonitorModule &module, int &curr_x, int &curr_y, Core &core);
 	void    init(void);
     void    update(void);
-	void    render(const std::map<std::string, IMonitorModule*> &modules);
+	void    render(const std::map<std::string, IMonitorModule*> &modules, Core &core);
 
 private:
     SdlDisplay							_display;

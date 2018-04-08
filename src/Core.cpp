@@ -34,34 +34,34 @@ void Core::init(char display_options[SIZE_OPT])
 {
 	int i = 0, l = 0;
 	char	rank = 48;
-	char	name[20];
+	char	name[30];
 	while (display_options[i]) {
-		bzero(name, 20);
+		bzero(name, 30);
 		if (display_options[i] == 'h' && (name[0] = rank)) {
-			strcpy(&(name[1]), "Hostname");
+			strcpy(&(name[1]), "Intel(R) Core(TM) i5-3470S");
 			_modules[name] = new Hostname();
 		}
 		if (display_options[i] == 't' && (name[0] = rank)) {
-			strcpy(&(name[1]), "time");
+			strcpy(&(name[1]), "uptime");
 			_modules[name] = new TimeModule();
 		}
 		if (display_options[i] == 'c' && (name[0] = rank)) {
-			strcpy(&(name[1]), "main_cpu");
+			strcpy(&(name[1]), "CPU");
 			_modules[name] = new MainCpu();
 		}
 		if (display_options[i] == 'r' && (name[0] = rank)) {
-			strcpy(&(name[1]), "ram");
+			strcpy(&(name[1]), "Memory");
 			_modules[name] = new MainMemory();
 		}
 		if (display_options[i] == 'n' && (name[0] = rank)) {
-			strcpy(&(name[1]), "net");
+			strcpy(&(name[1]), "Network");
 			_modules[name] = new NetworkModule();
 		}
 		if (display_options[i] == 'a' && (name[0] = rank)) {
 			_modules["cat"] = new Cat();
 		}
 		if (display_options[i] == 'o' && (name[0] = rank)) {
-			strcpy(&(name[1]), "os");
+			strcpy(&(name[1]), "OS");
 			_modules[name] = new OSModule();
 		}
 		rank++;
@@ -95,7 +95,7 @@ void Core::update()
 void Core::render()
 {
 	if (!_displays.empty())
-		_displays[_activeDisplayIndex]->render(_modules);
+		_displays[_activeDisplayIndex]->render(_modules, *this);
 }
 
 void Core::start(char display_options[SIZE_OPT])
@@ -109,6 +109,48 @@ void Core::start(char display_options[SIZE_OPT])
 void Core::stop()
 {
 	_running = false;
+}
+
+void	Core::deleteModule(std::string name)
+{
+	std::map<std::string, IMonitorModule*>::iterator it;
+
+	for (it = _modules.begin(); it != _modules.end(); it++ ) {
+		if ((std::isalpha(it->first.front()) ? it->first.c_str() : it->first.substr(1,it->first.length()).c_str()) == name)
+		{
+			std::cout << "exit name find " << it->first << std::endl;
+			_modules.erase (it);
+			return ;
+		}
+	}
+//	std::cout << "exit name not find find " << it->first << std::endl;
+	return ;
+}
+
+void	Core::addModule(std::string name)
+{
+	std::map<std::string, IMonitorModule*>::iterator it = _modules.find(name);
+
+	if (it == _modules.end()) {
+		if (name == "Intel(R) Core(TM) i5-3470S") {
+			_modules[name] = new Hostname();
+		}
+		if (name == "uptime") {
+			_modules[name] = new TimeModule();
+		}
+		if (name == "CPU") {
+			_modules[name] = new MainCpu();
+		}
+		if (name == "Memory") {
+			_modules[name] = new MainMemory();
+		}
+		if (name == "Network") {
+			_modules[name] = new NetworkModule();
+		}
+		if (name == "OS") {
+			_modules[name] = new OSModule();
+		}
+	}
 }
 
 void Core::loop()

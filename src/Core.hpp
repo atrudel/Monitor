@@ -56,7 +56,8 @@ public:
 	void stop();
 	void loop();
 
-
+	void deleteModule(std::string);
+	void addModule(std::string);
 	void test(int iterations);
 };
 

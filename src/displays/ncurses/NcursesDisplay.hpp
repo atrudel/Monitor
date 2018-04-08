@@ -24,7 +24,7 @@ public:
     virtual void             init( void );
     virtual void             init( const module_map &disp );
     virtual void             update( void );
-    virtual void             render( const module_map &disp ) ;
+    virtual void             render( const module_map &disp, Core &core) ;
     bool                     quit( void );
     std::map<std::string, WINDOW *> getWindow() const;
 

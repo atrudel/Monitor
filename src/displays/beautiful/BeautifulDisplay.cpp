@@ -38,9 +38,14 @@ void BeautifulDisplay::update(void)
 	_display.update();
 }
 
-void BeautifulDisplay::renderModule(const IMonitorModule &module, int &curr_x, int &curr_y)
+bool BeautifulDisplay::renderModule(const IMonitorModule &module, int &curr_x, int &curr_y, Core &core)
 {
-	_display.button("x", _display.getWidth() - 16 - 5, curr_y + 16, 16, 16, 0xaa0000);
+	if (_display.button("x", _display.getWidth() - 16 - 5, curr_y + 16, 16, 16, 0xaa0000))
+	{
+		std::string newname = module.getName();
+		core.deleteModule(newname);
+		return true;
+	}
 	_display.drawString(module.getName(), curr_x, curr_y);
 	curr_y += TITLE_HEIGHT;
 
@@ -87,10 +92,11 @@ void BeautifulDisplay::renderModule(const IMonitorModule &module, int &curr_x, i
 		}
 		curr_y += GRAPH_HEIGHT;
 	}
+	return false;
 
 }
 
-void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modules)
+void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modules, Core &core)
 {
 	(void) modules;
 	static int i = 0;
@@ -121,19 +127,25 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 		exit(0);
 
 	if (_display.button("OS", 5, 5, 40, 12, 0x00aa00))
-	{
+		core.addModule("OS");
 
-	}
-
-	_display.button("CPU", 5 + 45, 5, 40, TOP_BTN_HEIGHT, 0x00aa00);
-	_display.button("RAM", 5 + 45 * 2, 5, 40, TOP_BTN_HEIGHT, 0x00aa00);
-	_display.button("NET", 5 + 45 * 3, 5, 40, TOP_BTN_HEIGHT, 0x00aa00);
+	if (_display.button("CPU", 5 + 45, 5, 40, TOP_BTN_HEIGHT, 0x00aa00))
+		core.addModule("CPU");
+	if (_display.button("RAM", 5 + 45 * 2, 5, 40, TOP_BTN_HEIGHT, 0x00aa00))
+		core.addModule("Memory");
+	if (_display.button("NET", 5 + 45 * 3, 5, 40, TOP_BTN_HEIGHT, 0x00aa00))
+		core.addModule("Network");
+	if (_display.button("HOST", 5 + 45 * 4, 5, 40, TOP_BTN_HEIGHT, 0x00aa00))
+		core.addModule("Intel(R) Core(TM) i5-3470S");
+	if (_display.button("TIME", 5 + 45 * 5, 5, 40, TOP_BTN_HEIGHT, 0x00aa00))
+		core.addModule("uptime");
 
 	int curr_x = LEFT_OFFSET;
 	int curr_y = TOP_OFFSET;
 	for (iterator it = modules.begin(); it != modules.end(); it++)
 	{
-		renderModule(*it->second, curr_x, curr_y);
+		if (renderModule(*it->second, curr_x, curr_y, core))
+			return ;
 		curr_y += MODULE_GAP;
 	}
 

@@ -3,6 +3,8 @@
 
 # include "../modules/IMonitorModule.hpp"
 
+class Core;
+
 class IMonitorDisplay
 {
   public:
@@ -10,7 +12,7 @@ class IMonitorDisplay
 
     virtual void init(void) = 0;
     virtual void update(void) = 0;
-	virtual void render(const std::map<std::string, IMonitorModule*> &disp) = 0;
+	virtual void render(const std::map<std::string, IMonitorModule*> &disp, Core &core) = 0;
 };
 
 #endif //  IMONITORDISPLAY_HPP
