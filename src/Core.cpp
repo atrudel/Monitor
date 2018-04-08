@@ -1,6 +1,4 @@
 #include "Core.hpp"
-#include "displays/dummy/DummyDisplay.hpp"
-#include "modules/dummy/DummyModule.hpp"
 
 Core::Core()
 	: _running(false),
@@ -34,8 +32,17 @@ void Core::init()
 {
 	_displays.push_back(new BeautifulDisplay());
 	_modules["time"] = new TimeModule();
-	// _modules["gpu"] = new GpuModul();
+	_modules["main_cpu"] = new MainCpu();
+	_modules["net"] = new NetworkModule();
+//	_modules["main_cpu_2"] = new MainCpu();
+	_modules["Hostname"] = new Hostname();
 	// _modules["ram"] = new RamModul();
+  if (_activeDisplayIndex == 1)
+	{
+		NcursesDisplay *ncurses = new NcursesDisplay();
+		ncurses->init(_modules);
+		_displays.push_back(ncurses);
+	}
 }
 
 void Core::update()
@@ -70,7 +77,7 @@ void Core::stop()
 
 void Core::loop()
 {
-	int seconds = 0;
+//	int seconds = 0;
 	double tickTime = 1000000.0 / 60.0;
 	clock_t beforeTime = clock();
 	while (_running)
@@ -78,9 +85,9 @@ void Core::loop()
 		clock_t currentTime = clock();
 		if (currentTime - beforeTime > tickTime)
 		{
-			seconds++;
-			if (seconds % 60 == 0)
-				std::cout << (seconds / 60) << " seconds..." << std::endl;
+//			seconds++;
+//			if (seconds % 60 == 0)
+//				std::cout << (seconds / 60) << " seconds..." << std::endl;
 			update();
 			render();
 			beforeTime = clock();
@@ -94,6 +101,9 @@ void Core::test()
 
     // ADD YOUR MODULES HERE, AS A NEW ENTRY IN THE MAP
     _modules["dummy"] = new DummyModule();
+    _modules["hostname"] = new Hostname();
+//    _modules["os"] = new OSModule();
+    _modules["time"] = new TimeModule();
 
     update();
     render();

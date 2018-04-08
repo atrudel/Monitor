@@ -15,12 +15,13 @@
 
 #include <ncurses.h>
 #include <iostream>
-#include "IMonitorDisplay.hpp"
+#include "../IMonitorDisplay.hpp"
+#include "../../Core.hpp"
+
 
 class NcursesDisplay : public IMonitorDisplay {
 
 public:
-
 	NcursesDisplay( void );
 	NcursesDisplay( NcursesDisplay const & src );
 	virtual ~NcursesDisplay();
@@ -28,14 +29,26 @@ public:
 	NcursesDisplay &		operator=( NcursesDisplay const & rhs );
 
 	virtual void 			init( void );
+	virtual void 			init( const std::map<std::string, IMonitorModule*> &disp );
 	virtual void 			update( void );
-	virtual void 			render( void ) const;
+	virtual void 			render( const std::map<std::string, IMonitorModule*> &disp ) ;
 	bool 					quit( void );
 
 private:
-
-
+	std::map<std::string, WINDOW *>         _fenetres;
+	const int                               _module_separation_size;
+    const int                               _module_height;
+	const int                               _max_module_width;
+	int										_module_width;
+    int                  		            _window_height;
+	int										_window_width;
+	int										_anime;
 };
+
+# define MODULE_HEIGHT  10
+# define MODULE_WIDTH  	200
+
+# define ANIME_WIDTH 100
 
 # define DISP_WHITE		0
 # define DISP_RED		1

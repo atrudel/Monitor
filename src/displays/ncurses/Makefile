@@ -10,8 +10,8 @@ OBJ = $(SRC:.cpp=.o)
 
 all: ${NAME}
 
-${NAME}: ${OBJ} ${HDR}
-	c++ -lcurses ${CPPFLAGS} -I. -o $@ ${OBJ}
+${NAME}: #${OBJ} ${HDR}
+	c++ -lcurses ${CPPFLAGS} -I. -I./../ -I./../../ -o $@ $(SRC) #${OBJ}
 
 clean:
 	@/bin/rm -f ${OBJ}

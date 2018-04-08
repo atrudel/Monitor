@@ -1,9 +1,5 @@
-//
-// Created by Marc-andre PLOUX on 4/7/18.
-//
-
-#ifndef PISINE_CPP_SDLDISPLAY_HPP
-# define PISINE_CPP_SDLDISPLAY_HPP
+#ifndef SDLDISPLAY_HPP
+# define SDLDISPLAY_HPP
 
 # include <iostream>
 # include <SDL.h>
@@ -11,21 +7,47 @@
 class SdlDisplay
 {
 private:
-	SDL_Window	*_window;
+	SDL_Window		*_window;
+	SDL_Renderer	*_renderer;
+	SDL_Texture		*_texture;
+	int				_width;
+	int				_height;
+	int				*_pixels;
+	SDL_Texture		*_fontImg;
+	std::string		_font;
 
-public:
 	SdlDisplay();
+public:
 
-	SdlDisplay(/* const attributes */);
+	SdlDisplay(const int &x, const int &y);
 
 	SdlDisplay(const SdlDisplay &o);
 
 	virtual ~SdlDisplay();
 
 	SdlDisplay &operator=(const SdlDisplay &o);
+
+	void update();
+
+	void drawPix(const int &x, const int &y, const int &color);
+	void init();
+	void swap();
+	void draw();
+
+	void drawString(const std::string &str, const int &x, const int &y);
+
+	void setSize(const int &w, const int &h);
+
+	void handleEvents(const SDL_Event &e);
+
+	void resize(const int &w, const int &h);
+
+	int getWidth() const;
+
+	int getHeight() const;
+
+	int *getPixels() const;
+
 };
-
-std::ostream &operator<<(std::ostream &s, const SdlDisplay &o);
-
 
 #endif

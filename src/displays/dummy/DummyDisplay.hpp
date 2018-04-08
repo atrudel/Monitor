@@ -14,7 +14,7 @@ public:
     DummyDisplay& operator=(const DummyDisplay& rhs);
     virtual void init(void);
     virtual void update(void);
-    virtual void render(const std::map<std::string, IMonitorModule*> &disp) const;
+    virtual void render(const std::map<std::string, IMonitorModule*> &disp);
     virtual void close(void);
 
 private:
