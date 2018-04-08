@@ -39,14 +39,17 @@ public:
 
     BeautifulDisplay& operator=(const BeautifulDisplay& rhs);
 
-	void renderModule(const IMonitorModule &module, int &curr_x, int &curr_y);
-	void init(void);
-    void update(void);
-	void render(const std::map<std::string, IMonitorModule*> &modules);
-	int	 calculateTotalHeight(const std::map<std::string, IMonitorModule*> &modules) const;
-    int	 calculateModuleHeight(const IMonitorModule* module) const;
+	void    renderModule(const IMonitorModule &module, int &curr_x, int &curr_y);
+	void    init(void);
+    void    update(void);
+	void    render(const std::map<std::string, IMonitorModule*> &modules);
+
 private:
-	SdlDisplay	_display;
+    SdlDisplay	_display;
+
+    int     _calculateTotalHeight(const std::map<std::string, IMonitorModule*> &modules) const;
+    int	    _calculateModuleHeight(const IMonitorModule* module) const;
+    float   _scale(float data, const IMonitorModule& module) const;
 };
 
 #endif

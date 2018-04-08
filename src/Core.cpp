@@ -1,5 +1,6 @@
 #include "Core.hpp"
 
+
 Core::Core()
 	: _running(false),
 	  _displays(std::vector<IMonitorDisplay*>()),
@@ -31,12 +32,12 @@ Core &Core::operator=(const Core &o)
 void Core::init()
 {
 	_displays.push_back(new BeautifulDisplay());
-
 //	 _modules["time"] = new TimeModule();
-//	_modules["main_cpu"] = new MainCpu();
+	_modules["main_cpu"] = new MainCpu();
 	 _modules["net"] = new NetworkModule();
+//	_modules["main_cpu_2"] = new MainCpu();
 //	 _modules["Hostname"] = new Hostname();
-//	 _modules["ram"] = new RamModul();
+
   if (_activeDisplayIndex == 1)
 	{
 		NcursesDisplay *ncurses = new NcursesDisplay();
@@ -96,21 +97,3 @@ void Core::loop()
 	}
 }
 
-void Core::test(int iter)
-{
-//    _displays.push_back(new DummyDisplay());
-
-    // ADD YOUR MODULES HERE, AS A NEW ENTRY IN THE MAP
-//    _modules["dummy"] = new DummyModule();
-    _modules["hostname"] = new Hostname();
-//    _modules["os"] = new OSModule();
-    _modules["time"] = new TimeModule();
-    _modules["main_cpu"] = new MainCpu();
-    _modules["net"] = new NetworkModule();
-    _modules["memory"] = new MainMemory();
-
-    for (int i= 0; i < iter; i++) {
-        update();
-    }
-    render();
-}

@@ -7,5 +7,5 @@ int main()
 
 	std::cout << "Hello 42" << std::endl;
 	core.start();
-//	core.test(2);
+
 }

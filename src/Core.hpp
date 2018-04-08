@@ -54,7 +54,8 @@ public:
 	void stop();
 	void loop();
 
-	void test(int iters);
+
+	void test(int iterations);
 };
 
 #endif
