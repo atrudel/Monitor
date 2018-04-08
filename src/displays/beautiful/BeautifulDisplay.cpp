@@ -60,7 +60,7 @@ void BeautifulDisplay::renderModule(const IMonitorModule &module, int &curr_x, i
 		std::deque<float> data = it->second;
 		for (size_t x = data.size() - 1; x > 0; x--)
 		{
-			for (int y = _scale(data[x], module) * GRAPH_HEIGHT; y > 0; y--)
+			for (int y = _scale(data[x], module) * GRAPH_HEIGHT - 1; y > 0; y--)
 			{
 				int r = 255 - j * 50;
 				int g = 128 + j * 50;
