@@ -24,7 +24,10 @@ class TimeModule : public IMonitorModule
 
   public:
     TimeModule();
+    TimeModule(TimeModule const &src);
     virtual ~TimeModule(void);
+
+    TimeModule &operator=(TimeModule const &rhs);
 
     //From interface :
     virtual void fetch(void);

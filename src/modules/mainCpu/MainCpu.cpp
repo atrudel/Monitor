@@ -87,9 +87,25 @@ void MainCpu::dequeUpdate(std::string name, float ret)
         this->_graphs[name] = std::deque<float>(DEQUE_SIZE, 0);
 }
 
+void MainCpu::setCpuDatas()
+{
+    char buffer[BUFFERLEN];
+    size_t bufferlen = BUFFERLEN;
+
+    sysctlbyname("machdep.cpu.brand_string",&buffer,&bufferlen,NULL,0);
+
+    std::ostringstream ss;
+    ss << buffer;
+
+    printf("%s\n", buffer);
+
+    _data["cpuBrand"] = buffer;
+}
+
 void MainCpu::update(void)
 {
     this->setCPUsLoad();
+    this->setCpuDatas();
 }
 
 const float &MainCpu::getGraphMin(void) const
@@ -125,5 +141,9 @@ void MainCpu::setName(std::string name)
 MainCpu &MainCpu::operator=(MainCpu const &rhs)
 {
     this->_name = rhs.getName();
+    this->_graphs = rhs.getGraphs();
+    this->_data = rhs.getData();
+    this->_min = rhs.getGraphMin();
+    this->_max = rhs.getGraphMax();
     return *this;
 }

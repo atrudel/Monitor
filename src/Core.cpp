@@ -1,4 +1,7 @@
 #include "Core.hpp"
+#include "modules/Hostname/Hostname.hpp"
+#include "modules/os/OSModule.hpp"
+#include "modules/time/TimeModule.hpp"
 
 Core::Core()
 	: _running(false),
@@ -97,10 +100,10 @@ void Core::loop()
 
 void Core::test()
 {
-    _displays.push_back(new DummyDisplay());
+    // _displays.push_back(new DummyDisplay());
 
     // ADD YOUR MODULES HERE, AS A NEW ENTRY IN THE MAP
-    _modules["dummy"] = new DummyModule();
+ //   _modules["dummy"] = new DummyModule();
     _modules["hostname"] = new Hostname();
 //    _modules["os"] = new OSModule();
     _modules["time"] = new TimeModule();
