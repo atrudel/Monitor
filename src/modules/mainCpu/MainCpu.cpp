@@ -53,7 +53,7 @@ void MainCpu::setCPUsLoad()
         totalUserTime += user;
         totalIdleTime += idle;
     }
-       // std::cout << std::endl
+       // // std::cout << std::endl
        //            << this->getName() << std::endl;
 
     size_t newTotal = totalIdleTime + totalSystemTime + totalUserTime;
@@ -97,7 +97,7 @@ void MainCpu::setCpuDatas()
     std::ostringstream ss;
     ss << buffer;
 
-    // std::cout << buffer << std::endl;
+    // // std::cout << buffer << std::endl;
 
     _data["cpuBrand"] = buffer;
 }
