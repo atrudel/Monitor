@@ -45,7 +45,7 @@ private:
     int                                     _anime;
 };
 
-# define MODULE_HEIGHT     10
+# define MODULE_HEIGHT     11
 # define MODULE_WIDTH      COLS
 # define INFO_PADDING      5
 # define ANIME_WIDTH       1
@@ -62,7 +62,7 @@ private:
 # define CATS_COLOR        DISP_MAGENTA
 # define MODULE_COLOR      DISP_GREEN
 # define RANGE_INFO_COLOR  DISP_BLUE
-# define INFO_COLOR        DISP_MAGENTA
+# define INFO_COLOR        DISP_CYAN
 
 # define KEY_ESC           27
 
