@@ -32,7 +32,7 @@ NcursesDisplay &        NcursesDisplay::operator=( NcursesDisplay const & rhs )
     this->_window_width = rhs._window_width;
     this->_anime = rhs._anime;
     this->_fenetres = rhs.getWindow();
-    
+
     return *this;
 }
 
@@ -117,12 +117,12 @@ inline void              NcursesDisplay::_dispAnime( void )//Champion Gnebie's a
             mvprintw(LINES - 2, ANIME_WIDTH, "  ,(u  u  ,),");
             mvprintw(LINES - 1, ANIME_WIDTH, " {}{}{}{}{}{}   ");
             if (_window_width - 60 > ANIME_WIDTH) {
-                mvprintw(LINES - 7, ANIME_WIDTH + 20, "    |\\_._/|   ");
-                mvprintw(LINES - 6, ANIME_WIDTH + 20, "    | o o |   ");
-                mvprintw(LINES - 5, ANIME_WIDTH + 20, "    (  T  )   ");
-                mvprintw(LINES - 4, ANIME_WIDTH + 20, "   .^`-^-'^.  ");
-                mvprintw(LINES - 3, ANIME_WIDTH + 20, "   `.  ;  .'  ");
-                mvprintw(LINES - 2, ANIME_WIDTH + 20, "   | | | | |  ");
+                mvprintw(LINES - 7, ANIME_WIDTH + 20, "    |\\_._/|    ");
+                mvprintw(LINES - 6, ANIME_WIDTH + 20, "    | o o |    ");
+                mvprintw(LINES - 5, ANIME_WIDTH + 20, "    (  T  )    ");
+                mvprintw(LINES - 4, ANIME_WIDTH + 20, "   .^`-^-'^.   ");
+                mvprintw(LINES - 3, ANIME_WIDTH + 20, "   `.  ;  .'   ");
+                mvprintw(LINES - 2, ANIME_WIDTH + 20, "   | | | | |   ");
                 mvprintw(LINES - 1, ANIME_WIDTH + 20, "  ((_((|))_))  ");
             }
         }
@@ -168,12 +168,12 @@ inline void              NcursesDisplay::_dispAnime( void )//Champion Gnebie's a
 
 
             if (_window_width - 60 > ANIME_WIDTH) {
-                mvprintw(LINES - 7, ANIME_WIDTH + 20, "    |\\_._/|");
-                mvprintw(LINES - 6, ANIME_WIDTH + 20, "    | 0 0 |");
-                mvprintw(LINES - 5, ANIME_WIDTH + 20, "    (  T  )");
-                mvprintw(LINES - 4, ANIME_WIDTH + 20, "   .^`-^-'^.");
-                mvprintw(LINES - 3, ANIME_WIDTH + 20, "   `.  ;  .'");
-                mvprintw(LINES - 2, ANIME_WIDTH + 20, "   | | | | |");
+                mvprintw(LINES - 7, ANIME_WIDTH + 20, "    |\\_._/|    ");
+                mvprintw(LINES - 6, ANIME_WIDTH + 20, "    | 0 0 |    ");
+                mvprintw(LINES - 5, ANIME_WIDTH + 20, "    (  T  )    ");
+                mvprintw(LINES - 4, ANIME_WIDTH + 20, "   .^`-^-'^.   ");
+                mvprintw(LINES - 3, ANIME_WIDTH + 20, "   `.  ;  .'   ");
+                mvprintw(LINES - 2, ANIME_WIDTH + 20, "   | | | | |   ");
                 mvprintw(LINES - 1, ANIME_WIDTH + 20, "  ((_((|))_))  ");
             }
         }

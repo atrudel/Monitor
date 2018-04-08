@@ -35,7 +35,6 @@ void Core::init(char display_options[SIZE_OPT])
 	int i = 0, l = 0;
 	char	rank = 48;
 	char	name[20];
-
 	while (display_options[i]) {
 		bzero(name, 20);
 		if (display_options[i] == 'h' && (name[0] = rank)) {
@@ -61,7 +60,7 @@ void Core::init(char display_options[SIZE_OPT])
 		if (display_options[i] == 'a' && (name[0] = rank)) {
 			_modules["cat"] = new Cat();
 		}
-		if (display_options[i] == 'o') {
+		if (display_options[i] == 'o' && (name[0] = rank)) {
 			strcpy(&(name[1]), "os");
 			_modules[name] = new OSModule();
 		}
