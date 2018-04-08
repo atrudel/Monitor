@@ -1,6 +1,7 @@
 #ifndef CORE_HPP
 # define CORE_HPP
 
+# include <unistd.h>
 # include <iostream>
 # include <vector>
 # include <map>
@@ -14,6 +15,10 @@
 # include "modules/time/TimeModule.hpp"
 # include "modules/mainCpu/MainCpu.hpp"
 # include "modules/Network/NetworkModule.hpp"
+
+#include "modules/Hostname/Hostname.hpp"
+#include "modules/os/OSModule.hpp"
+#include "modules/time/TimeModule.hpp"
 
 // # include "displays/dummy/DummyDisplay.hpp"
 // # include "modules/dummy/DummyModule.hpp"

@@ -1,7 +1,4 @@
 #include "Core.hpp"
-#include "modules/Hostname/Hostname.hpp"
-#include "modules/os/OSModule.hpp"
-#include "modules/time/TimeModule.hpp"
 
 Core::Core()
 	: _running(false),
@@ -34,12 +31,12 @@ Core &Core::operator=(const Core &o)
 void Core::init()
 {
 	_displays.push_back(new BeautifulDisplay());
+
 //	 _modules["time"] = new TimeModule();
-	_modules["main_cpu"] = new MainCpu();
-	// _modules["net"] = new NetworkModule();
-//	_modules["main_cpu_2"] = new MainCpu();
+//	_modules["main_cpu"] = new MainCpu();
+	 _modules["net"] = new NetworkModule();
 //	 _modules["Hostname"] = new Hostname();
-	// _modules["ram"] = new RamModul();
+//	 _modules["ram"] = new RamModul();
   if (_activeDisplayIndex == 1)
 	{
 		NcursesDisplay *ncurses = new NcursesDisplay();
@@ -81,7 +78,7 @@ void Core::stop()
 void Core::loop()
 {
 //	int seconds = 0;
-	double tickTime = 1000000.0 / 6.0;
+	double tickTime = 1000000.0 / 60.0;
 	clock_t beforeTime = clock();
 	while (_running)
 	{
@@ -95,6 +92,7 @@ void Core::loop()
 			render();
 			beforeTime = clock();
 		}
+
 	}
 }
 

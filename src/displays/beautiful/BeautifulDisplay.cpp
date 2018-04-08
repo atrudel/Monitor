@@ -36,6 +36,7 @@ void BeautifulDisplay::update(void)
 
 void BeautifulDisplay::renderModule(const IMonitorModule &module, int &curr_x, int &curr_y)
 {
+	_display.button("x", _display.getWidth() - 16 - 5, curr_y + 16, 16, 16, 0xaa0000);
 	_display.drawString(module.getName(), curr_x, curr_y);
 	curr_y += TITLE_HEIGHT;
 
@@ -71,6 +72,7 @@ void BeautifulDisplay::renderModule(const IMonitorModule &module, int &curr_x, i
 		}
 		curr_y += GRAPH_HEIGHT;
 	}
+
 }
 
 void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modules)
@@ -95,9 +97,21 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 
 	for (int y = 0; y < _display.getHeight(); y++)
 		for (int x = 0; x < _display.getWidth(); x++)
-			_display.drawPix(x, y, 0);
+			_display.drawPix(x, y, 0x111111);
 
 	typedef std::map<std::string, IMonitorModule*>::const_iterator iterator;
+
+	if (_display.button("Exit", _display.getWidth() - 45, 5, 40, 12, 0xaa0000))
+		exit(0);
+
+	if (_display.button("OS", 5, 5, 40, 12, 0x00aa00))
+	{
+
+	}
+
+	_display.button("CPU", 5 + 45, 5, 40, 12, 0x00aa00);
+	_display.button("RAM", 5 + 45 * 2, 5, 40, 12, 0x00aa00);
+	_display.button("NET", 5 + 45 * 3, 5, 40, 12, 0x00aa00);
 
 	int curr_x = LEFT_OFFSET;
 	int curr_y = TOP_OFFSET;
