@@ -96,5 +96,9 @@ void MainMemory::setName(std::string name)
 MainMemory &MainMemory::operator=(MainMemory const &rhs)
 {
     this->_name = rhs.getName();
-    return *this;
+    this->_graphs = rhs.getGraphs();
+    this->_data = rhs.getData();
+    this->_min = rhs.getGraphMin();
+    this->_max = rhs.getGraphMax();
+return *this;
 }

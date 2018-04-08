@@ -99,8 +99,10 @@ const std::string &OSModule::getName(void) const
 }
 
 OSModule &OSModule::operator=(OSModule const &rhs) {
-
-	(void) rhs;
-    // this->_foo = rhs.getValue();
+    this->_name = rhs.getName();
+    this->_graphs = rhs.getGraphs();
+    this->_datas = rhs.getData();
+    this->_graphMin = rhs.getGraphMin();
+    this->_graphMax = rhs.getGraphMax();
     return *this;
 }

@@ -24,6 +24,7 @@ class MainCpu : public IMonitorModule
     std::map<std::string, std::deque<float> > _graphs;
     std::map<std::string, std::string> _data;
 
+    // unecessary to copy this block, it's reset on each loop
     size_t _oldWorkTicks, _oldTotalTicks;
     size_t _oldCpusWorkTicks[WORLD_WIDE_MAX_CPU_ON_UNIT], _oldCpusTotalTicks[WORLD_WIDE_MAX_CPU_ON_UNIT];  
 

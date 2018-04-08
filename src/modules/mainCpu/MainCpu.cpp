@@ -45,7 +45,7 @@ void MainCpu::setCPUsLoad()
         ss << "cpu" << i << "Usage";
 
         dequeUpdate(ss.str(), calculateCPULoad(system + user, _oldCpusWorkTicks[i], system + user + idle, _oldCpusTotalTicks[i]));
-        
+
         _oldCpusWorkTicks[i] = system + user;
         _oldCpusTotalTicks[i] = system + user + idle;
 
@@ -140,5 +140,9 @@ void MainCpu::setName(std::string name)
 MainCpu &MainCpu::operator=(MainCpu const &rhs)
 {
     this->_name = rhs.getName();
+    this->_graphs = rhs.getGraphs();
+    this->_data = rhs.getData();
+    this->_min = rhs.getGraphMin();
+    this->_max = rhs.getGraphMax();
     return *this;
 }
