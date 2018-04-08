@@ -42,8 +42,6 @@ int main(int ac, char **av)
 		}
 		i++;
 	}
-	// core.start(display_options);
-//	 core.test();
-
+	 core.start(display_options);
 	// std::cout.rdbuf(coutbuf);
 }
