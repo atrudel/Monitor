@@ -53,8 +53,6 @@ void MainCpu::setCPUsLoad()
         totalUserTime += user;
         totalIdleTime += idle;
     }
-       // // std::cout << std::endl
-       //            << this->getName() << std::endl;
 
     size_t newTotal = totalIdleTime + totalSystemTime + totalUserTime;
     size_t newWork = totalSystemTime + totalUserTime;
@@ -91,15 +89,23 @@ void MainCpu::setCpuDatas()
 {
     char buffer[BUFFERLEN];
     size_t bufferlen = BUFFERLEN;
+    memset (buffer, 0, bufferlen);
+    sysctlbyname("machdep.cpu.brand_string", &buffer, &bufferlen, NULL, 0);
 
-    sysctlbyname("machdep.cpu.brand_string",&buffer,&bufferlen,NULL,0);
+    std::string buff(buffer);
+    std::string delim = " CPU @ ";
+    size_t pos = 0;
 
-    std::ostringstream ss;
-    ss << buffer;
+    while ((pos = buff.find(delim)) != std::string::npos) {
+        this->_data["CPU Brand"] = buff.substr(0, pos);
+        buff.erase(0, pos + delim.length());
+    }
+    this->_data["CPU Frequecy"] = buff;
 
-    // // std::cout << buffer << std::endl;
-
-    _data["cpuBrand"] = buffer;
+    memset (buffer, 0, bufferlen);
+    sysctlbyname("hw.ncpu", &buffer, &bufferlen, NULL, 0);
+    std::string buff2("4");
+    this->_data["Number of Core"] = buff2;
 }
 
 void MainCpu::update(void)
