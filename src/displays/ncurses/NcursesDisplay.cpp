@@ -28,7 +28,11 @@ NcursesDisplay::~NcursesDisplay()
 
 NcursesDisplay &        NcursesDisplay::operator=( NcursesDisplay const & rhs )
 {
-    (void)rhs;
+    this->_window_height = rhs._window_height;
+    this->_window_width = rhs._window_width;
+    this->_anime = rhs._anime;
+    this->_fenetres = rhs.getWindow();
+    
     return *this;
 }
 
@@ -73,6 +77,11 @@ bool                     NcursesDisplay::quit( void )
         return true;
     }
     return false;
+}
+
+std::map<std::string, WINDOW *> NcursesDisplay::getWindow() const
+{
+    return this->_fenetres;
 }
 
 void                     NcursesDisplay::update(void)

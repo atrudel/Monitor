@@ -3,6 +3,10 @@
 BeautifulDisplay::BeautifulDisplay(void)
 	: _display(SdlDisplay(500, 1000))
 {
+    SDL_DisplayMode screen;
+    SDL_GetCurrentDisplayMode(0, &screen);
+
+    _display.setMove(screen.w - TOTAL_WIDTH, 0);
 }
 
 BeautifulDisplay::BeautifulDisplay(const BeautifulDisplay& src)
@@ -60,7 +64,7 @@ void BeautifulDisplay::renderModule(const IMonitorModule &module, int &curr_x, i
 		std::deque<float> data = it->second;
 		for (size_t x = data.size() - 1; x > 0; x--)
 		{
-			for (int y = _scale(data[x], module) * GRAPH_HEIGHT - 1; y > 0; y--)
+			for (int y = _scale(x, data, module) * GRAPH_HEIGHT - 1; y > 0; y--)
 			{
 				int r = 255 - j * 50;
 				int g = 128 + j * 50;
@@ -93,7 +97,7 @@ void BeautifulDisplay::render(const std::map<std::string, IMonitorModule*> &modu
 		}
 	}
 
-//	 _display.setSize(200, static_cast<int>(modules.size() * 100));
+	 _display.setSize(TOTAL_WIDTH, static_cast<int>(_calculateTotalHeight(modules)));
 
 	for (int y = 0; y < _display.getHeight(); y++)
 		for (int x = 0; x < _display.getWidth(); x++)
@@ -147,8 +151,12 @@ int	 BeautifulDisplay::_calculateModuleHeight(const IMonitorModule* module) cons
     height += MODULE_GAP * (module->getGraphs().size() -1); // to change
     return height;
 }
-float   BeautifulDisplay::_scale(float data, const IMonitorModule& module) const {
-    float range = module.getGraphMax() - module.getGraphMin();
-//    std::cout << data << " -> " << data / range << " (" << range << ")" << std::endl;
-	return data / range;
+float   BeautifulDisplay::_scale(size_t x, std::deque<float> data, const IMonitorModule& module) const {
+	float range = 0;
+
+	if (module.getGraphMax() == -1)
+		range = *std::max_element(data.begin(), data.end()) - module.getGraphMin();
+	else
+		range = module.getGraphMax() - module.getGraphMin();
+	return data[x] / range;
 }

@@ -19,6 +19,9 @@ SdlDisplay::SdlDisplay(const int &w, const int &h)
 	_fontImg = SDL_CreateTextureFromSurface(_renderer, SDL_LoadBMP("font.bmp"));
 	SDL_SetWindowResizable(_window, SDL_TRUE);
 	SDL_SetWindowBordered(_window, SDL_FALSE);
+
+
+
 }
 
 SdlDisplay::SdlDisplay(const SdlDisplay &o)
@@ -42,8 +45,17 @@ void SdlDisplay::setSize(const int &w, const int &h)
 	if (w <= 0 || h <= 0 || w > 10000 || h > 10000)
 		return;
 	if (_width != w || _height != h)
-		resize(w, h);
+    {
+        SDL_SetWindowSize(_window, w, h);
+        resize(w, h);
+    }
 }
+
+void SdlDisplay::setMove(const int &x, const int &y)
+{
+    SDL_SetWindowPosition(_window, x, y);
+}
+
 
 void SdlDisplay::update()
 {

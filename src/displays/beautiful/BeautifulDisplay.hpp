@@ -29,7 +29,6 @@
 # define TOTAL_WIDTH  (LEFT_OFFSET + LEFT_MARGIN_GR + GRAPH_WIDTH + RIGHT_OFFSET)
 //** total height can be calculated using calculageTotalHeight() method
 
-
 class BeautifulDisplay : public IMonitorDisplay {
 
 public:
@@ -49,7 +48,7 @@ private:
 
     int     _calculateTotalHeight(const std::map<std::string, IMonitorModule*> &modules) const;
     int	    _calculateModuleHeight(const IMonitorModule* module) const;
-    float   _scale(float data, const IMonitorModule& module) const;
+    float   _scale(size_t x, std::deque<float> data, const IMonitorModule& module) const;
 };
 
 #endif
