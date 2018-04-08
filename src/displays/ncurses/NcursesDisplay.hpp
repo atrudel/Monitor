@@ -45,7 +45,7 @@ private:
     int                                     _anime;
 };
 
-# define MODULE_HEIGHT     12
+# define MODULE_HEIGHT     10
 # define MODULE_WIDTH      COLS
 # define INFO_PADDING      5
 # define ANIME_WIDTH       1

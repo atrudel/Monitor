@@ -61,11 +61,24 @@ void                     NcursesDisplay::init(const std::map<std::string, \
     this->init();
 
     int i = 0;
+    int height = 0;
+    int height_begin = _module_height;
     for (module_iterator it = modules.begin(); it != modules.end(); it++)
     {
         if (it->first != "cat")
-            _fenetres[it->first] = subwin(stdscr, _module_height , _module_width, \
-                (_module_height + _module_separation_size) * ++i , 0);
+        {
+            if (it->second->getGraphs().size())
+                height = _module_height;
+            else if (it->second->getData().size())
+                height = it->second->getData().size() + 3;
+            else
+                height = 3;
+            _fenetres[it->first] = subwin(stdscr, height , _module_width, \
+                height_begin , 0);
+            height_begin += _module_separation_size + height;
+            i++;
+        }
+
     }
 }
 
