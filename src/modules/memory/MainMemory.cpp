@@ -17,8 +17,8 @@ void MainMemory::dequeUpdate(std::string name, float ret)
     if (!this->_graphs[name].empty())
     {
         while (this->_graphs[name].size() > DEQUE_SIZE)
-            this->_graphs[name].pop_front();
-        this->_graphs[name].push_back(ret);
+            this->_graphs[name].pop_back();
+        this->_graphs[name].push_front(ret);
     }
     else
         this->_graphs[name] = std::deque<float>(DEQUE_SIZE, 0);
