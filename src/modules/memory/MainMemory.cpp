@@ -1,6 +1,6 @@
 #include "MainMemory.hpp"
 
-MainMemory::MainMemory(void) : _name("CPU"), _min(0.0f), _max(100.0f), _graphs(std::map< std::string, std::deque<float> >()), _data(std::map<std::string, std::string>()), _frame(0)
+MainMemory::MainMemory(void) : _name("Memory"), _min(0.0f), _max(100.0f), _graphs(std::map< std::string, std::deque<float> >()), _data(std::map<std::string, std::string>()), _frame(0)
 {
     this->update();
 }
