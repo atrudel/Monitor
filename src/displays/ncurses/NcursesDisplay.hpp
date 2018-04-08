@@ -44,6 +44,9 @@ private:
 	int										_window_width;
 };
 
+# define MODULE_HEIGHT  20
+# define MODULE_WIDTH  	200
+
 # define DISP_WHITE		0
 # define DISP_RED		1
 # define DISP_GREEN		2
